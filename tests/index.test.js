@@ -276,11 +276,22 @@ describe('nano-css', function() {
 		it('supports @font-face', function() {
 			const nano = create()
 
-			nano.put('font-face', {
+			nano.put('@font-face', {
 				'font-weight': 'bold'
 			})
 
-			// expect(nano.putRaw).toHaveBeenCalledTimes(1)
+			if (env.isClient) {
+				// expect(nano.putRaw).toHaveBeenCalledTimes(1)
+				expect(nano.putRaw.mock.calls[0][0].replace(/[\s\n]+/g, '')).toBe(
+					'@font-face{font-weight:bold;}'
+				)
+			}
+
+			if (env.isServer) {
+				expect(nano.raw.replace(/[\s\n]+/g, '')).toBe(
+					'@font-face{font-weight:bold;}'
+				)
+			}
 		})
 	})
 })

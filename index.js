@@ -125,6 +125,8 @@ exports.create = function(config) {
 
 	renderer.put = async function(selector, decls, atRule) {
 		const declInString = walkDecls(selector, decls, atRule)
+		console.log('check param', selector, decls, atRule)
+		// console.log('check font-face', declInString)
 
 		if (R.isEmpty(declInString)) {
 			return
@@ -132,11 +134,8 @@ exports.create = function(config) {
 
 		const withSelector = addSelector(selector, declInString)
 
-		// console.log('check withSelector result', withSelector, atRule)
-
 		const withAtRule = atRule ? addAtRule(withSelector, atRule) : withSelector
 
-		// console.log('check withAtRule result', withAtRule)
 		renderer.putRaw(withAtRule)
 	}
 
