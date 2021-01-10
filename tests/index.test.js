@@ -213,11 +213,9 @@ describe('nano-css', function() {
 			const nano = create()
 			nano.putRaw = jest.fn()
 
-			nano.put('', {
+			nano.put('.global', {
 				'@media screen': {
-					'.global': {
-						color: 'green'
-					}
+					color: 'green'
 				}
 			})
 

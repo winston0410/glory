@@ -99,12 +99,17 @@ exports.create = function(config) {
 
 	function fromObjectToString(selector, decls) {
 		return Object.entries(decls).reduce((acc, declObj) => {
+			if (isAtRule(declObj[0])) {
+				console.log('this is an atRule')
+				return acc
+			}
+
 			if (R.is(Object, declObj[1])) {
-				if (isAtRule(declObj[0])) {
-					// console.log(`is atRUle ${fromObjectToString(declObj[0], declObj[1])}`)
-					return acc + fromObjectToString(declObj[0], declObj[1])
-				}
-				console.log('check value to spawn', selector, declObj)
+				// if (isAtRule(declObj[0])) {
+				// 	// console.log(`is atRUle ${fromObjectToString(declObj[0], declObj[1])}`)
+				// 	return acc + fromObjectToString(declObj[0], declObj[1])
+				// }
+				// console.log('check value to spawn', selector, declObj)
 				const nestingSelector = renderer.selector(selector, declObj[0])
 				// Resolve that object with a new put method call
 				renderer.put(nestingSelector, declObj[1])
