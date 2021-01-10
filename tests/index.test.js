@@ -71,161 +71,161 @@ describe('nano-css', function() {
 	})
 
 	describe('.put()', function() {
-		it('inserts CSS', function() {
-			const nano = create()
-
-			nano.put('.foo', {
-				color: 'red'
-			})
-
-			if (env.isClient) {
-				const rule = findCssRuleAndDelete('.foo')
-
-				expect(typeof rule).toBe('object')
-				expect(rule.style.color).toBe('red')
-			}
-
-			if (env.isServer) {
-				expect(nano.raw.replace(/[\s\n]+/g, '')).toBe('.foo{color:red;}')
-			}
-		})
-
-		it('puts many declarations', function() {
-			const nano = create()
-
-			nano.put('.foo2', {
-				color: 'red',
-				textDecoration: 'underline',
-				'border-radius': '5px'
-			})
-
-			if (env.isClient) {
-				const rule = findCssRuleAndDelete('.foo2')
-
-				expect(typeof rule).toBe('object')
-				expect(rule.style.color).toBe('red')
-				expect(rule.style['text-decoration']).toBe('underline')
-				expect(rule.style['border-radius']).toBe('5px')
-			}
-
-			if (env.isServer) {
-				expect(nano.raw.includes('.foo2')).toBe(true)
-				expect(nano.raw.includes('color:red')).toBe(true)
-				expect(nano.raw.includes('text-decoration:underline')).toBe(true)
-				expect(nano.raw.includes('border-radius:5px')).toBe(true)
-			}
-		})
-
-		it('supports nesting', function() {
-			const nano = create()
-
-			nano.put('.foo3', {
-				'.nested': {
-					color: 'blue'
-				}
-			})
-
-			if (env.isClient) {
-				const rule = findCssRuleAndDelete('.foo3 .nested')
-
-				expect(typeof rule).toBe('object')
-				expect(rule.style.color).toBe('blue')
-			}
-
-			if (env.isServer) {
-				expect(nano.raw.includes('.foo3 .nested')).toBe(true)
-				expect(nano.raw.includes('color:blue')).toBe(true)
-			}
-		})
-		//
-		it('supports nesting - 2', function() {
-			const renderer = create()
-
-			renderer.put('.foo', {
-				'.bar': {
-					'.baz': {
-						'.bazooka': {
-							color: 'red'
-						}
-					}
-				}
-			})
-
-			if (env.isClient) {
-				const rule = findCssRuleAndDelete('.foo .bar .baz .bazooka')
-
-				expect(typeof rule).toBe('object')
-				expect(rule.style.color).toBe('red')
-			}
-
-			if (env.isServer) {
-				expect(renderer.raw.indexOf('.foo .bar .baz .bazooka') > -1).toBe(true)
-				expect(renderer.raw.indexOf('color') > -1).toBe(true)
-				expect(renderer.raw.indexOf('red') > -1).toBe(true)
-			}
-		})
-
-		it('supports pseudo selectors', function() {
-			const nano = create()
-
-			nano.put('.foo3', {
-				':hover': {
-					color: 'green'
-				}
-			})
-
-			if (env.isClient) {
-				const rule = findCssRuleAndDelete('.foo3:hover')
-
-				expect(typeof rule).toBe('object')
-				expect(rule.style.color).toBe('green')
-			}
-
-			if (env.isServer) {
-				expect(nano.raw.includes('.foo3:hover')).toBe(true)
-				expect(nano.raw.includes('color:green')).toBe(true)
-			}
-		})
-
-		it('can insert global styles', function() {
-			const nano = create()
-
-			nano.put('', {
-				'.global': {
-					color: 'green'
-				}
-			})
-
-			if (env.isClient) {
-				const rule = findCssRuleAndDelete('.global')
-
-				expect(typeof rule).toBe('object')
-				expect(rule.style.color).toBe('green')
-			}
-
-			if (env.isServer) {
-				expect(nano.raw.includes('.global')).toBe(true)
-				expect(nano.raw.includes('color:green')).toBe(true)
-			}
-		})
-		//
-		// it('supports @media queries - 2', function() {
+		// it('inserts CSS', function() {
 		// 	const nano = create()
-		// 	nano.putRaw = jest.fn()
 		//
-		// 	nano.put('', {
-		// 		'@media screen': {
-		// 			'.global': {
-		// 				color: 'green'
+		// 	nano.put('.foo', {
+		// 		color: 'red'
+		// 	})
+		//
+		// 	if (env.isClient) {
+		// 		const rule = findCssRuleAndDelete('.foo')
+		//
+		// 		expect(typeof rule).toBe('object')
+		// 		expect(rule.style.color).toBe('red')
+		// 	}
+		//
+		// 	if (env.isServer) {
+		// 		expect(nano.raw.replace(/[\s\n]+/g, '')).toBe('.foo{color:red;}')
+		// 	}
+		// })
+		//
+		// it('puts many declarations', function() {
+		// 	const nano = create()
+		//
+		// 	nano.put('.foo2', {
+		// 		color: 'red',
+		// 		textDecoration: 'underline',
+		// 		'border-radius': '5px'
+		// 	})
+		//
+		// 	if (env.isClient) {
+		// 		const rule = findCssRuleAndDelete('.foo2')
+		//
+		// 		expect(typeof rule).toBe('object')
+		// 		expect(rule.style.color).toBe('red')
+		// 		expect(rule.style['text-decoration']).toBe('underline')
+		// 		expect(rule.style['border-radius']).toBe('5px')
+		// 	}
+		//
+		// 	if (env.isServer) {
+		// 		expect(nano.raw.includes('.foo2')).toBe(true)
+		// 		expect(nano.raw.includes('color:red')).toBe(true)
+		// 		expect(nano.raw.includes('text-decoration:underline')).toBe(true)
+		// 		expect(nano.raw.includes('border-radius:5px')).toBe(true)
+		// 	}
+		// })
+		//
+		// it('supports nesting', function() {
+		// 	const nano = create()
+		//
+		// 	nano.put('.foo3', {
+		// 		'.nested': {
+		// 			color: 'blue'
+		// 		}
+		// 	})
+		//
+		// 	if (env.isClient) {
+		// 		const rule = findCssRuleAndDelete('.foo3 .nested')
+		//
+		// 		expect(typeof rule).toBe('object')
+		// 		expect(rule.style.color).toBe('blue')
+		// 	}
+		//
+		// 	if (env.isServer) {
+		// 		expect(nano.raw.includes('.foo3 .nested')).toBe(true)
+		// 		expect(nano.raw.includes('color:blue')).toBe(true)
+		// 	}
+		// })
+		// //
+		// it('supports nesting - 2', function() {
+		// 	const renderer = create()
+		//
+		// 	renderer.put('.foo', {
+		// 		'.bar': {
+		// 			'.baz': {
+		// 				'.bazooka': {
+		// 					color: 'red'
+		// 				}
 		// 			}
 		// 		}
 		// 	})
 		//
-		// 	expect(nano.putRaw).toHaveBeenCalledTimes(1)
-		// 	expect(nano.putRaw.mock.calls[0][0].replace(/[\s\n]+/g, '')).toBe(
-		// 		'@mediascreen{.global{color:green;}}'
-		// 	)
+		// 	if (env.isClient) {
+		// 		const rule = findCssRuleAndDelete('.foo .bar .baz .bazooka')
+		//
+		// 		expect(typeof rule).toBe('object')
+		// 		expect(rule.style.color).toBe('red')
+		// 	}
+		//
+		// 	if (env.isServer) {
+		// 		expect(renderer.raw.indexOf('.foo .bar .baz .bazooka') > -1).toBe(true)
+		// 		expect(renderer.raw.indexOf('color') > -1).toBe(true)
+		// 		expect(renderer.raw.indexOf('red') > -1).toBe(true)
+		// 	}
 		// })
+		//
+		// it('supports pseudo selectors', function() {
+		// 	const nano = create()
+		//
+		// 	nano.put('.foo3', {
+		// 		':hover': {
+		// 			color: 'green'
+		// 		}
+		// 	})
+		//
+		// 	if (env.isClient) {
+		// 		const rule = findCssRuleAndDelete('.foo3:hover')
+		//
+		// 		expect(typeof rule).toBe('object')
+		// 		expect(rule.style.color).toBe('green')
+		// 	}
+		//
+		// 	if (env.isServer) {
+		// 		expect(nano.raw.includes('.foo3:hover')).toBe(true)
+		// 		expect(nano.raw.includes('color:green')).toBe(true)
+		// 	}
+		// })
+		//
+		// it('can insert global styles', function() {
+		// 	const nano = create()
+		//
+		// 	nano.put('', {
+		// 		'.global': {
+		// 			color: 'green'
+		// 		}
+		// 	})
+		//
+		// 	if (env.isClient) {
+		// 		const rule = findCssRuleAndDelete('.global')
+		//
+		// 		expect(typeof rule).toBe('object')
+		// 		expect(rule.style.color).toBe('green')
+		// 	}
+		//
+		// 	if (env.isServer) {
+		// 		expect(nano.raw.includes('.global')).toBe(true)
+		// 		expect(nano.raw.includes('color:green')).toBe(true)
+		// 	}
+		// })
+		//
+		it('supports @media queries - 2', function() {
+			const nano = create()
+			nano.putRaw = jest.fn()
+
+			nano.put('', {
+				'@media screen': {
+					'.global': {
+						color: 'green'
+					}
+				}
+			})
+
+			// expect(nano.putRaw).toHaveBeenCalledTimes(1)
+			expect(nano.putRaw.mock.calls[0][0].replace(/[\s\n]+/g, '')).toBe(
+				'@mediascreen{.global{color:green;}}'
+			)
+		})
 		//
 		// it('supports @media queries - 3', function() {
 		// 	const nano = create()
@@ -255,5 +255,13 @@ describe('nano-css', function() {
 		// 		)
 		// 	}
 		// })
+
+		it('supports @font-face', function() {
+			const nano = create()
+
+			nano.put('font-face', {
+				'font-weight': 'bold'
+			})
+		})
 	})
 })

@@ -1,15 +1,5 @@
 'use strict'
 
-// const styleObjToString = (decls, styleString) => {
-//
-// }
-
-// const style = Object.entries(decls).reduce((acc, declObj) => {
-// 	return renderer.decl(declObj[0], declObj[1], selector, atrule)
-// }, '')
-
-// console.log('check style', style)
-
 const { isBrowser } = require('browser-or-node')
 const joli = require('@blackblock/joli-string')
 const R = require('rambda')
@@ -22,8 +12,26 @@ const generator = joli({
 
 const isProduction = process.env.NODE_ENV !== 'production'
 
-const declToRule = (selector, str) =>
-	isProduction ? `${selector}{${str}}` : `\n${selector} {\n${str}}\n`
+const declToRule = (selector, str) => {
+	console.log('check selector at declToRule', selector)
+	return isProduction ? `${selector}{${str}}` : `\n${selector} {\n${str}}\n`
+}
+
+const isAtRule = (selector) => {
+	// console.log(`check selector${selector}`)
+	return selector[0] === '@' && selector !== '@font-face'
+}
+
+const shouldAddSpace = (selector) => {
+	// return selector
+	// console.log(`check if selector needs to be added${selector[0]}`)
+	if (selector[0] === '@' || selector[0] === ':') {
+		// console.log('is AtRule!')
+		return selector
+	}
+
+	return ` ${selector}`
+}
 
 exports.create = function(config) {
 	const renderer = {
@@ -35,8 +43,7 @@ exports.create = function(config) {
 		decl: (key, value) => `${renderer.kebab(key)}:${value};`,
 		hash: (obj) => generator.next().value,
 		selector: function(parent, selector) {
-			console.log('check selector', parent, selector)
-			return parent + (selector[0] === ':' ? '' : ' ') + selector
+			return parent + shouldAddSpace(selector)
 		},
 		putRaw: function(rawCssRule) {
 			renderer.raw += rawCssRule
@@ -90,39 +97,36 @@ exports.create = function(config) {
 		}
 	}
 
-	function fromObjectToString(selector, decls, atrule) {
+	function fromObjectToString(selector, decls) {
 		return Object.entries(decls).reduce((acc, declObj) => {
 			if (R.is(Object, declObj[1])) {
+				if (isAtRule(declObj[0])) {
+					// console.log(`is atRUle ${fromObjectToString(declObj[0], declObj[1])}`)
+					return acc + fromObjectToString(declObj[0], declObj[1])
+				}
+				console.log('check value to spawn', selector, declObj)
 				const nestingSelector = renderer.selector(selector, declObj[0])
-				renderer.put(nestingSelector, declObj[1], atrule)
+				// Resolve that object with a new put method call
+				renderer.put(nestingSelector, declObj[1])
 				return acc
 			}
-			// console.log('check data', acc, declObj)
-			return acc + renderer.decl(declObj[0], declObj[1], selector, atrule)
+
+			return acc + renderer.decl(declObj[0], declObj[1], selector)
 		}, '')
 	}
 
-	renderer.put = function(selector, decls, atrule) {
-		const declInString = fromObjectToString(selector, decls, atrule)
+	renderer.put = function(selector, decls) {
+		const declInString = fromObjectToString(selector, decls)
 
 		const ruleInString = declToRule(selector, declInString)
 
 		if (!R.isEmpty(ruleInString)) {
-			renderer.putRaw(atrule ? `${atrule}{${ruleInString}}` : ruleInString)
+			renderer.putRaw(
+				ruleInString
+				// isAtRule(selector) ? `${atrule}{${ruleInString}}` : ruleInString
+			)
 		}
 	}
 
-	renderer.putAt = renderer.put
-
 	return renderer
 }
-
-// for (let i = 0; i < postponed.length; i++) {
-// 	prop = postponed[i]
-//
-// 	if (prop[0] === '@' && prop !== '@font-face') {
-// 		renderer.putAt(selector, decls[prop], prop)
-// 	} else {
-// 		renderer.put(renderer.selector(selector, prop), decls[prop], atrule)
-// 	}
-// }
