@@ -94,37 +94,43 @@ exports.create = function(config) {
 	}
 
 	const addAtRule = (rule, atRule) => {
+		console.log('check rules to handle', rule, atRule)
 		return `${atRule}{${rule}}`
 	}
 
-	function walkDecls(selector, decls, atRule) {
-		let index = 0
-		const declTuple = Object.entries(decls)
-
-		const recursion = (style) => {
-			if (index === declTuple.length) return style
-			const currentDecl = declTuple[index]
-			index++
-			if (R.is(Object, currentDecl[1])) {
-				if (isAtRule(currentDecl[0])) {
-					renderer.put(selector, currentDecl[1], currentDecl[0])
-				} else {
-					renderer.put(
-						renderer.selector(selector, currentDecl[0]),
-						currentDecl[1],
-						atRule
-					)
-				}
-				return recursion(style)
-			}
-			return recursion(style + renderer.decl(currentDecl[0], currentDecl[1]))
-		}
-
-		return recursion('')
+	const handleAtRule = (selector, decls, atrule) => {
+		console.log(`check data`, selector, decls, atrule)
 	}
 
-	renderer.put = async function(selector, decls, atRule) {
-		const declInString = walkDecls(selector, decls, atRule)
+	function fromObjectToString(selector, decls) {
+		return Object.entries(decls).reduce((acc, declObj) => {
+			if (R.is(Object, declObj[1])) {
+				if (isAtRule(declObj[0])) {
+					renderer.put(selector, declObj[1], declObj[0])
+					handleAtRule(selector, declObj[1], declObj[0])
+					return acc
+				}
+				const nestingSelector = renderer.selector(selector, declObj[0])
+				// Resolve that object with a new put method call
+				renderer.put(nestingSelector, declObj[1])
+				return acc
+			}
+
+			return acc + renderer.decl(declObj[0], declObj[1], selector)
+		}, '')
+	}
+
+	renderer.put = function(selector, decls, atRule) {
+		if (atRule) {
+			console.log(
+				'check value when atRule presented',
+				R.isEmpty(selector),
+				decls,
+				atRule
+			)
+		}
+
+		const declInString = fromObjectToString(selector, decls)
 
 		if (R.isEmpty(declInString)) {
 			return
@@ -132,13 +138,42 @@ exports.create = function(config) {
 
 		const withSelector = addSelector(selector, declInString)
 
-		// console.log('check withSelector result', withSelector, atRule)
-
 		const withAtRule = atRule ? addAtRule(withSelector, atRule) : withSelector
 
-		// console.log('check withAtRule result', withAtRule)
+		console.log('check with atRule', atRule, withAtRule)
+
 		renderer.putRaw(withAtRule)
 	}
 
 	return renderer
 }
+
+// function fromObjectToString(selector, decls) {
+// 	return Object.entries(decls).reduce((acc, declObj) => {
+// 		if (R.is(Object, declObj[1])) {
+// 			console.log('check value to spawn', selector, declObj[0])
+// 			if (isAtRule(declObj[0])) {
+// 				console.log(
+// 					'this is an atRule',
+// 					`${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+// 				)
+// 				return `${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+// 			}
+// 			const nestingSelector = renderer.selector(selector, declObj[0])
+// 			// Resolve that object with a new put method call
+// 			renderer.put(nestingSelector, declObj[1])
+// 			return acc
+// 		}
+//
+// 		return acc + renderer.decl(declObj[0], declObj[1], selector)
+// 	}, '')
+// }
+
+// console.log('check value to spawn', selector, declObj[0])
+// if (isAtRule(declObj[0])) {
+// 	console.log(
+// 		'this is an atRule',
+// 		`${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+// 	)
+// 	return `${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+// }
