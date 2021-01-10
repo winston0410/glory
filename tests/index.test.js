@@ -209,21 +209,39 @@ describe('nano-css', function() {
 		// 	}
 		// })
 		//
-		it('supports @media queries - 2', function() {
+
+		it('supports @media queries', function() {
 			const nano = create()
 			nano.putRaw = jest.fn()
 
-			nano.put('.global', {
+			nano.put('.foo', {
 				'@media screen': {
 					color: 'green'
 				}
 			})
 
-			// expect(nano.putRaw).toHaveBeenCalledTimes(1)
 			expect(nano.putRaw.mock.calls[0][0].replace(/[\s\n]+/g, '')).toBe(
-				'@mediascreen{.global{color:green;}}'
+				'@mediascreen{.foo{color:green;}}'
 			)
 		})
+
+		// it('supports @media queries - 2', function() {
+		// 	const nano = create()
+		// 	nano.putRaw = jest.fn()
+		//
+		// 	nano.put('', {
+		// 		'@media screen': {
+		// 			'.global': {
+		// 				color: 'green'
+		// 			}
+		// 		}
+		// 	})
+		//
+		// 	// expect(nano.putRaw).toHaveBeenCalledTimes(1)
+		// 	expect(nano.putRaw.mock.calls[0][0].replace(/[\s\n]+/g, '')).toBe(
+		// 		'@mediascreen{.global{color:green;}}'
+		// 	)
+		// })
 		//
 		// it('supports @media queries - 3', function() {
 		// 	const nano = create()

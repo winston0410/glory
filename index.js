@@ -97,19 +97,47 @@ exports.create = function(config) {
 		}
 	}
 
+	// function fromObjectToString(selector, decls) {
+	// 	return Object.entries(decls).reduce((acc, declObj) => {
+	// 		if (R.is(Object, declObj[1])) {
+	// 			console.log('check value to spawn', selector, declObj[0])
+	// 			if (isAtRule(declObj[0])) {
+	// 				console.log(
+	// 					'this is an atRule',
+	// 					`${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+	// 				)
+	// 				return `${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+	// 			}
+	// 			const nestingSelector = renderer.selector(selector, declObj[0])
+	// 			// Resolve that object with a new put method call
+	// 			renderer.put(nestingSelector, declObj[1])
+	// 			return acc
+	// 		}
+	//
+	// 		return acc + renderer.decl(declObj[0], declObj[1], selector)
+	// 	}, '')
+	// }
+
+	// console.log('check value to spawn', selector, declObj[0])
+	// if (isAtRule(declObj[0])) {
+	// 	console.log(
+	// 		'this is an atRule',
+	// 		`${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+	// 	)
+	// 	return `${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+	// }
+
+	const handleAtRule = (selector, decls, atRule) => {
+		console.log('check rules to handle', selector, decls, atRule)
+	}
+
 	function fromObjectToString(selector, decls) {
 		return Object.entries(decls).reduce((acc, declObj) => {
-			if (isAtRule(declObj[0])) {
-				console.log('this is an atRule')
-				return acc
-			}
-
 			if (R.is(Object, declObj[1])) {
-				// if (isAtRule(declObj[0])) {
-				// 	// console.log(`is atRUle ${fromObjectToString(declObj[0], declObj[1])}`)
-				// 	return acc + fromObjectToString(declObj[0], declObj[1])
-				// }
-				// console.log('check value to spawn', selector, declObj)
+				if (isAtRule(declObj[0])) {
+					handleAtRule(selector, declObj[1], declObj[0])
+					return acc
+				}
 				const nestingSelector = renderer.selector(selector, declObj[0])
 				// Resolve that object with a new put method call
 				renderer.put(nestingSelector, declObj[1])
@@ -126,10 +154,7 @@ exports.create = function(config) {
 		const ruleInString = declToRule(selector, declInString)
 
 		if (!R.isEmpty(ruleInString)) {
-			renderer.putRaw(
-				ruleInString
-				// isAtRule(selector) ? `${atrule}{${ruleInString}}` : ruleInString
-			)
+			renderer.putRaw(ruleInString)
 		}
 	}
 
