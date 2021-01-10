@@ -12,21 +12,17 @@ const generator = joli({
 
 const isProduction = process.env.NODE_ENV !== 'production'
 
-const declToRule = (selector, str) => {
-	console.log('check selector at declToRule', selector)
+const addSelector = (selector, str) => {
+	// console.log('check selector at addSelector', selector)
 	return isProduction ? `${selector}{${str}}` : `\n${selector} {\n${str}}\n`
 }
 
 const isAtRule = (selector) => {
-	// console.log(`check selector${selector}`)
 	return selector[0] === '@' && selector !== '@font-face'
 }
 
 const shouldAddSpace = (selector) => {
-	// return selector
-	// console.log(`check if selector needs to be added${selector[0]}`)
 	if (selector[0] === '@' || selector[0] === ':') {
-		// console.log('is AtRule!')
 		return selector
 	}
 
@@ -97,44 +93,20 @@ exports.create = function(config) {
 		}
 	}
 
-	// function fromObjectToString(selector, decls) {
-	// 	return Object.entries(decls).reduce((acc, declObj) => {
-	// 		if (R.is(Object, declObj[1])) {
-	// 			console.log('check value to spawn', selector, declObj[0])
-	// 			if (isAtRule(declObj[0])) {
-	// 				console.log(
-	// 					'this is an atRule',
-	// 					`${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
-	// 				)
-	// 				return `${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
-	// 			}
-	// 			const nestingSelector = renderer.selector(selector, declObj[0])
-	// 			// Resolve that object with a new put method call
-	// 			renderer.put(nestingSelector, declObj[1])
-	// 			return acc
-	// 		}
-	//
-	// 		return acc + renderer.decl(declObj[0], declObj[1], selector)
-	// 	}, '')
-	// }
+	const addAtRule = (rule, atRule) => {
+		console.log('check rules to handle', rule, atRule)
+		return `${atRule}{${rule}}`
+	}
 
-	// console.log('check value to spawn', selector, declObj[0])
-	// if (isAtRule(declObj[0])) {
-	// 	console.log(
-	// 		'this is an atRule',
-	// 		`${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
-	// 	)
-	// 	return `${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
-	// }
-
-	const handleAtRule = (selector, decls, atRule) => {
-		console.log('check rules to handle', selector, decls, atRule)
+	const handleAtRule = (selector, decls, atrule) => {
+		console.log(`check data`, selector, decls, atrule)
 	}
 
 	function fromObjectToString(selector, decls) {
 		return Object.entries(decls).reduce((acc, declObj) => {
 			if (R.is(Object, declObj[1])) {
 				if (isAtRule(declObj[0])) {
+					renderer.put(selector, declObj[1], declObj[0])
 					handleAtRule(selector, declObj[1], declObj[0])
 					return acc
 				}
@@ -148,15 +120,58 @@ exports.create = function(config) {
 		}, '')
 	}
 
-	renderer.put = function(selector, decls) {
+	renderer.put = function(selector, decls, atRule) {
+		if (atRule) {
+			console.log(
+				'check value when atRule presented',
+				R.isEmpty(selector),
+				decls,
+				atRule
+			)
+		}
+
 		const declInString = fromObjectToString(selector, decls)
 
-		const ruleInString = declToRule(selector, declInString)
-
-		if (!R.isEmpty(ruleInString)) {
-			renderer.putRaw(ruleInString)
+		if (R.isEmpty(declInString)) {
+			return
 		}
+
+		const withSelector = addSelector(selector, declInString)
+
+		const withAtRule = atRule ? addAtRule(withSelector, atRule) : withSelector
+
+		renderer.putRaw(withAtRule)
 	}
 
 	return renderer
 }
+
+// function fromObjectToString(selector, decls) {
+// 	return Object.entries(decls).reduce((acc, declObj) => {
+// 		if (R.is(Object, declObj[1])) {
+// 			console.log('check value to spawn', selector, declObj[0])
+// 			if (isAtRule(declObj[0])) {
+// 				console.log(
+// 					'this is an atRule',
+// 					`${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+// 				)
+// 				return `${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+// 			}
+// 			const nestingSelector = renderer.selector(selector, declObj[0])
+// 			// Resolve that object with a new put method call
+// 			renderer.put(nestingSelector, declObj[1])
+// 			return acc
+// 		}
+//
+// 		return acc + renderer.decl(declObj[0], declObj[1], selector)
+// 	}, '')
+// }
+
+// console.log('check value to spawn', selector, declObj[0])
+// if (isAtRule(declObj[0])) {
+// 	console.log(
+// 		'this is an atRule',
+// 		`${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+// 	)
+// 	return `${declObj[0]}{${fromObjectToString(selector, declObj[1])}}`
+// }

@@ -198,32 +198,31 @@ describe('nano-css', function() {
 		//
 		// 	if (env.isClient) {
 		// 		const rule = findCssRuleAndDelete('.global')
-		//
 		// 		expect(typeof rule).toBe('object')
 		// 		expect(rule.style.color).toBe('green')
 		// 	}
 		//
 		// 	if (env.isServer) {
+		// 		// console.log('check raw', nano.raw)
 		// 		expect(nano.raw.includes('.global')).toBe(true)
 		// 		expect(nano.raw.includes('color:green')).toBe(true)
 		// 	}
 		// })
 		//
-
-		it('supports @media queries', function() {
-			const nano = create()
-			nano.putRaw = jest.fn()
-
-			nano.put('.foo', {
-				'@media screen': {
-					color: 'green'
-				}
-			})
-
-			expect(nano.putRaw.mock.calls[0][0].replace(/[\s\n]+/g, '')).toBe(
-				'@mediascreen{.foo{color:green;}}'
-			)
-		})
+		// it('supports @media queries', function() {
+		// 	const nano = create()
+		// 	nano.putRaw = jest.fn()
+		//
+		// 	nano.put('.foo', {
+		// 		'@media screen': {
+		// 			color: 'green'
+		// 		}
+		// 	})
+		//
+		// 	expect(nano.putRaw.mock.calls[0][0].replace(/[\s\n]+/g, '')).toBe(
+		// 		'@mediascreen{.foo{color:green;}}'
+		// 	)
+		// })
 
 		// it('supports @media queries - 2', function() {
 		// 	const nano = create()
@@ -275,9 +274,9 @@ describe('nano-css', function() {
 		it('supports @font-face', function() {
 			const nano = create()
 
-			nano.put('font-face', {
-				'font-weight': 'bold'
-			})
+			// nano.put('font-face', {
+			// 	'font-weight': 'bold'
+			// })
 		})
 	})
 })
