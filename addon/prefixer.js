@@ -1,6 +1,8 @@
 'use strict'
 
-const prefixAll = require('inline-style-prefixer/static')
+const { prefix: prefixAll } = require('inline-style-prefixer')
+
+console.log('check prefixAll', prefixAll)
 
 const CAMEL_REGEX = /-[a-z\u00E0-\u00F6\u00F8-\u00FE]/g
 
