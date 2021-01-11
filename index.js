@@ -28,19 +28,19 @@ const shouldAddSpace = (selector) => {
 	return ` ${selector}`
 }
 
-exports.create = function(config) {
+exports.create = function (config) {
 	const renderer = {
 		raw: '',
 		pfx: '_',
 		client: isBrowser,
-		assign: Object.assign,
+		// assign: Object.assign,
 		kebab: (prop) => prop.replace(KEBAB_REGEX, '-$&').toLowerCase(),
 		decl: (key, value) => `${renderer.kebab(key)}:${value};`,
 		hash: (obj) => generator.next().value,
-		selector: function(parent, selector) {
+		selector: function (parent, selector) {
 			return parent + shouldAddSpace(selector)
 		},
-		putRaw: function(rawCssRule) {
+		putRaw: function (rawCssRule) {
 			renderer.raw += rawCssRule
 		},
 		...config
@@ -60,7 +60,7 @@ exports.create = function(config) {
 			document.head.appendChild(renderer.shTest)
 		}
 
-		renderer.putRaw = function(rawCssRule) {
+		renderer.putRaw = function (rawCssRule) {
 			// .insertRule() is faster than .appendChild(), that's why we use it in PROD.
 			// But CSS injected using .insertRule() is not displayed in Chrome Devtools,
 			// that's why we use .appendChild in DEV.
@@ -126,7 +126,7 @@ exports.create = function(config) {
 		return recursion('')
 	}
 
-	renderer.put = async function(selector, decls, atRule) {
+	renderer.put = async function (selector, decls, atRule) {
 		const declInString = walkDecls(selector, decls, atRule)
 
 		if (R.isEmpty(declInString)) {

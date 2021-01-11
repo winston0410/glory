@@ -14,13 +14,13 @@ function createNano(config) {
 	return nano
 }
 
-describe('prefixer', function() {
-	it('installs without crashing', function() {
+describe('prefixer', function () {
+	it('installs without crashing', function () {
 		const nano = createNano()
 		expect(nano).toBeDefined()
 	})
 
-	it('handles "user-select" correctly', function() {
+	it('handles "user-select" correctly', function () {
 		const nano = createNano()
 
 		nano.putRaw = jest.fn()
@@ -40,7 +40,7 @@ describe('prefixer', function() {
 
 		// console.log('check result', result)
 
-		userSelectPrefix.forEach(function(key) {
+		userSelectPrefix.forEach(function (key) {
 			expect(result.includes(key)).toBe(true)
 		})
 	})
