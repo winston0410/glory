@@ -1,37 +1,32 @@
 'use strict'
+// TODO: Check performance between map vs reduce
+const handleComma = (parentSelector, childSelectors) => {
+	if (!childSelectors.includes(',')) {
+		return childSelectors
+	}
+	return childSelectors
+		.split(',')
+		.map((selector) => {
+			return `${parentSelector} ${selector}`
+		})
+		.join(',')
+}
 
 exports.addon = function(renderer) {
-	renderer.selector = function(parentSelectors, selector) {
-		const parents = parentSelectors.split(',')
-		const result = []
-		const selectors = selector.split(',')
-		const len1 = parents.length
-		const len2 = selectors.length
-		let i, j, sel, pos, parent, replacedSelector
+	renderer.selector = function(parentSelectors, childSelectors) {
+		const data = parentSelectors.split(',').reduce((acc, cur) => {
+			const handledComma = handleComma(cur, childSelectors)
+			const handledOperand = handledComma.replace('&', cur)
 
-		for (i = 0; i < len2; i++) {
-			sel = selectors[i]
-			pos = sel.indexOf('&')
-
-			if (pos > -1) {
-				for (j = 0; j < len1; j++) {
-					parent = parents[j]
-					replacedSelector = sel.replace(/&/g, parent)
-					result.push(replacedSelector)
-				}
-			} else {
-				for (j = 0; j < len1; j++) {
-					parent = parents[j]
-
-					if (parent) {
-						result.push(`${parent} ${sel}`)
-					} else {
-						result.push(sel)
-					}
-				}
-			}
-		}
-
-		return result.join(',')
+			return acc + handledOperand
+		}, '')
+		// console.log('check nested string', data)
+		return data
 	}
 }
+
+// return splited
+// 	.reduce((acc, current, index) => {
+// 		return acc + `${parentSelector} ${current}`
+// 	}, '')
+// 	.join(', ')
