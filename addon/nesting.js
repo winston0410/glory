@@ -1,5 +1,4 @@
 'use strict'
-// TODO: Check performance between map vs reduce
 const handleComma = (parentSelector, childSelectors) => {
 	if (!childSelectors.includes(',')) {
 		return childSelectors
@@ -14,16 +13,31 @@ const handleComma = (parentSelector, childSelectors) => {
 
 exports.addon = function(renderer) {
 	renderer.selector = function(parentSelectors, childSelectors) {
-		const data = parentSelectors.split(',').reduce((acc, cur) => {
-			const handledComma = handleComma(cur, childSelectors)
-			const handledOperand = handledComma.replace('&', cur)
+		const data = parentSelectors
+			.split(',')
+			.map((parentSelector) => {
+				const handledComma = handleComma(parentSelector, childSelectors)
 
-			return acc + handledOperand
-		}, '')
-		// console.log('check nested string', data)
+				const handledOperand = handledComma.replace(/&/g, parentSelector)
+
+				return handledOperand
+			})
+			.join(',')
+
 		return data
 	}
 }
+
+// Use reduce instead of map for performance benefits?
+
+// const data = parentSelectors.split(',').reduce((acc, cur) => {
+// 	const handledComma = handleComma(cur, childSelectors)
+//
+// 	const handledOperand = handleOperand(cur, handledComma)
+// 	// console.log('check handledComma', handledOperand)
+// 	return acc + handledOperand
+// }, '')
+// // console.log('check nested string', data)
 
 // return splited
 // 	.reduce((acc, current, index) => {
