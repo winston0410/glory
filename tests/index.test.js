@@ -189,6 +189,7 @@ describe('nano-css', function() {
 		//
 		it('can insert global styles', function() {
 			const nano = create()
+			nano.putRaw = jest.fn()
 
 			nano.put('', {
 				'.global': {
@@ -198,15 +199,16 @@ describe('nano-css', function() {
 
 			if (env.isClient) {
 				const rule = findCssRuleAndDelete('.global')
-				expect(typeof rule).toBe('object')
-				expect(rule.style.color).toBe('green')
+				expect(nano.putRaw.mock.calls[0][0].replace(/[\s\n]+/g, '')).toBe(
+					'.global{color:green;}'
+				)
 			}
 
 			if (env.isServer) {
-				// console.log('check raw', nano.raw)
 				expect(nano.putRaw).toHaveBeenCalledTimes(1)
-				expect(nano.raw.includes('.global')).toBe(true)
-				expect(nano.raw.includes('color:green')).toBe(true)
+				expect(nano.putRaw.mock.calls[0][0].replace(/[\s\n]+/g, '')).toBe(
+					'.global{color:green;}'
+				)
 			}
 		})
 
