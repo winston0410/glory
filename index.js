@@ -102,21 +102,25 @@ exports.create = function(config) {
 
 		const recursion = (style) => {
 			if (index === declTuple.length) return style
-			const currentDecl = declTuple[index]
+			const [prop, value] = declTuple[index]
 			index++
-			if (R.is(Object, currentDecl[1])) {
-				if (isAtRule(currentDecl[0])) {
-					renderer.put(selector, currentDecl[1], currentDecl[0])
+			// console.log('check index', currentDecl)
+			if (Array.isArray(value)) {
+				const expandedRules = value.reduce((acc, cur) => {
+					return acc + renderer.decl(prop, cur)
+				}, '')
+				return recursion(style + expandedRules)
+			}
+
+			if (R.is(Object, value)) {
+				if (isAtRule(prop)) {
+					renderer.put(selector, value, prop)
 				} else {
-					renderer.put(
-						renderer.selector(selector, currentDecl[0]),
-						currentDecl[1],
-						atRule
-					)
+					renderer.put(renderer.selector(selector, prop), value, atRule)
 				}
 				return recursion(style)
 			}
-			return recursion(style + renderer.decl(currentDecl[0], currentDecl[1]))
+			return recursion(style + renderer.decl(prop, value))
 		}
 
 		return recursion('')

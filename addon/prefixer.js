@@ -2,8 +2,6 @@
 
 const { prefix: prefixAll } = require('inline-style-prefixer')
 
-console.log('check prefixAll', prefixAll)
-
 const CAMEL_REGEX = /-[a-z\u00E0-\u00F6\u00F8-\u00FE]/g
 
 const matchCallback = function(match) {
@@ -43,6 +41,7 @@ exports.addon = function(renderer) {
 	}
 
 	renderer.decl = function(prop, value) {
+		// console.log('check data', prop, value);
 		const result = renderer.prefix(prop, value)
 
 		let returned = ''
