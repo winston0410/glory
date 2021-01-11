@@ -13,7 +13,6 @@ const generator = joli({
 const isProduction = process.env.NODE_ENV !== 'production'
 
 const addSelector = (selector, str) => {
-	// console.log('check selector at addSelector', selector)
 	return isProduction ? `${selector}{${str}}` : `\n${selector} {\n${str}}\n`
 }
 
@@ -125,8 +124,6 @@ exports.create = function(config) {
 
 	renderer.put = async function(selector, decls, atRule) {
 		const declInString = walkDecls(selector, decls, atRule)
-		console.log('check param', selector, decls, atRule)
-		// console.log('check font-face', declInString)
 
 		if (R.isEmpty(declInString)) {
 			return

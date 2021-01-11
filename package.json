@@ -6,9 +6,9 @@
 	"type": "commonjs",
 	"scripts": {
 		"build": "echo 'building'",
-		"test": "yarn run jest",
-		"test:coverage": "jest --coverage",
-		"test:watch": "jest --watch",
+		"test": "npx jest",
+		"test:coverage": "npx jest --coverage",
+		"test:watch": "npx jest --watch",
 		"prepublish": "yarn build"
 	},
 	"exports": {
