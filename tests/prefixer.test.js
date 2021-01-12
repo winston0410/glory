@@ -5,6 +5,7 @@ const env = require('./env')
 const create = require('../index').create
 const addonPrefixer = require('../addon/prefixer').addon
 const addonNesting = require('../addon/nesting').addon
+const { removeLineAndSpace } = require('./helper.js')
 
 function createNano(config) {
 	const nano = create(config)
@@ -14,13 +15,13 @@ function createNano(config) {
 	return nano
 }
 
-describe('prefixer', function () {
-	it('installs without crashing', function () {
+describe('prefixer', function() {
+	it('installs without crashing', function() {
 		const nano = createNano()
 		expect(nano).toBeDefined()
 	})
 
-	it('handles "user-select" correctly', function () {
+	it('handles "user-select" correctly', function() {
 		const nano = createNano()
 
 		nano.putRaw = jest.fn()
@@ -38,7 +39,7 @@ describe('prefixer', function () {
 			'user-select'
 		]
 
-		userSelectPrefix.forEach(function (key) {
+		userSelectPrefix.forEach(function(key) {
 			expect(result.includes(key)).toBe(true)
 		})
 	})
@@ -60,26 +61,26 @@ describe('prefixer', function () {
 	// 	expect(result).toEqual(expected)
 	// })
 	//
-	// it('prefixes "placeholder" correctly', function() {
-	// 	const nano = createNano()
-	// 	nano.putRaw = jest.fn()
-	//
-	// 	nano.put('input::placeholder', {
-	// 		'font-weight': 300,
-	// 		'user-select': 'none'
-	// 	})
-	//
-	// 	const result = nano.putRaw.mock.calls.join(' ').replace(/ +(?= )/g, '')
-	// 	;[
-	// 		'input::-webkit-input-placeholder',
-	// 		'input::-moz-placeholder',
-	// 		'input:-ms-input-placeholder',
-	// 		'input:-moz-placeholder',
-	// 		'::placeholder'
-	// 	].forEach(function(key) {
-	// 		expect(result.includes(key)).toBe(true)
-	// 	})
-	// })
+	it('prefixes "placeholder" correctly', function() {
+		const nano = createNano()
+		nano.putRaw = jest.fn()
+
+		nano.put('input::placeholder', {
+			'font-weight': 300,
+			'user-select': 'none'
+		})
+
+		const result = nano.putRaw.mock.calls.join(' ').replace(/ +(?= )/g, '')
+		;[
+			'input::-webkit-input-placeholder',
+			'input::-moz-placeholder',
+			'input:-ms-input-placeholder',
+			'input:-moz-placeholder',
+			'::placeholder'
+		].forEach(function(key) {
+			expect(result.includes(key)).toBe(true)
+		})
+	})
 	//
 	// it('prefixes "placeholder" in nested rules correctly', function() {
 	// 	const nano = createNano()
