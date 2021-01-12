@@ -3,8 +3,7 @@
 const { isBrowser } = require('browser-or-node')
 const joli = require('@blackblock/joli-string')
 const R = require('rambda')
-
-const KEBAB_REGEX = /[A-Z]/g
+const { hyphenateProperty } = require('css-in-js-utils')
 
 const generator = joli({
 	chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_'
@@ -28,14 +27,14 @@ const shouldAddSpace = (selector) => {
 	return ` ${selector}`
 }
 
+// hyphenateProperty(prop)
+
 exports.create = function (config) {
 	const renderer = {
 		raw: '',
 		pfx: '_',
 		client: isBrowser,
-		// assign: Object.assign,
-		kebab: (prop) => prop.replace(KEBAB_REGEX, '-$&').toLowerCase(),
-		decl: (key, value) => `${renderer.kebab(key)}:${value};`,
+		decl: (key, value) => `${hyphenateProperty(key)}:${value};`,
 		hash: (obj) => generator.next().value,
 		selector: function (parent, selector) {
 			return parent + shouldAddSpace(selector)
@@ -106,8 +105,8 @@ exports.create = function (config) {
 			index++
 			// console.log('check index', currentDecl)
 			if (Array.isArray(value)) {
-				const expandedRules = value.reduce((acc, cur) => {
-					return acc + renderer.decl(prop, cur)
+				const expandedRules = value.reduce((acc, currentValue) => {
+					return acc + renderer.decl(prop, currentValue)
 				}, '')
 				return recursion(style + expandedRules)
 			}

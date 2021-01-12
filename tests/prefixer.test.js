@@ -38,8 +38,6 @@ describe('prefixer', function () {
 			'user-select'
 		]
 
-		// console.log('check result', result)
-
 		userSelectPrefix.forEach(function (key) {
 			expect(result.includes(key)).toBe(true)
 		})
