@@ -3,6 +3,11 @@
 
 import { create } from '../index'
 import addonRule from '../addon/rule'
+import joli from '@blackblock/joli-string'
+
+const generator = joli({
+	chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_'
+})
 
 function createNano(config) {
 	const nano = create(config)
@@ -39,22 +44,22 @@ describe('rule()', function () {
 
 		expect(nano.put).toHaveBeenCalledTimes(1)
 		expect(nano.put).toHaveBeenCalledWith('.test-foobar', { color: 'red' })
-		expect(classNames).toBe(' test-foobar')
+		expect(classNames).toBe('test-foobar')
 	})
 
-	// it('generates class name automatically if not specified', function() {
-	// 	const nano = createNano({
-	// 		pfx: 'test-'
-	// 	})
-	//
-	// 	nano.put = jest.fn()
-	//
-	// 	const css = { color: 'red' }
-	// 	const classNames = nano.rule(css)
-	// 	const computed = 'test-' + nano.hash(css)
-	//
-	// 	expect(nano.put).toHaveBeenCalledTimes(1)
-	// 	expect(nano.put).toHaveBeenCalledWith('.' + computed, css)
-	// 	expect(classNames).toBe(' ' + computed)
-	// })
+	it('generates class name automatically if not specified', function () {
+		const nano = createNano({
+			pfx: 'test-'
+		})
+
+		nano.put = jest.fn()
+
+		const css = { color: 'red' }
+		const classNames = nano.rule(css)
+		const computed = 'test-' + generator.next().value
+
+		expect(nano.put).toHaveBeenCalledTimes(1)
+		expect(nano.put).toHaveBeenCalledWith(`.${classNames}`, css)
+		expect(classNames).toBe(computed)
+	})
 })

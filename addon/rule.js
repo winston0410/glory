@@ -4,7 +4,7 @@ const addOn = function (renderer) {
 	renderer.rule = function (css, name) {
 		const className = renderer.pfx + (name || renderer.hash(css))
 		renderer.put(`.${className}`, css)
-		return ` ${className}`
+		return `${className}`
 	}
 }
 
