@@ -2,7 +2,7 @@
 'use strict'
 
 import { create } from '../index'
-const addonRule = require('../addon/rule').addon
+import addonRule from '../addon/rule'
 
 function createNano(config) {
 	const nano = create(config)
