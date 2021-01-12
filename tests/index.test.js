@@ -40,8 +40,8 @@ describe('nano-css', function () {
 		expect(typeof nano.put).toBe('function')
 	})
 
-	it('default prefix is "_"', function () {
-		expect(create().pfx).toBe('_')
+	it('default prefix is ""', function () {
+		expect(create().pfx).toBe('')
 	})
 
 	// it('default assign function is Object.assign', function() {

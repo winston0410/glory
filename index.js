@@ -32,7 +32,7 @@ const shouldAddSpace = (selector) => {
 const create = function (config) {
 	const renderer = {
 		raw: '',
-		pfx: '_',
+		pfx: '',
 		client: isBrowser,
 		decl: (key, value) => `${hyphenateProperty(key)}:${value};`,
 		hash: (obj) => generator.next().value,
