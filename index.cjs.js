@@ -1,9 +1,9 @@
 'use strict'
 
-import { isBrowser } from 'browser-or-node'
-import { hyphenateProperty } from 'css-in-js-utils'
-import joli from '@blackblock/joli-string'
-import { is, isEmpty } from 'rambda'
+const { isBrowser } = require('browser-or-node')
+const joli = require('@blackblock/joli-string')
+const R = require('rambda')
+const { hyphenateProperty } = require('css-in-js-utils')
 
 const generator = joli({
 	chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_'
@@ -29,7 +29,7 @@ const shouldAddSpace = (selector) => {
 
 // hyphenateProperty(prop)
 
-const create = function (config) {
+exports.create = function (config) {
 	const renderer = {
 		raw: '',
 		pfx: '_',
@@ -111,7 +111,7 @@ const create = function (config) {
 				return recursion(style + expandedRules)
 			}
 
-			if (is(Object, value)) {
+			if (R.is(Object, value)) {
 				if (isAtRule(prop)) {
 					renderer.put(selector, value, prop)
 				} else {
@@ -128,7 +128,7 @@ const create = function (config) {
 	renderer.put = async function (selector, decls, atRule) {
 		const declInString = walkDecls(selector, decls, atRule)
 
-		if (isEmpty(declInString)) {
+		if (R.isEmpty(declInString)) {
 			return
 		}
 
@@ -141,5 +141,3 @@ const create = function (config) {
 
 	return renderer
 }
-
-export { create }

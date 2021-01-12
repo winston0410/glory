@@ -1,8 +1,9 @@
 /* eslint-disable */
 'use strict'
-
 const env = require('./env')
-const create = require('../index').create
+import { create } from '../index'
+
+// import { create } from '../index'
 
 function findCssRuleAndDelete(selector) {
 	const sheets = document.styleSheets
@@ -26,12 +27,12 @@ function findCssRuleAndDelete(selector) {
 	return null
 }
 
-describe('nano-css', function() {
-	it('exists', function() {
+describe('nano-css', function () {
+	it('exists', function () {
 		expect(typeof create).toBe('function')
 	})
 
-	it('can create renderer', function() {
+	it('can create renderer', function () {
 		const nano = create()
 
 		expect(typeof nano).toBe('object')
@@ -39,39 +40,38 @@ describe('nano-css', function() {
 		expect(typeof nano.put).toBe('function')
 	})
 
-	it('default prefix is "_"', function() {
+	it('default prefix is "_"', function () {
 		expect(create().pfx).toBe('_')
 	})
 
-	it('default assign function is Object.assign', function() {
-		expect(create().assign).toBe(Object.assign)
-	})
+	// it('default assign function is Object.assign', function() {
+	// 	expect(create().assign).toBe(Object.assign)
+	// })
 
-	it('has no default hyperscript function', function() {
+	it('has no default hyperscript function', function () {
 		expect(create().h).toBe(undefined)
 	})
 
-	it('can set configuration', function() {
-		const assign = function() {
-			return Object.assign.apply(Object, arguments)
-		}
-		const h = function() {}
-		const stringify = function() {}
+	it('can set configuration', function () {
+		// const assign = function() {
+		// 	return Object.assign.apply(Object, arguments)
+		// }
+		const h = function () {}
+		const stringify = function () {}
 		const nano = create({
 			pfx: 'hello-',
 			h: h,
-			assign: assign,
+			// assign: assign,
 			stringify: stringify
 		})
 
 		expect(nano.pfx).toBe('hello-')
 		expect(nano.h).toBe(h)
-		expect(nano.assign).toBe(assign)
 		expect(nano.stringify).toBe(stringify)
 	})
 
-	describe('.put()', function() {
-		it('inserts CSS', function() {
+	describe('.put()', function () {
+		it('inserts CSS', function () {
 			const nano = create()
 
 			nano.put('.foo', {
@@ -90,7 +90,7 @@ describe('nano-css', function() {
 			}
 		})
 
-		it('puts many declarations', function() {
+		it('puts many declarations', function () {
 			const nano = create()
 
 			nano.put('.foo2', {
@@ -116,7 +116,7 @@ describe('nano-css', function() {
 			}
 		})
 		//
-		it('supports nesting', function() {
+		it('supports nesting', function () {
 			const nano = create()
 
 			nano.put('.foo3', {
@@ -138,7 +138,7 @@ describe('nano-css', function() {
 			}
 		})
 		// //
-		it('supports nesting - 2', function() {
+		it('supports nesting - 2', function () {
 			const renderer = create()
 
 			renderer.put('.foo', {
@@ -165,7 +165,7 @@ describe('nano-css', function() {
 			}
 		})
 
-		it('supports pseudo selectors', function() {
+		it('supports pseudo selectors', function () {
 			const nano = create()
 
 			nano.put('.foo3', {
@@ -187,7 +187,7 @@ describe('nano-css', function() {
 			}
 		})
 		//
-		it('can insert global styles', function() {
+		it('can insert global styles', function () {
 			const nano = create()
 			nano.putRaw = jest.fn()
 
@@ -212,7 +212,7 @@ describe('nano-css', function() {
 			}
 		})
 
-		it('supports @media queries', function() {
+		it('supports @media queries', function () {
 			const nano = create()
 			nano.putRaw = jest.fn()
 
@@ -228,7 +228,7 @@ describe('nano-css', function() {
 			)
 		})
 
-		it('supports @media queries - 2', function() {
+		it('supports @media queries - 2', function () {
 			const nano = create()
 			nano.putRaw = jest.fn()
 
@@ -246,7 +246,7 @@ describe('nano-css', function() {
 			)
 		})
 
-		it('supports @media queries - 3', function() {
+		it('supports @media queries - 3', function () {
 			const nano = create()
 
 			if (env.isClient) {
@@ -275,7 +275,7 @@ describe('nano-css', function() {
 			}
 		})
 
-		it('supports @font-face', function() {
+		it('supports @font-face', function () {
 			const nano = create()
 
 			if (env.isClient) {
