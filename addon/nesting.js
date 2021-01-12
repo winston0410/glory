@@ -11,8 +11,8 @@ const handleComma = (parentSelector, childSelectors) => {
 		.join(',')
 }
 
-exports.addon = function(renderer) {
-	renderer.selector = function(parentSelectors, childSelectors) {
+const addOn = function (renderer) {
+	renderer.selector = function (parentSelectors, childSelectors) {
 		const data = parentSelectors
 			.split(',')
 			.map((parentSelector) => {
@@ -27,6 +27,8 @@ exports.addon = function(renderer) {
 		return data
 	}
 }
+
+export default addOn
 
 // Use reduce instead of map for performance benefits?
 

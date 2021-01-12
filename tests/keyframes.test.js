@@ -2,7 +2,7 @@
 'use strict'
 
 const env = require('./env')
-const create = require('../index').create
+import { create } from '../index'
 const addonKeyframes = require('../addon/keyframes').addon
 
 function createNano(config) {
@@ -13,14 +13,14 @@ function createNano(config) {
 	return nano
 }
 
-describe('keyframes', function() {
-	it('installs interface', function() {
+describe('keyframes', function () {
+	it('installs interface', function () {
 		const nano = createNano()
 
 		expect(typeof nano.keyframes).toBe('function')
 	})
 
-	it('creates keyframe style sheet on client', function() {
+	it('creates keyframe style sheet on client', function () {
 		const nano = createNano()
 
 		if (env.isClient) {
@@ -30,8 +30,8 @@ describe('keyframes', function() {
 		}
 	})
 
-	describe('keyframes()', function() {
-		it('returns animation name', function() {
+	describe('keyframes()', function () {
+		it('returns animation name', function () {
 			const nano = createNano()
 			const name = nano.keyframes({
 				to: {
@@ -43,7 +43,7 @@ describe('keyframes', function() {
 			expect(name.length > 0).toBe(true)
 		})
 
-		it('puts animation CSS', function() {
+		it('puts animation CSS', function () {
 			const nano = create()
 
 			addonKeyframes(nano, {
@@ -68,7 +68,7 @@ describe('keyframes', function() {
 			}
 		})
 
-		it('puts animation CSS with all prefixes', function() {
+		it('puts animation CSS with all prefixes', function () {
 			const nano = create()
 
 			addonKeyframes(nano, {
@@ -103,7 +103,7 @@ describe('keyframes', function() {
 		})
 	})
 
-	describe('CSS-like object', function() {
+	describe('CSS-like object', function () {
 		// it('puts animation CSS with all prefixes', function() {
 		// 	const nano = create()
 		//

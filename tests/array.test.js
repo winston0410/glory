@@ -2,7 +2,7 @@
 'use strict'
 
 const env = require('./env')
-const create = require('../index').create
+import { create } from '../index'
 // const addonArray = require('../addon/array').addon
 
 function createNano(config) {
@@ -10,13 +10,13 @@ function createNano(config) {
 	return nano
 }
 
-describe('prefixer', function() {
-	it('installs without crashing', function() {
+describe('prefixer', function () {
+	it('installs without crashing', function () {
 		const nano = createNano()
 		expect(nano).toBeDefined()
 	})
 
-	it('handles array values correctly', function() {
+	it('handles array values correctly', function () {
 		const nano = createNano()
 
 		nano.putRaw = jest.fn()

@@ -1,7 +1,7 @@
 /* eslint-disable */
 'use strict'
 
-const create = require('../index').create
+import { create } from '../index'
 const addonRule = require('../addon/rule').addon
 
 function createNano(config) {
@@ -12,8 +12,8 @@ function createNano(config) {
 	return nano
 }
 
-describe('rule()', function() {
-	it('installs rule() method', function() {
+describe('rule()', function () {
+	it('installs rule() method', function () {
 		const nano = create()
 
 		expect(typeof nano.rule).toBe('undefined')
@@ -23,7 +23,7 @@ describe('rule()', function() {
 		expect(typeof nano.rule).toBe('function')
 	})
 
-	it('puts CSS styles', function() {
+	it('puts CSS styles', function () {
 		const nano = createNano({
 			pfx: 'test-'
 		})

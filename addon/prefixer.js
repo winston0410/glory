@@ -1,16 +1,16 @@
 'use strict'
 
-const { prefix: prefixAll } = require('inline-style-prefixer')
-const { camelCaseProperty } = require('css-in-js-utils')
-const R = require('rambda')
+import { prefix as prefixAll } from 'inline-style-prefixer'
+import { camelCaseProperty } from 'css-in-js-utils'
+import { pipe, map } from 'rambda'
 
-exports.addon = function (renderer) {
+const addOn = function (renderer) {
 	const put = renderer.put
 
 	renderer.put = function withPrefixer(selector, decls, atRule) {
-		const prefixedDecl = R.pipe(
+		const prefixedDecl = pipe(
 			Object.entries,
-			R.map(([prop, value]) => [camelCaseProperty(prop), value]),
+			map(([prop, value]) => [camelCaseProperty(prop), value]),
 			Object.fromEntries,
 			prefixAll
 		)(decls)
@@ -20,3 +20,5 @@ exports.addon = function (renderer) {
 		put(selector, prefixedDecl, atRule)
 	}
 }
+
+export default addOn

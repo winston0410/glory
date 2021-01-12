@@ -2,9 +2,9 @@
 'use strict'
 
 const env = require('./env')
-const create = require('../index').create
-const addonPrefixer = require('../addon/prefixer').addon
-const addonNesting = require('../addon/nesting').addon
+import { create } from '../index'
+import addonPrefixer from '../addon/prefixer'
+import addonNesting from '../addon/nesting'
 const { removeLineAndSpace } = require('./helper.js')
 
 function createNano(config) {
@@ -15,13 +15,13 @@ function createNano(config) {
 	return nano
 }
 
-describe('prefixer', function() {
-	it('installs without crashing', function() {
+describe('prefixer', function () {
+	it('installs without crashing', function () {
 		const nano = createNano()
 		expect(nano).toBeDefined()
 	})
 
-	it('handles "user-select" correctly', function() {
+	it('handles "user-select" correctly', function () {
 		const nano = createNano()
 
 		nano.putRaw = jest.fn()
@@ -39,7 +39,7 @@ describe('prefixer', function() {
 			'user-select'
 		]
 
-		userSelectPrefix.forEach(function(key) {
+		userSelectPrefix.forEach(function (key) {
 			expect(result.includes(key)).toBe(true)
 		})
 	})
@@ -61,7 +61,7 @@ describe('prefixer', function() {
 	// 	expect(result).toEqual(expected)
 	// })
 	//
-	it('prefixes "placeholder" correctly', function() {
+	it('prefixes "placeholder" correctly', function () {
 		const nano = createNano()
 		nano.putRaw = jest.fn()
 
@@ -77,7 +77,7 @@ describe('prefixer', function() {
 			'input:-ms-input-placeholder',
 			'input:-moz-placeholder',
 			'::placeholder'
-		].forEach(function(key) {
+		].forEach(function (key) {
 			expect(result.includes(key)).toBe(true)
 		})
 	})

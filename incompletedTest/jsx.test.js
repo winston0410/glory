@@ -2,7 +2,7 @@
 'use strict'
 
 const env = require('./env')
-const create = require('../index').create
+import { create } from '../index'
 const addonRule = require('../addon/rule').addon
 const addonCache = require('../addon/cache').addon
 const addonJsx = require('../addon/jsx').addon
