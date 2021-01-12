@@ -3,7 +3,7 @@
 
 const env = require('./env')
 import { create } from '../index'
-const addonKeyframes = require('../addon/keyframes').addon
+import addonKeyframes from '../addon/keyframes'
 
 function createNano(config) {
 	const nano = create(config)

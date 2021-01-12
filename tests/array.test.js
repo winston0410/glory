@@ -3,7 +3,6 @@
 
 const env = require('./env')
 import { create } from '../index'
-// const addonArray = require('../addon/array').addon
 
 function createNano(config) {
 	const nano = create(config)
