@@ -1,6 +1,6 @@
 'use strict'
 
-exports.addon = (renderer) => {
+const addOn = (renderer) => {
 	const cache = {}
 
 	renderer.cache = (css) => {
@@ -15,3 +15,5 @@ exports.addon = (renderer) => {
 		return cache[key]
 	}
 }
+
+export default addOn

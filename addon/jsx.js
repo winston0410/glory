@@ -2,7 +2,7 @@
 
 const addonCache = require('./cache').addon
 
-exports.addon = function(renderer) {
+const addOn = function (renderer) {
 	if (!renderer.cache) {
 		addonCache(renderer)
 	}
@@ -14,7 +14,7 @@ exports.addon = function(renderer) {
 		])
 	}
 
-	renderer.jsx = function(fn, styles, block) {
+	renderer.jsx = function (fn, styles, block) {
 		let className
 		const isElement = typeof fn === 'string'
 
@@ -23,7 +23,7 @@ exports.addon = function(renderer) {
 			className = renderer.rule(styles, block)
 		}
 
-		const Component = function(props) {
+		const Component = function (props) {
 			if (!className) {
 				className = renderer.rule(styles, block)
 			}
@@ -59,3 +59,5 @@ exports.addon = function(renderer) {
 		return Component
 	}
 }
+
+export default addOn

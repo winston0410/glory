@@ -3,9 +3,9 @@
 
 const env = require('./env')
 import { create } from '../index'
-const addonRule = require('../addon/rule').addon
-const addonCache = require('../addon/cache').addon
-const addonJsx = require('../addon/jsx').addon
+import addonRule from '../addon/rule'
+import addonCache from '../addon/cache'
+import addonJsx from '../addon/jsx'
 
 function createNano(config) {
 	const nano = create(config)
