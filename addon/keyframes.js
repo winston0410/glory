@@ -1,6 +1,6 @@
 'use strict'
 
-exports.addon = function(renderer, config) {
+const addOn = function (renderer, config) {
 	if (process.env.NODE_ENV !== 'production') {
 		require('./__dev__/warnOnMissingDependencies')('keyframes', renderer, [
 			'putRaw',
@@ -8,12 +8,10 @@ exports.addon = function(renderer, config) {
 		])
 	}
 
-	config = renderer.assign(
-		{
-			prefixes: ['-webkit-', '-moz-', '-o-', '']
-		},
-		config || {}
-	)
+	config = {
+		...config,
+		prefixes: ['-webkit-', '-moz-', '-o-', '']
+	}
 
 	const prefixes = config.prefixes
 
@@ -24,7 +22,7 @@ exports.addon = function(renderer, config) {
 
 	const putAt = renderer.putAt
 
-	renderer.putAt = function(__, keyframes, prelude) {
+	renderer.putAt = function (__, keyframes, prelude) {
 		// @keyframes
 		if (prelude[1] === 'k') {
 			let str = ''
@@ -58,7 +56,7 @@ exports.addon = function(renderer, config) {
 		putAt(__, keyframes, prelude)
 	}
 
-	renderer.keyframes = function(keyframes, block) {
+	renderer.keyframes = function (keyframes, block) {
 		if (!block) block = renderer.hash(keyframes)
 		block = renderer.pfx + block
 
@@ -67,3 +65,5 @@ exports.addon = function(renderer, config) {
 		return block
 	}
 }
+
+export default addOn
