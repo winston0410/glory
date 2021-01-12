@@ -13,20 +13,24 @@
 	},
 	"exports": {
 		".": {
-			"require": "./index.js",
-			"default": "./index.js"
+			"require": "./dist/cjs/index.js",
+			"default": "./dist/esm/index.js"
 		},
 		"./jsx": {
-			"require": "./plugins/jsx.js",
-			"default": "./plugins/jsx.js"
+			"require": "./dist/cjs/jsx/index.js",
+			"default": "./dist/esm/jsx/index.js"
 		},
-		"./hydration": {
-			"require": "./plugins/hydration.js",
-			"default": "./plugins/hydration.js"
+		"./rule": {
+			"require": "./dist/cjs/rule/index.js",
+			"default": "./dist/esm/rule/index.js"
 		},
 		"./prefixer": {
-			"require": "./plugins/prefixer.js",
-			"default": "./plugins/prefixer.js"
+			"require": "./dist/cjs/prefixer/index.js",
+			"default": "./dist/esm/prefixer/index.js"
+		},
+		"./hydration": {
+			"require": "./dist/cjs/hydration/index.js",
+			"default": "./dist/esm/hydration/index.js"
 		}
 	},
 	"dependencies": {
