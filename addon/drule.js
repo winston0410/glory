@@ -1,27 +1,25 @@
-'use strict';
+'use strict'
 
-exports.addon = function (renderer) {
-    if (process.env.NODE_ENV !== 'production') {
-        require('./__dev__/warnOnMissingDependencies')('drule', renderer, ['rule', 'cache']);
-    }
+const addOn = function (renderer) {
+	renderer.drule = function (styles, block) {
+		const className = renderer.rule(styles, block)
 
-    renderer.drule = function (styles, block) {
-        var className = renderer.rule(styles, block);
+		const closure = function (dynamicStyles) {
+			if (!dynamicStyles) {
+				return className
+			}
 
-        var closure = function (dynamicStyles) {
-            if (!dynamicStyles) {
-                return className;
-            }
+			const dynamicClassName = renderer.cache(dynamicStyles)
 
-            var dynamicClassName = renderer.cache(dynamicStyles);
+			return className + dynamicClassName
+		}
 
-            return className + dynamicClassName;
-        };
+		closure.toString = function () {
+			return className
+		}
 
-        closure.toString = function () {
-            return className;
-        };
+		return closure
+	}
+}
 
-        return closure;
-    };
-};
+export default addOn
