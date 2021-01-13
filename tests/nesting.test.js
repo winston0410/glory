@@ -2,8 +2,8 @@
 'use strict'
 
 const env = require('./env')
-import { create } from '../index'
-import addonNesting from '../addon/nesting'
+import { create } from '../src/index'
+import addonNesting from '../src/addon/nesting'
 
 function createNano(config) {
 	const nano = create(config)

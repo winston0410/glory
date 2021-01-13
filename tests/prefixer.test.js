@@ -2,9 +2,9 @@
 'use strict'
 
 const env = require('./env')
-import { create } from '../index'
-import addonPrefixer from '../addon/prefixer'
-import addonNesting from '../addon/nesting'
+import { create } from '../src/index'
+import addonPrefixer from '../src/addon/prefixer'
+import addonNesting from '../src/addon/nesting'
 const { removeLineAndSpace } = require('./helper.js')
 
 function createNano(config) {

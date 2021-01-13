@@ -67,7 +67,8 @@
 		"lint-staged": "^10.5.3",
 		"nyc": "^15.1.0",
 		"ramda": "^0.27.1",
-		"rollup": "^2.36.1"
+		"rollup": "^2.36.1",
+		"rollup-plugin-multi-input": "^1.2.0"
 	},
 	"lint-staged": {
 		"**/*.js": [

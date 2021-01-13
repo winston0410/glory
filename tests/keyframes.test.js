@@ -2,8 +2,8 @@
 'use strict'
 
 const env = require('./env')
-import { create } from '../index'
-import addonKeyframes from '../addon/keyframes'
+import { create } from '../src/index'
+import addonKeyframes from '../src/addon/keyframes'
 
 function createNano(config) {
 	const nano = create(config)

@@ -1,9 +1,9 @@
 /* eslint-disable */
 'use strict'
 const env = require('./env')
-import { create } from '../index'
+import { create } from '../src/index'
 
-// import { create } from '../index'
+// import { create } from '../src/index'
 
 function findCssRuleAndDelete(selector) {
 	const sheets = document.styleSheets

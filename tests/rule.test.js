@@ -1,8 +1,8 @@
 /* eslint-disable */
 'use strict'
 
-import { create } from '../index'
-import addonRule from '../addon/rule'
+import { create } from '../src/index'
+import addonRule from '../src/addon/rule'
 import joli from '@blackblock/joli-string'
 
 const generator = joli({

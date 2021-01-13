@@ -1,10 +1,10 @@
 /* eslint-disable */
 'use strict'
 
-import { create } from '../index'
-import addOnCache from '../addon/cache'
-import addOnRule from '../addon/rule'
-import addOnDrule from '../addon/drule'
+import { create } from '../src/index'
+import addOnCache from '../src/addon/cache'
+import addOnRule from '../src/addon/rule'
+import addOnDrule from '../src/addon/drule'
 
 function createNano(config) {
 	const nano = create(config)

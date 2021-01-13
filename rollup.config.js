@@ -1,3 +1,4 @@
+import multiInput from 'rollup-plugin-multi-input'
 const { nodeResolve } = require('@rollup/plugin-node-resolve')
 const commonjs = require('@rollup/plugin-commonjs')
 

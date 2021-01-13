@@ -2,7 +2,7 @@
 'use strict'
 
 const env = require('./env')
-import { create } from '../index'
+import { create } from '../src/index'
 
 function createNano(config) {
 	const nano = create(config)

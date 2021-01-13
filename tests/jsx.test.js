@@ -2,10 +2,10 @@
 'use strict'
 
 const env = require('./env')
-import { create } from '../index'
-import addonRule from '../addon/rule'
-import addonCache from '../addon/cache'
-import addonJsx from '../addon/jsx'
+import { create } from '../src/index'
+import addonRule from '../src/addon/rule'
+import addonCache from '../src/addon/cache'
+import addonJsx from '../src/addon/jsx'
 
 function createNano(config) {
 	const nano = create(config)
