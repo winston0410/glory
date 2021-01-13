@@ -11,8 +11,8 @@ const buildKeyframe = (obj) => {
 	}, '')
 }
 
-const addOn = function (renderer) {
-	const prefixes = ['-webkit-', '-moz-', '-o-']
+const addOn = function (renderer, config = {}) {
+	const { prefixes = ['-webkit-', '-moz-', '-o-', ''] } = config
 
 	const prefixedKeyframes = prefixes.map((prefix) => `@${prefix}keyframes`)
 
@@ -24,14 +24,18 @@ const addOn = function (renderer) {
 	renderer.keyframes = function (decls, name) {
 		const frameName = assembleClassName(renderer, name)
 
-		prefixedKeyframes.forEach((prefixedKeyframe) => {
-			const rawKeyframes = `${frameName} ${frameName}{${decls}}`
-			if (renderer.client) {
-				renderer.ksh.appendChild(document.createTextNode(rawKeyframes))
-			} else {
-				renderer.putRaw(rawKeyframes)
-			}
-		})
+		const rawKeyframes = prefixedKeyframes.reduce((acc, keyframe) => {
+			const rawKeyframe = `${keyframe} ${frameName}{${buildKeyframe(decls)}}`
+			return acc + rawKeyframe
+		}, '')
+
+		console.log('check rawKeyframes', rawKeyframes)
+
+		if (renderer.client) {
+			renderer.ksh.appendChild(document.createTextNode(rawKeyframes))
+		} else {
+			renderer.putRaw(rawKeyframes)
+		}
 
 		return frameName
 	}
