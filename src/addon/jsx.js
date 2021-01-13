@@ -1,6 +1,6 @@
 'use strict'
 
-const addonCache = require('./cache').addon
+import addonCache from './cache'
 
 const addOn = function (renderer) {
 	if (!renderer.cache) {

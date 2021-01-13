@@ -36,14 +36,16 @@ describe('drule()', function () {
 
 		nano.put = jest.fn()
 
-		nano.drule(
+		const returnedValue = nano.drule(
 			{
 				color: 'red'
 			},
 			'foobar'
 		)
 
-		expect(nano.put).toHaveBeenCalledTimes(1)
+		console.log('check returnedValue', returnedValue.toString())
+
+		// expect(nano.put).toHaveBeenCalledTimes(1)
 		expect(nano.put).toHaveBeenCalledWith('.test-foobar', { color: 'red' })
 		// expect(classNames).toBe('test-foobar')
 	})
