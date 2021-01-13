@@ -1,8 +1,9 @@
 'use strict'
+import { assembleClassName } from './helper'
 
 const addOn = function (renderer) {
 	renderer.rule = function (css, name) {
-		const className = renderer.pfx + (name || renderer.hash(css))
+		const className = assembleClassName(renderer, name)
 		renderer.put(`.${className}`, css)
 		return `${className}`
 	}

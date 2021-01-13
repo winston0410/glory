@@ -2,4 +2,6 @@
 exclude_paths:
   - '**.md'
   - '**.json'
+  - '**/*.spec.js'
 ---
+

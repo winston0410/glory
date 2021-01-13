@@ -1,15 +1,15 @@
 {
-  "exclude_patterns": [
-    "./.*.json",
-    "./*.json",
-    "LICENSE",
-    "./*.md",
-    "./.*.yml",
-    "./.*.yaml",
-    "./.*",
-    "./build.js",
-    "./*.config.js",
-    "./dist/**/*",
-    "./**/*.spec.js"
-  ]
+	"exclude_patterns": [
+		"./.*.json",
+		"./*.json",
+		"LICENSE",
+		"./*.md",
+		"./.*.yml",
+		"./.*.yaml",
+		"./.*",
+		"./build.js",
+		"./*.config.js",
+		"./dist/**/*",
+		"./**/*.spec.js"
+	]
 }
