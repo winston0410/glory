@@ -6,9 +6,9 @@
 	"type": "commonjs",
 	"scripts": {
 		"build": "npx rollup -c",
-		"test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
-		"test:coverage": "NODE_OPTIONS=--experimental-vm-modules npx jest --coverage",
-		"test:watch": "NODE_OPTIONS=--experimental-vm-modules npx jest --watch",
+		"test": "npx jest",
+		"test:coverage": "npx jest --coverage",
+		"test:watch": "npx jest --watch",
 		"prepublish": "yarn build",
 		"benchmark:reduce": "node benchmarks/keyframes.spec.js"
 	},
