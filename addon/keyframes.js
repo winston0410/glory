@@ -29,8 +29,6 @@ const addOn = function (renderer, config = {}) {
 			return acc + rawKeyframe
 		}, '')
 
-		console.log('check rawKeyframes', rawKeyframes)
-
 		if (renderer.client) {
 			renderer.ksh.appendChild(document.createTextNode(rawKeyframes))
 		} else {
