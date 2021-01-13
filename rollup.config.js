@@ -4,22 +4,31 @@ const commonjs = require('@rollup/plugin-commonjs')
 
 export default [
 	{
-		input: './index.js',
+		input: ['src/**/*.js'],
 		output: [
 			{
-				file: 'dist/esm/index.js',
+				dir: 'dist/esm',
 				format: 'esm',
 				plugins: [],
 				exports: 'named'
 			},
 			{
-				file: 'dist/cjs/index.js',
+				dir: 'dist/cjs',
 				format: 'cjs',
 				plugins: [],
 				exports: 'named'
 			}
 		],
 		plugins: [
+			multiInput({
+				relative: 'src/addon/',
+				transformOutputPath: (output, input) => {
+					if (output === 'src/index.js') {
+						return 'index.js'
+					}
+					return output
+				}
+			}),
 			nodeResolve({}),
 			commonjs({
 				include: ['./**', 'node_modules/**']
@@ -27,3 +36,5 @@ export default [
 		]
 	}
 ]
+
+// 'src/index.js'

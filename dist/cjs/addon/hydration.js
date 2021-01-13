@@ -1,6 +1,8 @@
 'use strict'
 
-exports.addon = function (renderer) {
+Object.defineProperty(exports, '__esModule', { value: true })
+
+var addon = function (renderer) {
 	const hydrated = {}
 
 	renderer.hydrate = function (sh) {
@@ -29,3 +31,10 @@ exports.addon = function (renderer) {
 		}
 	}
 }
+
+var hydration = {
+	addon: addon
+}
+
+exports.addon = addon
+exports.default = hydration

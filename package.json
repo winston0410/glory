@@ -18,20 +18,20 @@
 			"default": "./dist/esm/index.js"
 		},
 		"./jsx": {
-			"require": "./dist/cjs/jsx/index.js",
-			"default": "./dist/esm/jsx/index.js"
+			"require": "./dist/cjs/jsx.js",
+			"default": "./dist/esm/jsx.js"
 		},
 		"./rule": {
-			"require": "./dist/cjs/rule/index.js",
-			"default": "./dist/esm/rule/index.js"
+			"require": "./dist/cjs/rule.js",
+			"default": "./dist/esm/rule.js"
 		},
 		"./prefixer": {
-			"require": "./dist/cjs/prefixer/index.js",
-			"default": "./dist/esm/prefixer/index.js"
+			"require": "./dist/cjs/prefixer.js",
+			"default": "./dist/esm/prefixer.js"
 		},
 		"./hydration": {
-			"require": "./dist/cjs/hydration/index.js",
-			"default": "./dist/esm/hydration/index.js"
+			"require": "./dist/cjs/hydration.js",
+			"default": "./dist/esm/hydration.js"
 		}
 	},
 	"dependencies": {

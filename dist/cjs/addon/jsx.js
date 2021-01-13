@@ -1,5 +1,7 @@
 'use strict'
 
+Object.defineProperty(exports, '__esModule', { value: true })
+
 const addonCache = require('./cache').addon
 
 const addOn = function (renderer) {
@@ -53,4 +55,4 @@ const addOn = function (renderer) {
 	}
 }
 
-export default addOn
+exports.default = addOn
