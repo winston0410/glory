@@ -1,4 +1,10 @@
-function buildDecls(selector, decls, atRule) {
+import safeIsObj from 'safe-is-obj'
+
+const isAtRule = (selector) => {
+	return selector[0] === '@' && selector !== '@font-face'
+}
+
+function buildDecls(renderer, selector, decls, atRule) {
 	let index = 0
 	const declTuple = Object.entries(decls)
 
@@ -14,7 +20,7 @@ function buildDecls(selector, decls, atRule) {
 			return recursion(style + expandedRules)
 		}
 
-		if (is(Object, value)) {
+		if (safeIsObj(value)) {
 			if (isAtRule(prop)) {
 				renderer.put(selector, value, prop)
 			} else {
