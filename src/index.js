@@ -2,7 +2,7 @@
 import { isBrowser } from 'browser-or-node'
 import { hyphenateProperty } from 'css-in-js-utils'
 import joli from '@blackblock/joli-string'
-import { is, isEmpty } from 'rambda'
+import { isEmpty } from 'rambda'
 import safeIsObj from 'safe-is-obj'
 import { isAtRule } from './helper'
 const generator = joli({

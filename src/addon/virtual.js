@@ -5,7 +5,7 @@ const createMemoizer = function (pfx) {
 	let msb = 35
 	let power = 1
 
-	var self = {
+	const self = {
 		cache: {},
 		length: 0,
 
@@ -42,7 +42,7 @@ const createMemoizer = function (pfx) {
 	return self
 }
 
-exports.addon = function (renderer) {
+const addOn = function (renderer) {
 	renderer.memo = createMemoizer(renderer.pfx)
 
 	renderer.atomic = function (selectorTemplate, rawDecl, atrule) {
@@ -106,3 +106,5 @@ exports.addon = function (renderer) {
 		return renderer.virtual('&', decls)
 	}
 }
+
+export default addOn
