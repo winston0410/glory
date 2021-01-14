@@ -17,16 +17,12 @@ suite.add('Recursion with for-loop', function () {
 	require('./buildKeyframe/forLoop')(fakeData)
 })
 
-// suite.add('Plain recursion', function() {
-// 	require('./buildKeyframe/plainRecursion')(fakeData)
-// })
-
-suite.add('Pure for loop without function', function () {
-	require('./buildKeyframe/tom2')(fakeData)
+suite.add('Pure for loop with function', function () {
+	require('./buildKeyframe/forInLoopWithFn')(fakeData)
 })
 
-suite.add('Pure for loop with function', function () {
-	require('./buildKeyframe/tom')(fakeData)
+suite.add('Pure for loop without function', function () {
+	require('./buildKeyframe/forInLoopWithoutFn')(fakeData)
 })
 
 suite.add('Recursion with array pop and push', function () {
