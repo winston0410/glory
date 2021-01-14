@@ -1,14 +1,14 @@
 /* eslint-disable */
 'use strict'
 
-var env = require('./env')
-var create = require('../../index').create
-var addonRule = require('../../addon/rule').addon
-var addonVirtual = require('../../addon/virtual').addon
-var addonKeyframes = require('../../addon/keyframes').addon
+const env = require('./env')
+import { create } from '../src/index'
+import addonRule from '../src/addon/rule'
+import addonVirtual from '../src/addon/virtual'
+import addonKeyframes from '../src/addon/keyframes'
 
 function createNano(config) {
-	var nano = create(config)
+	const nano = create(config)
 
 	addonRule(nano)
 	addonVirtual(nano)
@@ -18,7 +18,7 @@ function createNano(config) {
 
 describe('virtual', function () {
 	it('installs interface', function () {
-		var nano = createNano()
+		const nano = createNano()
 
 		expect(typeof nano.atomic).toBe('function')
 		expect(typeof nano.virtual).toBe('function')
@@ -26,9 +26,9 @@ describe('virtual', function () {
 
 	describe('atomic()', function () {
 		it('injects raw styles', function () {
-			var nano = createNano()
+			const nano = createNano()
 
-			var className = nano.atomic('&', 'color:red;', '')
+			const className = nano.atomic('&', 'color:red;', '')
 
 			expect(className).toBe('_a')
 
@@ -38,7 +38,7 @@ describe('virtual', function () {
 		})
 
 		it('increments ID', function () {
-			var nano = createNano()
+			const nano = createNano()
 
 			expect(nano.atomic('&', 'color:red;')).toBe('_a')
 			expect(nano.atomic('&', 'color:blue;')).toBe('_b')
@@ -52,14 +52,14 @@ describe('virtual', function () {
 		})
 
 		it('caches', function () {
-			var nano = createNano()
+			const nano = createNano()
 
 			expect(nano.atomic('&', 'color:red;')).toBe('_a')
 			expect(nano.atomic('&', 'color:red;')).toBe('_a')
 		})
 
 		it('at-rules', function () {
-			var nano = createNano()
+			const nano = createNano()
 
 			expect(nano.atomic('&', 'color:red;', '@media screen')).toBe('_a')
 			expect(nano.atomic('&', 'color:red;', '@media screen')).toBe('_a')
@@ -70,7 +70,7 @@ describe('virtual', function () {
 		})
 
 		it('interpolates selector', function () {
-			var nano = createNano()
+			const nano = createNano()
 
 			expect(
 				nano.atomic('.global &:hover', 'color:red;', '@media screen')
@@ -85,7 +85,7 @@ describe('virtual', function () {
 		})
 
 		it('prefixes class names', function () {
-			var nano = createNano({
+			const nano = createNano({
 				pfx: 'foo-'
 			})
 
@@ -95,8 +95,8 @@ describe('virtual', function () {
 
 	describe('virtual()', function () {
 		it('injects CSS', function () {
-			var nano = createNano()
-			var className = nano.virtual('&', {
+			const nano = createNano()
+			const className = nano.virtual('&', {
 				color: 'red'
 			})
 
@@ -107,8 +107,8 @@ describe('virtual', function () {
 		})
 
 		it('makes styles atomic', function () {
-			var nano = createNano()
-			var className = nano.virtual('&', {
+			const nano = createNano()
+			const className = nano.virtual('&', {
 				color: 'red',
 				background: 'black',
 				textAlign: 'center'
@@ -124,8 +124,8 @@ describe('virtual', function () {
 		})
 
 		it('allows nesting', function () {
-			var nano = createNano()
-			var className = nano.virtual('&', {
+			const nano = createNano()
+			const className = nano.virtual('&', {
 				color: 'red',
 				':hover': {
 					color: 'blue'
@@ -144,11 +144,11 @@ describe('virtual', function () {
 		})
 
 		it('multiple styles', function () {
-			var nano = createNano()
+			const nano = createNano()
 
 			nano.atomic = jest.fn()
 
-			var className = nano.virtual('&', {
+			const className = nano.virtual('&', {
 				color: 'tomato',
 				border: '1px solid red',
 				margin: '10px auto',
@@ -202,11 +202,11 @@ describe('virtual', function () {
 		})
 
 		it('extrapolates array values', function () {
-			var nano = createNano()
+			const nano = createNano()
 
 			nano.atomic = jest.fn()
 
-			var className = nano.virtual('&', {
+			const className = nano.virtual('&', {
 				color: 'blue;color:red;'
 			})
 
@@ -216,11 +216,11 @@ describe('virtual', function () {
 		})
 
 		it('removes semicolons', function () {
-			var nano = createNano()
+			const nano = createNano()
 
 			nano.atomic = jest.fn()
 
-			var className = nano.virtual('&', {
+			const className = nano.virtual('&', {
 				color: 'blue;;;;;'
 			})
 
@@ -229,7 +229,7 @@ describe('virtual', function () {
 		})
 
 		it("doesn't break keyframes", function () {
-			var nano = createNano()
+			const nano = createNano()
 			addonKeyframes(nano)
 
 			nano.virtual('&', {
