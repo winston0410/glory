@@ -13,7 +13,11 @@ function buildDecls(renderer, selector, decls, atRule) {
 			)
 			result += expandedRules
 		} else if (safeIsObj(value)) {
-			result += renderer.put(renderer.selector(selector, prop), value, atRule)
+			if (isAtRule(prop)) {
+				renderer.put(selector, value, prop)
+			} else {
+				result += renderer.put(renderer.selector(selector, prop), value, atRule)
+			}
 		} else {
 			result += `${hyphenateProperty(prop)}:${value};`
 		}

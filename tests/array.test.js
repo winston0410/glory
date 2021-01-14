@@ -26,7 +26,6 @@ describe('prefixer', function () {
 
 		expect(nano.putRaw).toHaveBeenCalledTimes(1)
 		const result = nano.putRaw.mock.calls[0][0].replace(/[\s\n]+/g, '')
-
 		expect(result).toBe('.one{display:flex;display:-webkit-flex;}')
 	})
 })

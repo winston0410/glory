@@ -12,4 +12,8 @@ const addPrefix = pipe(
 	prefixAll
 )
 
-export { assembleClassName, addPrefix }
+const isAtRule = (selector) => {
+	return selector[0] === '@' && selector !== '@font-face'
+}
+
+export { assembleClassName, addPrefix, isAtRule }

@@ -4,6 +4,9 @@
 	"author": "Hugo Sum",
 	"license": "MIT",
 	"type": "commonjs",
+	"files": [
+		"dist/"
+	],
 	"scripts": {
 		"build": "npx rollup -c",
 		"test": "npx jest",
@@ -38,7 +41,8 @@
 		"browser-or-node": "^1.3.0",
 		"css-in-js-utils": "^3.1.0",
 		"inline-style-prefixer": "^6.0.0",
-		"rambda": "^6.5.1"
+		"rambda": "^6.5.1",
+		"safe-is-obj": "^1.0.1"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",

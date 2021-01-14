@@ -1,5 +1,5 @@
 'use strict'
-import { assembleClassName } from './helper'
+import { assembleClassName } from '../helper'
 
 const addOn = function (renderer) {
 	renderer.rule = function (css, name) {

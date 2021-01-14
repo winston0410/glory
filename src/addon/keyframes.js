@@ -1,5 +1,5 @@
 'use strict'
-import { assembleClassName } from './helper'
+import { assembleClassName } from '../helper'
 
 const buildKeyframe = (list) => {
 	let result = ''
