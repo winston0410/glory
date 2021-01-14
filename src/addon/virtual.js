@@ -50,6 +50,8 @@ const addOn = function (renderer) {
 		const memoLength = memo.length
 		const className = memo.get(atrule, selectorTemplate, rawDecl)
 
+		console.log('check memo', memo, className)
+
 		if (memoLength < memo.length) {
 			const selector = selectorTemplate.replace(/&/g, `.${className}`)
 			let str = `${selector}{${rawDecl}}`

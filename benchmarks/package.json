@@ -7,7 +7,8 @@
 	"scripts": {
 		"benchmark:keyframe": "node keyframes.spec.js",
 		"benchmark:decl": "node -r esm decls.spec.js",
-		"benchmark:css": "node -r esm css.spec.js"
+		"benchmark:css": "node -r esm css.spec.js",
+		"benchmark:css:keyframes": "node -r esm css-keyframes.spec.js"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",
