@@ -2,15 +2,16 @@
 const { Benchmark } = require('benchmark')
 const suite = new Benchmark.Suite()
 
-const fakeData = {
-	a: {
-		b: 'c',
-		d: 'e'
-	}
+const fakeClassName = '.foo2'
+
+const fakeDecl = {
+	color: 'red',
+	textDecoration: 'underline',
+	'border-radius': '5px'
 }
 
-suite.add('Recursion with reduce', function () {
-	require('./buildKeyframe/reduce')(fakeData)
+suite.add('Recursion with manual index increase', function () {
+	require('./buildDecls/recursion')(fakeClassName, fakeDecl)
 })
 
 suite.on('cycle', function (event) {
