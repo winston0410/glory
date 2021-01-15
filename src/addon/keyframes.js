@@ -1,14 +1,15 @@
 'use strict'
-import { assembleClassName } from './helper'
+import { assembleClassName } from '../helper'
 
-const buildKeyframe = (obj) => {
-	return Object.entries(obj).reduce((acc, [prop, value]) => {
-		if (typeof value === 'string') {
-			return `${acc}${prop}:${value};`
-		}
-
-		return `${acc}${prop}{${buildKeyframe(value)}}`
-	}, '')
+const buildKeyframe = (list) => {
+	let result = ''
+	for (const key in list) {
+		result +=
+			typeof list[key] === 'string'
+				? `${key}:${list[key]};`
+				: `${key}{${buildKeyframe(list[key])}}`
+	}
+	return result
 }
 
 const addOn = function (renderer, config = {}) {

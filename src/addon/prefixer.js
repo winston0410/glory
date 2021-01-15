@@ -1,6 +1,6 @@
 'use strict'
 
-import { addPrefix } from './helper'
+import { addPrefix } from '../helper'
 
 const addOn = function (renderer) {
 	const put = renderer.put

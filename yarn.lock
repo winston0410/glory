@@ -2017,11 +2017,6 @@ fast-memoize@^2.5.2:
   resolved "https://registry.yarnpkg.com/fast-memoize/-/fast-memoize-2.5.2.tgz#79e3bb6a4ec867ea40ba0e7146816f6cdce9b57e"
   integrity sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw==
 
-fast-stringify@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/fast-stringify/-/fast-stringify-2.0.0.tgz#bb5dd243fce053e91d04f68e595405ca656167e4"
-  integrity sha512-+b+ki4C5K/tw+RmyiehpRzHjWmeqPb3Wn0whMsi+JPrYjzdapybfGejhCTblfLBErPMRSToYXDObawLG9BN78A==
-
 fastq@^1.6.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/fastq/-/fastq-1.10.0.tgz#74dbefccade964932cdf500473ef302719c652bb"
@@ -4463,6 +4458,11 @@ safe-buffer@~5.1.1:
   version "5.1.2"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.1.2.tgz#991ec69d296e0313747d59bdfd2b745c35f8828d"
   integrity sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g==
+
+safe-is-obj@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/safe-is-obj/-/safe-is-obj-1.0.1.tgz#79a5083234dfe9597ce55945e8f16f594518db15"
+  integrity sha512-zSc7FWOQZIgjYqvz9YGngm5dEgcvurQyOmVNIVVY6DadmzXftR7Na2NdnlbXm5Hu6/qa+AtF7TcOasghXzuxqw==
 
 safe-regex@^1.1.0:
   version "1.1.0"

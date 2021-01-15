@@ -3,5 +3,6 @@ exclude_paths:
   - '**.md'
   - '**.json'
   - '**/*.spec.js'
+  - './**/*.test.js'
 ---
 

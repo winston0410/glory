@@ -5,7 +5,7 @@ const createMemoizer = function (pfx) {
 	let msb = 35
 	let power = 1
 
-	var self = {
+	const self = {
 		cache: {},
 		length: 0,
 
@@ -42,20 +42,15 @@ const createMemoizer = function (pfx) {
 	return self
 }
 
-exports.addon = function (renderer) {
-	if (process.env.NODE_ENV !== 'production') {
-		require('./__dev__/warnOnMissingDependencies')('virtual', renderer, [
-			'rule',
-			'putRaw'
-		])
-	}
-
+const addOn = function (renderer) {
 	renderer.memo = createMemoizer(renderer.pfx)
 
 	renderer.atomic = function (selectorTemplate, rawDecl, atrule) {
 		const memo = renderer.memo
 		const memoLength = memo.length
 		const className = memo.get(atrule, selectorTemplate, rawDecl)
+
+		console.log('check memo', memo, className)
 
 		if (memoLength < memo.length) {
 			const selector = selectorTemplate.replace(/&/g, `.${className}`)
@@ -113,3 +108,5 @@ exports.addon = function (renderer) {
 		return renderer.virtual('&', decls)
 	}
 }
+
+export default addOn

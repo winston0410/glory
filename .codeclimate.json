@@ -10,6 +10,7 @@
 		"./build.js",
 		"./*.config.js",
 		"./dist/**/*",
-		"./**/*.spec.js"
+		"./**/*.spec.js",
+		"./**/*.test.js"
 	]
 }

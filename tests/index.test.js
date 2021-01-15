@@ -44,24 +44,16 @@ describe('nano-css', function () {
 		expect(create().pfx).toBe('')
 	})
 
-	// it('default assign function is Object.assign', function() {
-	// 	expect(create().assign).toBe(Object.assign)
-	// })
-
 	it('has no default hyperscript function', function () {
 		expect(create().h).toBe(undefined)
 	})
 
 	it('can set configuration', function () {
-		// const assign = function() {
-		// 	return Object.assign.apply(Object, arguments)
-		// }
 		const h = function () {}
 		const stringify = function () {}
 		const nano = create({
 			pfx: 'hello-',
 			h: h,
-			// assign: assign,
 			stringify: stringify
 		})
 
@@ -164,7 +156,7 @@ describe('nano-css', function () {
 				expect(renderer.raw.indexOf('red') > -1).toBe(true)
 			}
 		})
-
+		//
 		it('supports pseudo selectors', function () {
 			const nano = create()
 
@@ -211,7 +203,7 @@ describe('nano-css', function () {
 				)
 			}
 		})
-
+		//
 		it('supports @media queries', function () {
 			const nano = create()
 			nano.putRaw = jest.fn()
@@ -227,7 +219,7 @@ describe('nano-css', function () {
 				'@mediascreen{.foo{color:green;}}'
 			)
 		})
-
+		//
 		it('supports @media queries - 2', function () {
 			const nano = create()
 			nano.putRaw = jest.fn()

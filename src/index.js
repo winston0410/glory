@@ -1,10 +1,9 @@
 'use strict'
-
 import { isBrowser } from 'browser-or-node'
-import { hyphenateProperty } from 'css-in-js-utils'
 import joli from '@blackblock/joli-string'
-import { is, isEmpty } from 'rambda'
-
+import { isEmpty } from 'rambda'
+import { isAtRule, buildDecls } from './helper'
+import { hyphenateProperty } from 'css-in-js-utils'
 const generator = joli({
 	chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_'
 })
@@ -15,19 +14,8 @@ const addSelector = (selector, str) => {
 	return isProduction ? `${selector}{${str}}` : `\n${selector} {\n${str}}\n`
 }
 
-const isAtRule = (selector) => {
-	return selector[0] === '@' && selector !== '@font-face'
-}
-
-const shouldAddSpace = (selector) => {
-	if (selector[0] === '@' || selector[0] === ':') {
-		return selector
-	}
-
-	return ` ${selector}`
-}
-
-// hyphenateProperty(prop)
+const shouldAddSpace = (selector) =>
+	selector[0] === '@' || selector[0] === ':' ? selector : ` ${selector}`
 
 const create = function (config) {
 	const renderer = {
@@ -95,41 +83,11 @@ const create = function (config) {
 		return `${atRule}{${rule}}`
 	}
 
-	function walkDecls(selector, decls, atRule) {
-		let index = 0
-		const declTuple = Object.entries(decls)
-
-		const recursion = (style) => {
-			if (index === declTuple.length) return style
-			const [prop, value] = declTuple[index]
-			index++
-			// console.log('check index', currentDecl)
-			if (Array.isArray(value)) {
-				const expandedRules = value.reduce((acc, currentValue) => {
-					return acc + renderer.decl(prop, currentValue)
-				}, '')
-				return recursion(style + expandedRules)
-			}
-
-			if (is(Object, value)) {
-				if (isAtRule(prop)) {
-					renderer.put(selector, value, prop)
-				} else {
-					renderer.put(renderer.selector(selector, prop), value, atRule)
-				}
-				return recursion(style)
-			}
-			return recursion(style + renderer.decl(prop, value))
-		}
-
-		return recursion('')
-	}
-
-	renderer.put = async function (selector, decls, atRule) {
-		const declInString = walkDecls(selector, decls, atRule)
+	renderer.put = function (selector, decls, atRule) {
+		const declInString = buildDecls(renderer, selector, decls, atRule)
 
 		if (isEmpty(declInString)) {
-			return
+			return ''
 		}
 
 		const withSelector = addSelector(selector, declInString)
@@ -137,6 +95,8 @@ const create = function (config) {
 		const withAtRule = atRule ? addAtRule(withSelector, atRule) : withSelector
 
 		renderer.putRaw(withAtRule)
+
+		return ''
 	}
 
 	return renderer
