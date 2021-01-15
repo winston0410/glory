@@ -45,6 +45,9 @@ suite.add('camouflage', function () {
 })
 
 suite.on('cycle', function (event) {
+	if (event.target.error) {
+		console.log(event.target.error)
+	}
 	console.log(String(event.target))
 })
 
