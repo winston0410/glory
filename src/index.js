@@ -25,41 +25,33 @@ const create = function (config) {
 		selector: (parent, selector) => {
 			return parent + shouldAddSpace(selector)
 		},
-		putRaw: function (rawCssRule) {
-			renderer.raw += rawCssRule
-		},
 		...config
 	}
 
 	if (renderer.client) {
 		if (!renderer.sh) {
-			document.head.appendChild((renderer.sh = document.createElement('style')))
+			renderer.sh = document.createElement('style')
+			document.head.appendChild(renderer.sh)
 		}
 
 		if (process.env.NODE_ENV !== 'production') {
 			renderer.sh.setAttribute('data-nano-css-dev', '')
-
-			// Test style sheet used in DEV mode to test if .insetRule() would throw.
 			renderer.shTest = document.createElement('style')
 			renderer.shTest.setAttribute('data-nano-css-dev-tests', '')
 			document.head.appendChild(renderer.shTest)
 		}
 
 		renderer.putRaw = function (rawCssRule) {
-			// .insertRule() is faster than .appendChild(), that's why we use it in PROD.
-			// But CSS injected using .insertRule() is not displayed in Chrome Devtools,
-			// that's why we use .appendChild in DEV.
 			if (process.env.NODE_ENV === 'production') {
 				const sheet = renderer.sh.sheet
 
-				// Unknown pseudo-selectors will throw, this try/catch swallows all errors.
 				try {
 					sheet.insertRule(rawCssRule, sheet.cssRules.length)
 					// eslint-disable-next-line no-empty
-				} catch (error) {}
+				} catch (error) {
+					console.log(error)
+				}
 			} else {
-				// Test if .insertRule() works in dev mode. Unknown pseudo-selectors will throw when
-				// .insertRule() is used, but .appendChild() will not throw.
 				try {
 					renderer.shTest.sheet.insertRule(
 						rawCssRule,
@@ -70,10 +62,12 @@ const create = function (config) {
 						console.error(error)
 					}
 				}
-
-				// Insert pretty-printed CSS for dev mode.
 				renderer.sh.appendChild(document.createTextNode(rawCssRule))
 			}
+		}
+	} else {
+		renderer.putRaw = function (rawCssRule) {
+			renderer.raw += rawCssRule
 		}
 	}
 
