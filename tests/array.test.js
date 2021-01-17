@@ -9,7 +9,7 @@ function createNano(config) {
 	return nano
 }
 
-describe('prefixer', function () {
+describe('array', function () {
 	it('installs without crashing', function () {
 		const nano = createNano()
 		expect(nano).toBeDefined()

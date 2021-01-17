@@ -1,6 +1,6 @@
 'use strict'
 
-exports.addon = function (renderer) {
+const addOn = function (renderer) {
 	const hydrated = {}
 
 	renderer.hydrate = function (sh) {
@@ -11,17 +11,15 @@ exports.addon = function (renderer) {
 	}
 
 	if (renderer.client) {
+		console.log('in client')
 		if (renderer.sh) renderer.hydrate(renderer.sh)
 
 		const put = renderer.put
 
 		renderer.put = function (selector, css) {
 			if (selector in hydrated) {
-				if (process.env.NODE_ENV !== 'production') {
-					// eslint-disable-next-line
-					console.info('Hydrated selector: ' + selector)
-				}
-
+				// eslint-disable-next-line
+				console.info('Hydrated selector: ' + selector)
 				return
 			}
 
@@ -29,3 +27,5 @@ exports.addon = function (renderer) {
 		}
 	}
 }
+
+export default addOn
