@@ -38,6 +38,7 @@ const create = function (config) {
 		}
 
 		renderer.putRaw = function (rawCssRule) {
+			console.log('check raw', rawCssRule)
 			if (process.env.NODE_ENV === 'production') {
 				const sheet = renderer.sh.sheet
 
