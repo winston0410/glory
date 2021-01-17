@@ -5,7 +5,7 @@ const addOn = function (renderer) {
 	renderer.rule = function (css, name) {
 		const className = assembleClassName(renderer, name)
 		renderer.put(`.${className}`, css)
-		return `${className}`
+		return className
 	}
 }
 
