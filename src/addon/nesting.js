@@ -3,16 +3,25 @@ const handleComma = (parentSelector, childSelectors) => {
 	if (!childSelectors.includes(',')) {
 		return childSelectors
 	}
-	return childSelectors
+	// console.log('check childSelectors', childSelectors)
+	// Use concat string here?
+	const result = childSelectors
 		.split(',')
 		.map((selector) => {
 			return `${parentSelector} ${selector}`
 		})
 		.join(',')
+	// console.log('check result', result)
+	return result
 }
 
 const addOn = function (renderer) {
+	const originSelector = renderer.selector
 	renderer.selector = function (parentSelectors, childSelectors) {
+		// if (!childSelectors.includes(',') && !parentSelectors.includes(',')) {
+		// 	return originSelector(parentSelectors, childSelectors)
+		// }
+
 		const data = parentSelectors
 			.split(',')
 			.map((parentSelector) => {
@@ -29,20 +38,3 @@ const addOn = function (renderer) {
 }
 
 export default addOn
-
-// Use reduce instead of map for performance benefits?
-
-// const data = parentSelectors.split(',').reduce((acc, cur) => {
-// 	const handledComma = handleComma(cur, childSelectors)
-//
-// 	const handledOperand = handleOperand(cur, handledComma)
-// 	// console.log('check handledComma', handledOperand)
-// 	return acc + handledOperand
-// }, '')
-// // console.log('check nested string', data)
-
-// return splited
-// 	.reduce((acc, current, index) => {
-// 		return acc + `${parentSelector} ${current}`
-// 	}, '')
-// 	.join(', ')

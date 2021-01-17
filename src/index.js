@@ -4,9 +4,7 @@ import joli from '@blackblock/joli-string'
 import { isEmpty } from 'rambda'
 import { isAtRule, buildDecls } from './helper'
 import { hyphenateProperty } from 'css-in-js-utils'
-const generator = joli({
-	chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_'
-})
+const next = joli('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_')
 
 const isProduction = process.env.NODE_ENV !== 'production'
 
@@ -23,8 +21,8 @@ const create = function (config) {
 		pfx: '',
 		client: isBrowser,
 		decl: (key, value) => `${hyphenateProperty(key)}:${value};`,
-		hash: (obj) => generator.next().value,
-		selector: function (parent, selector) {
+		hash: (obj) => next(),
+		selector: (parent, selector) => {
 			return parent + shouldAddSpace(selector)
 		},
 		putRaw: function (rawCssRule) {

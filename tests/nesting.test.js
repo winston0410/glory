@@ -18,6 +18,22 @@ describe('nesting', function () {
 		const nano = createNano()
 	})
 
+	it('returns selectors correctly if no & or ,', function () {
+		const nano = createNano()
+
+		nano.putRaw = jest.fn()
+
+		nano.put('.foo', {
+			'.zero': {
+				color: 'tomato'
+			}
+		})
+
+		const result = nano.putRaw.mock.calls[0][0]
+
+		// expect(result.includes('.foo .zero')).toBe(true)
+	})
+
 	it('prepends selectors if no & operand', function () {
 		const nano = createNano()
 

@@ -39,7 +39,7 @@ suite.add('camouflage', function () {
 	const camouflage = createCamoflage()
 
 	RuleCamouflage(camouflage)
-	PrefixerCamouflage(camouflage)
+	// PrefixerCamouflage(camouflage)
 
 	const className = camouflage.rule(mockStyle)
 })
