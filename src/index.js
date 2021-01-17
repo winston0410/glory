@@ -8,10 +8,6 @@ const next = joli('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_')
 
 const isProduction = process.env.NODE_ENV !== 'production'
 
-const addSelector = (selector, str) => {
-	return isProduction ? `${selector}{${str}}` : `\n${selector} {\n${str}}\n`
-}
-
 const shouldAddSpace = (selector) =>
 	selector[0] === '@' || selector[0] === ':' ? selector : ` ${selector}`
 
@@ -58,9 +54,7 @@ const create = function (config) {
 						renderer.shTest.sheet.cssRules.length
 					)
 				} catch (error) {
-					if (config.verbose) {
-						console.error(error)
-					}
+					console.error(error)
 				}
 				renderer.sh.appendChild(document.createTextNode(rawCssRule))
 			}
@@ -82,7 +76,7 @@ const create = function (config) {
 			return ''
 		}
 
-		const withSelector = addSelector(selector, declInString)
+		const withSelector = `${selector}{${declInString}}`
 
 		const withAtRule = atRule ? addAtRule(withSelector, atRule) : withSelector
 
