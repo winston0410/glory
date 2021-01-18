@@ -91,8 +91,6 @@ describe('keyframes', function () {
 			} else {
 				const result = nano.putRaw.mock.calls[0][0]
 
-				console.log('check result', result)
-
 				expect(nano.putRaw).toHaveBeenCalledTimes(1)
 				expect(result.includes('to{transform:rotate(360deg);}')).toBe(true)
 				expect(result.includes('@-webkit-keyframes')).toBe(true)

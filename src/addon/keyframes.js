@@ -25,10 +25,11 @@ const addOn = function (renderer, config = {}) {
 	renderer.keyframes = function (decls, name) {
 		const frameName = assembleClassName(renderer, name)
 
-		const rawKeyframes = prefixedKeyframes.reduce((acc, keyframe) => {
-			const rawKeyframe = `${keyframe} ${frameName}{${buildKeyframe(decls)}}`
-			return acc + rawKeyframe
-		}, '')
+		let rawKeyframes = ''
+
+		for (const prefixed of prefixedKeyframes) {
+			rawKeyframes += `${prefixed} ${frameName}{${buildKeyframe(decls)}}`
+		}
 
 		if (renderer.client) {
 			renderer.ksh.appendChild(document.createTextNode(rawKeyframes))
@@ -41,3 +42,8 @@ const addOn = function (renderer, config = {}) {
 }
 
 export default addOn
+
+// const rawKeyframes = prefixedKeyframes.reduce((acc, keyframe) => {
+// 	const rawKeyframe = `${keyframe} ${frameName}{${buildKeyframe(decls)}}`
+// 	return acc + rawKeyframe
+// }, '')
