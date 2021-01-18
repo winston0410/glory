@@ -8,7 +8,8 @@
 		"benchmark:keyframe": "node buildKeyframe/keyframes.spec.js",
 		"benchmark:decl": "node -r esm buildDecls/decls.spec.js",
 		"benchmark:css": "node -r esm renderStyle/css.spec.js",
-		"benchmark:css:keyframes": "node -r esm css renderStyle/keyframes.spec.js"
+		"benchmark:css:keyframes": "node -r esm css renderStyle/keyframes.spec.js",
+		"benchmark:prefix:case": "node -r esm addPrefix/prefixer.spec.js"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",
