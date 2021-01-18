@@ -1,9 +1,9 @@
 'use strict'
 import { create } from 'nano-css'
 import { css } from '@emotion/css'
-import { create as createCamoflage } from '../src/index'
-import PrefixerCamouflage from '../src/addon/prefixer'
-import RuleCamouflage from '../src/addon/rule'
+import { create as createCamoflage } from '../../src/index'
+import PrefixerCamouflage from '../../src/addon/prefixer'
+import RuleCamouflage from '../../src/addon/rule'
 import { css as gooberCss } from 'goober'
 const { addon: Rule } = require('nano-css/addon/rule')
 const { addon: Cache } = require('nano-css/addon/cache')

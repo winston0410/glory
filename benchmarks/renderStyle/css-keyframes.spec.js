@@ -1,10 +1,10 @@
 'use strict'
 import { create } from 'nano-css'
 import { css, keyframes } from '@emotion/css'
-import { create as createCamoflage } from '../src/index'
-import PrefixerCamouflage from '../src/addon/prefixer'
-import RuleCamouflage from '../src/addon/rule'
-import KeyframeCamouflage from '../src/addon/keyframes'
+import { create as createCamoflage } from '../../src/index'
+import PrefixerCamouflage from '../../src/addon/prefixer'
+import RuleCamouflage from '../../src/addon/rule'
+import KeyframeCamouflage from '../../src/addon/keyframes'
 const { Benchmark } = require('benchmark')
 const suite = new Benchmark.Suite()
 

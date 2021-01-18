@@ -1,11 +1,9 @@
 'use strict'
-// require('@babel/register')({
-// 	plugins: ['@babel/plugin-transform-modules-commonjs']
-// })
+
 const { Benchmark } = require('benchmark')
 const suite = new Benchmark.Suite()
 // eslint-disable-next-line
-const { create } = require('../src/index')
+const { create } = require('../../src/index')
 
 const fakeClassName = '.foo2'
 
@@ -17,25 +15,16 @@ const fakeDecl = {
 
 const nano = create()
 
-// const fakeRenderer = {
-// 	put: () => {
-//
-// 	},
-// 	selector: () => {
-//
-// 	},
-// }
-
 suite.add('Recursion with manual index increase', function () {
-	require('./buildDecls/recursion')(nano, fakeClassName, fakeDecl)
+	require('./recursion')(nano, fakeClassName, fakeDecl)
 })
 
 suite.add('Recursion with for in loop', function () {
-	require('./buildDecls/forInLoop')(nano, fakeClassName, fakeDecl)
+	require('./forInLoop')(nano, fakeClassName, fakeDecl)
 })
 
 suite.on('cycle', function (event) {
-	if (event.error) {
+	if (event.target.error) {
 		console.log(event.error)
 	}
 	console.log(String(event.target))

@@ -10,23 +10,23 @@ const fakeData = {
 }
 
 suite.add('Recursion with reduce', function () {
-	require('./buildKeyframe/reduce')(fakeData)
+	require('./reduce')(fakeData)
 })
 
 suite.add('Recursion with for-loop', function () {
-	require('./buildKeyframe/forLoop')(fakeData)
+	require('./forLoop')(fakeData)
 })
 
 suite.add('Pure for loop with function', function () {
-	require('./buildKeyframe/forInLoopWithFn')(fakeData)
+	require('./forInLoopWithFn')(fakeData)
 })
 
 suite.add('Pure for loop without function', function () {
-	require('./buildKeyframe/forInLoopWithoutFn')(fakeData)
+	require('./forInLoopWithoutFn')(fakeData)
 })
 
 suite.add('Recursion with array pop and push', function () {
-	require('./buildKeyframe/array')(fakeData)
+	require('./array')(fakeData)
 })
 
 suite.add('JSON.stringify', function () {
