@@ -47,10 +47,9 @@ describe('hydration', function () {
 		expect(putMock).toHaveBeenCalledTimes(1)
 	})
 
-	// it('should prevent media-queries found in stylesheet from re-rendering', function () {
+	// it('should prevent media-queries found in stylesheet from re-rendering', function() {
 	// 	const mockStylesheet = document.createElement('style')
-	// 	mockStylesheet.textContent =
-	// 		'@media screen{.one{display:block;}}.two{color:#be132d;}'
+	// 	mockStylesheet.textContent = '@media screen{.one{display:block;}}'
 	// 	document.head.appendChild(mockStylesheet)
 	//
 	// 	const nano = create({

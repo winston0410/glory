@@ -1,18 +1,14 @@
 'use strict'
 const compare = (original, updated) => {
-	const eql = {}
 	const diff = {}
 
 	for (const key in updated) {
-		if (updated[key] === original[key]) {
-			eql[key] = original[key]
-		} else {
+		if (updated[key] !== original[key]) {
 			diff[key] = updated[key]
 		}
 	}
 
 	return {
-		eql,
 		diff,
 		hasDiff: Object.keys(diff).length > 0
 	}
@@ -37,6 +33,7 @@ const addOn = function (renderer) {
 			if (rule.media) {
 				// console.log('check rule', rule)
 				// hydrated[`@media ${rule.media.mediaText}`] = '1'
+				// hydrated[rule.selectorText] = ruleToObj(rule)
 			} else {
 				hydrated[rule.selectorText] = ruleToObj(rule)
 			}
