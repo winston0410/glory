@@ -1,4 +1,24 @@
 'use strict'
+import parseCSS from 'style-to-object'
+
+const compare = (original, updated) => {
+	const eql = {}
+	const diff = {}
+
+	for (const key in updated) {
+		if (updated[key] === original[key]) {
+			eql[key] = original[key]
+		} else {
+			diff[key] = updated[key]
+		}
+	}
+
+	return {
+		eql,
+		diff,
+		hasDiff: Object.keys(diff).length > 0
+	}
+}
 
 const addOn = function (renderer) {
 	const hydrated = {}
@@ -11,9 +31,7 @@ const addOn = function (renderer) {
 				// console.log('check rule', rule)
 				// hydrated[`@media ${rule.media.mediaText}`] = '1'
 			} else {
-				console.log('check rule prop', rule.cssText)
-				// console.log('check rule prop', rule)
-				hydrated[rule.selectorText] = '1'
+				hydrated[rule.selectorText] = parseCSS(rule.style.cssText)
 			}
 		}
 	}
@@ -23,15 +41,15 @@ const addOn = function (renderer) {
 
 		const put = renderer.put
 
-		renderer.put = function (selector, css, atRule) {
-			console.log('check value', selector, css, atRule)
+		renderer.put = function (selector, decls, atRule) {
 			if (selector in hydrated) {
-				// eslint-disable-next-line
-				console.info('Hydrated selector: ' + selector)
-				return
+				const compareResult = compare(hydrated[selector], decls)
+				if (compareResult.hasDiff) {
+					put(selector, compareResult.diff, atRule)
+				}
+			} else {
+				put(selector, decls, atRule)
 			}
-
-			put(selector, css, atRule)
 		}
 	}
 }
