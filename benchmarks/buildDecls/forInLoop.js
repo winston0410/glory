@@ -2,6 +2,10 @@ import { hyphenateProperty } from 'css-in-js-utils'
 import { is, isEmpty } from 'rambda'
 import safeIsObj from 'safe-is-obj'
 
+const isAtRule = (selector) => {
+	return selector[0] === '@' && selector !== '@font-face'
+}
+
 function buildDecls(renderer, selector, decls, atRule) {
 	let result = ''
 	for (const prop in decls) {

@@ -80,8 +80,6 @@ const create = function (config) {
 
 		const withAtRule = atRule ? addAtRule(withSelector, atRule) : withSelector
 
-		console.log('check result', withAtRule)
-
 		renderer.putRaw(withAtRule)
 
 		return ''

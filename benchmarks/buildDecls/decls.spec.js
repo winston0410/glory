@@ -10,7 +10,11 @@ const fakeClassName = '.foo2'
 const fakeDecl = {
 	color: 'red',
 	textDecoration: 'underline',
-	'border-radius': '5px'
+	'border-radius': '5px',
+	display: ['block', 'flex'],
+	'.foo': {
+		color: 'red'
+	}
 }
 
 const nano = create()
@@ -21,6 +25,10 @@ suite.add('Recursion with manual index increase', function () {
 
 suite.add('Recursion with for in loop', function () {
 	require('./forInLoop')(nano, fakeClassName, fakeDecl)
+})
+
+suite.add('Handle array value with for...in loop', function () {
+	require('./handleArrayWithForInLoop')(nano, fakeClassName, fakeDecl)
 })
 
 suite.on('cycle', function (event) {

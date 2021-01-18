@@ -1,17 +1,6 @@
-import { prefix as prefixAll } from 'inline-style-prefixer'
-import { camelCaseProperty, hyphenateProperty } from 'css-in-js-utils'
-import { pipe, map } from 'rambda'
+import { hyphenateProperty } from 'css-in-js-utils'
+import { is, isEmpty } from 'rambda'
 import safeIsObj from 'safe-is-obj'
-
-const assembleClassName = (renderer, name) =>
-	renderer.pfx + (name || renderer.hash())
-
-const addPrefix = pipe(
-	Object.entries,
-	map(([prop, value]) => [camelCaseProperty(prop), value]),
-	Object.fromEntries,
-	prefixAll
-)
 
 const isAtRule = (selector) => {
 	return selector[0] === '@' && selector !== '@font-face'
@@ -27,7 +16,7 @@ function buildDecls(renderer, selector, decls, atRule) {
 			}
 		} else if (safeIsObj(value)) {
 			if (isAtRule(prop)) {
-				result += renderer.put(selector, value, prop)
+				renderer.put(selector, value, prop)
 			} else {
 				result += renderer.put(renderer.selector(selector, prop), value, atRule)
 			}
@@ -38,4 +27,4 @@ function buildDecls(renderer, selector, decls, atRule) {
 	return result
 }
 
-export { assembleClassName, addPrefix, isAtRule, buildDecls }
+module.exports = buildDecls
