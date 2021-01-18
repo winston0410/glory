@@ -65,10 +65,6 @@ const create = function (config) {
 		}
 	}
 
-	const addAtRule = (rule, atRule) => {
-		return `${atRule}{${rule}}`
-	}
-
 	renderer.put = function (selector, decls, atRule) {
 		const declInString = buildDecls(renderer, selector, decls, atRule)
 
@@ -78,7 +74,7 @@ const create = function (config) {
 
 		const withSelector = `${selector}{${declInString}}`
 
-		const withAtRule = atRule ? addAtRule(withSelector, atRule) : withSelector
+		const withAtRule = atRule ? `${atRule}{${withSelector}}` : withSelector
 
 		renderer.putRaw(withAtRule)
 

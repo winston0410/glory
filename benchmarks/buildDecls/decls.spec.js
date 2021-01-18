@@ -14,6 +14,9 @@ const fakeDecl = {
 	display: ['block', 'flex'],
 	'.foo': {
 		color: 'red'
+	},
+	'@media screen': {
+		color: 'blue'
 	}
 }
 
@@ -29,6 +32,10 @@ suite.add('Recursion with for in loop', function () {
 
 suite.add('Handle array value with for...in loop', function () {
 	require('./handleArrayWithForInLoop')(nano, fakeClassName, fakeDecl)
+})
+
+suite.add('use macro task', function () {
+	require('./useMacroTask')(nano, fakeClassName, fakeDecl)
 })
 
 suite.on('cycle', function (event) {
