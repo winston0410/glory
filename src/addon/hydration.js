@@ -6,12 +6,13 @@ const addOn = function (renderer) {
 	renderer.hydrate = function (sh) {
 		const cssRules = sh.cssRules || sh.sheet.cssRules
 
-		// console.log('check cssRules', cssRules)
-
 		for (const rule of cssRules) {
 			if (rule.media) {
-				// console.log(rule.media.mediaText)
+				// console.log('check rule', rule)
+				// hydrated[`@media ${rule.media.mediaText}`] = '1'
 			} else {
+				console.log('check rule prop', rule.cssText)
+				// console.log('check rule prop', rule)
 				hydrated[rule.selectorText] = '1'
 			}
 		}

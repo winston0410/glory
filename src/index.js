@@ -38,7 +38,6 @@ const create = function (config) {
 		}
 
 		renderer.putRaw = function (rawCssRule) {
-			console.log('check raw', rawCssRule)
 			if (process.env.NODE_ENV === 'production') {
 				const sheet = renderer.sh.sheet
 
@@ -80,6 +79,8 @@ const create = function (config) {
 		const withSelector = `${selector}{${declInString}}`
 
 		const withAtRule = atRule ? addAtRule(withSelector, atRule) : withSelector
+
+		console.log('check result', withAtRule)
 
 		renderer.putRaw(withAtRule)
 

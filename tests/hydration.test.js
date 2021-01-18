@@ -5,14 +5,28 @@ const env = require('./env')
 import { create } from '../src/index'
 import addOnHydration from '../src/addon/hydration'
 
-// function createNano(config) {
-// 	const nano = create(config)
-// 	addOnHydration(nano)
-// 	return nano
-// }
-
 describe('hydration', function () {
-	// it('should prevent basic declaration found in stylesheet from re-rendering', function() {
+	it('should prevent basic declaration found in stylesheet from re-rendering', function () {
+		const mockStylesheet = document.createElement('style')
+		mockStylesheet.textContent = '.one{display:block;}'
+		document.head.appendChild(mockStylesheet)
+
+		const nano = create({
+			sh: mockStylesheet
+		})
+
+		const putMock = jest.spyOn(nano, 'put')
+
+		addOnHydration(nano)
+
+		nano.put('.one', {
+			display: 'block'
+		})
+
+		expect(putMock).toHaveBeenCalledTimes(0)
+	})
+
+	// it('should re-render basic declaration, if props in stylesheet and in Javascript are different', function() {
 	// 	const mockStylesheet = document.createElement('style')
 	// 	mockStylesheet.textContent = '.one{display:block;}'
 	// 	document.head.appendChild(mockStylesheet)
@@ -26,10 +40,11 @@ describe('hydration', function () {
 	// 	addOnHydration(nano)
 	//
 	// 	nano.put('.one', {
-	// 		display: 'block'
+	// 		display: 'block',
+	// 		color: 'red'
 	// 	})
 	//
-	// 	expect(putMock).toHaveBeenCalledTimes(0)
+	// 	// expect(putMock).toHaveBeenCalledTimes(1)
 	// })
 
 	it('should prevent media-queries found in stylesheet from re-rendering', function () {
@@ -54,9 +69,6 @@ describe('hydration', function () {
 
 		expect(putMock).toHaveBeenCalledTimes(0)
 	})
-
-	//
-	// it('should re-render basic declaration, if props in stylesheet and in Javascript are different', function() {})
 
 	// it('should prevent keyframes found in stylesheet from re-rendering', function() {
 	//
