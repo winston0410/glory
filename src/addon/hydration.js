@@ -1,6 +1,4 @@
 'use strict'
-import parseCSS from 'style-to-object'
-
 const compare = (original, updated) => {
 	const eql = {}
 	const diff = {}
@@ -20,6 +18,15 @@ const compare = (original, updated) => {
 	}
 }
 
+const ruleToObj = (rule) => {
+	const obj = {}
+	for (let i = 0; i < rule.style.length; i++) {
+		const prop = rule.style[i]
+		obj[prop] = rule.style[prop]
+	}
+	return obj
+}
+
 const addOn = function (renderer) {
 	const hydrated = {}
 
@@ -31,7 +38,7 @@ const addOn = function (renderer) {
 				// console.log('check rule', rule)
 				// hydrated[`@media ${rule.media.mediaText}`] = '1'
 			} else {
-				hydrated[rule.selectorText] = parseCSS(rule.style.cssText)
+				hydrated[rule.selectorText] = ruleToObj(rule)
 			}
 		}
 	}
