@@ -32,6 +32,8 @@ describe('virtual', function () {
 
 			const className = nano.atomic('&', 'color:red;', '')
 
+			console.log('check atomic', className)
+
 			expect(className).toBe('_a')
 
 			if (env.isServer) {

@@ -6,6 +6,8 @@
 
 - Array add-on is set as default
 
+- Only camelCase is accepted as style prop
+
 ## Useful preset:
 
 ### Rule-preset
