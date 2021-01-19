@@ -3,8 +3,9 @@ import { camelCaseProperty, hyphenateProperty } from 'css-in-js-utils'
 import { pipe, map } from 'rambda'
 import safeIsObj from 'safe-is-obj'
 
-const assembleClassName = (renderer, name) =>
-	renderer.pfx + (name || renderer.hash())
+const assembleClassName = (renderer, name) => {
+	return renderer.pfx + (name || renderer.hash())
+}
 
 const addPrefix = prefixAll
 

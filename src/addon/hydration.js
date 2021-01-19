@@ -10,7 +10,7 @@ const compare = (original, updated) => {
 
 	return {
 		diff,
-		hasDiff: Object.keys(diff).length > 0
+		isEql: Object.keys(diff).length === 0
 	}
 }
 
@@ -48,7 +48,7 @@ const addOn = function (renderer) {
 		renderer.put = function (selector, decls, atRule) {
 			if (selector in hydrated) {
 				const compareResult = compare(hydrated[selector], decls)
-				if (compareResult.hasDiff) {
+				if (!compareResult.isEql) {
 					put(selector, compareResult.diff, atRule)
 				}
 			} else {

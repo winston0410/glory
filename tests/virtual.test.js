@@ -32,8 +32,6 @@ describe('virtual', function () {
 
 			const className = nano.atomic('&', 'color:red;', '')
 
-			console.log('check atomic', className)
-
 			expect(className).toBe('_a')
 
 			if (env.isServer) {
@@ -41,45 +39,56 @@ describe('virtual', function () {
 			}
 		})
 
-		// it('increments ID', function () {
-		// 	const nano = createNano({
-		// 		pfx: '_'
-		// 	})
+		it('increments ID', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+
+			expect(nano.atomic('&', 'color:red;')).toBe('_a')
+			expect(nano.atomic('&', 'color:blue;')).toBe('_b')
+			expect(nano.atomic('&', 'color:green;')).toBe('_c')
+
+			if (env.isServer) {
+				expect(nano.raw).toBe(
+					'._a{color:red;}._b{color:blue;}._c{color:green;}'
+				)
+			}
+		})
+
+		it('caches basic declarations', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+
+			expect(nano.atomic('&', 'color:red;')).toBe('_a')
+			expect(nano.atomic('&', 'color:red;')).toBe('_a')
+		})
+
+		it('at-rules', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+
+			nano.atomic('&', 'color:red;', '@media screen')
+
+			if (env.isServer) {
+				expect(nano.raw).toBe('@media screen{._a{color:red;}}')
+			}
+		})
+
+		it('caches at-rules', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+
+			const className = nano.atomic('&', 'color:red;', '@media screen')
+
+			const cachedClassName = nano.atomic('&', 'color:red;', '@media screen')
+
+			expect(className).toBe(cachedClassName)
+		})
 		//
-		// 	expect(nano.atomic('&', 'color:red;')).toBe('_a')
-		// 	expect(nano.atomic('&', 'color:blue;')).toBe('_b')
-		// 	expect(nano.atomic('&', 'color:green;')).toBe('_c')
-		//
-		// 	if (env.isServer) {
-		// 		expect(nano.raw).toBe(
-		// 			'._a{color:red;}._b{color:blue;}._c{color:green;}'
-		// 		)
-		// 	}
-		// })
-		//
-		// it('caches', function () {
-		// 	const nano = createNano({
-		// 		pfx: '_'
-		// 	})
-		//
-		// 	expect(nano.atomic('&', 'color:red;')).toBe('_a')
-		// 	expect(nano.atomic('&', 'color:red;')).toBe('_a')
-		// })
-		//
-		// it('at-rules', function () {
-		// 	const nano = createNano({
-		// 		pfx: '_'
-		// 	})
-		//
-		// 	expect(nano.atomic('&', 'color:red;', '@media screen')).toBe('_a')
-		// 	expect(nano.atomic('&', 'color:red;', '@media screen')).toBe('_a')
-		//
-		// 	if (env.isServer) {
-		// 		expect(nano.raw).toBe('@media screen{._a{color:red;}}')
-		// 	}
-		// })
-		//
-		// it('interpolates selector', function () {
+		// it('interpolates selector', function() {
 		// 	const nano = createNano({
 		// 		pfx: '_'
 		// 	})
@@ -96,13 +105,13 @@ describe('virtual', function () {
 		// 	}
 		// })
 		//
-		// it('prefixes class names', function () {
-		// 	const nano = createNano({
-		// 		pfx: 'foo-'
-		// 	})
-		//
-		// 	expect(nano.atomic('&', 'color:red;')).toBe('foo-a')
-		// })
+		it('prefixes class names', function () {
+			const nano = createNano({
+				pfx: 'foo-'
+			})
+
+			expect(nano.atomic('&', 'color:red;')).toBe('foo-a')
+		})
 	})
 
 	// describe('virtual()', function() {
