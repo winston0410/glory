@@ -1,4 +1,4 @@
-import { prefix as prefixAll } from 'inline-style-prefixer'
+import { prefix as addPrefix } from 'inline-style-prefixer'
 import { camelCaseProperty, hyphenateProperty } from 'css-in-js-utils'
 import { pipe, map } from 'rambda'
 import safeIsObj from 'safe-is-obj'
@@ -10,8 +10,6 @@ const assembleClassName = (renderer, name = '') => {
 const assembleDecl = (prop, value) => `${hyphenateProperty(prop)}:${value};`
 
 const assembleRule = (name, rule) => `${name}{${rule}}`
-
-const addPrefix = prefixAll
 
 const isAtRule = (selector) => selector[0] === '@' && selector !== '@font-face'
 
