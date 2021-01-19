@@ -2,7 +2,7 @@
 import { isBrowser } from 'browser-or-node'
 import joli from '@blackblock/joli-string'
 import { isEmpty } from 'rambda'
-import { buildDecls, assembleRule } from './helper'
+import { isAtRule, cssifyObject, assembleRule } from './helper'
 import { hyphenateProperty } from 'css-in-js-utils'
 const isProduction = process.env.NODE_ENV !== 'production'
 
@@ -21,6 +21,14 @@ const create = function (config) {
 			return parent + shouldAddSpace(selector)
 		},
 		...config
+	}
+
+	const handleNestedDecls = (selector, atRule) => (prop, value) => {
+		if (isAtRule(prop)) {
+			renderer.put(selector, value, prop)
+		} else {
+			renderer.put(renderer.selector(selector, prop), value, atRule)
+		}
 	}
 
 	if (renderer.client) {
@@ -65,13 +73,13 @@ const create = function (config) {
 	}
 
 	renderer.put = function (selector, decls, atRule) {
-		const declInString = buildDecls(renderer, selector, decls, atRule)
+		const css = cssifyObject(decls, handleNestedDecls(selector, atRule))
 
-		if (isEmpty(declInString)) {
+		if (isEmpty(css)) {
 			return ''
 		}
 
-		const withSelector = assembleRule(selector, declInString)
+		const withSelector = assembleRule(selector, css)
 
 		const withAtRule = atRule
 			? assembleRule(atRule, withSelector)
