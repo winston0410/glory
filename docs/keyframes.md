@@ -43,4 +43,4 @@ As a second argument, `keyframes` addon can accept a configuration object with t
 
 ## Installation
 
-Simply install `keyframes` addon. Read more about the [Addon Installation](./Addons.md#addon-installation).
+Simply install `keyframes` addon. Read more about the [Addon Installation](./addons.md#addon-installation).
