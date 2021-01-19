@@ -38,4 +38,11 @@ function buildDecls(renderer, selector, decls, atRule) {
 	return result
 }
 
-export { assembleClassName, addPrefix, isAtRule, buildDecls, assembleRule }
+export {
+	assembleClassName,
+	addPrefix,
+	isAtRule,
+	buildDecls,
+	assembleRule,
+	assembleDecl
+}

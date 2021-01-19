@@ -1,6 +1,6 @@
 'use strict'
 
-import { assembleClassName, assembleRule } from '../helper'
+import { assembleClassName, assembleRule, assembleDecl } from '../helper'
 
 const addOn = function (renderer) {
 	// Setting the cache outside this function may result in more persistant but unexpected behaviors
@@ -28,7 +28,7 @@ const addOn = function (renderer) {
 
 		for (const prop in decls) {
 			const value = decls[prop]
-			classNames += ` ${renderer.atomic('', `${prop}:${value};`, '')}`
+			classNames += ` ${renderer.atomic('', assembleDecl(prop, value), '')}`
 		}
 		// for (let i = 0; i < rawDecls.length; i++) {
 		// 	const d = rawDecls[i]

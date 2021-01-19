@@ -142,32 +142,34 @@ describe('virtual', function () {
 			expect(className).toBe(' _a _b _c')
 
 			if (env.isServer) {
-				console.log('check raw result', nano.raw)
 				expect(nano.raw.includes('color:red')).toBe(true)
 				expect(nano.raw.includes('background:black')).toBe(true)
 				expect(nano.raw.includes('text-align:center')).toBe(true)
 			}
 		})
 		//
-		// it('allows nesting', function() {
-		// 	const nano = createNano()
-		// 	const className = nano.virtual('&', {
-		// 		color: 'red',
-		// 		':hover': {
-		// 			color: 'blue'
-		// 		}
-		// 	})
-		//
-		// 	expect(className).toBe(' _a _b')
-		//
-		// 	if (env.isServer) {
-		// 		expect(nano.raw.includes('._a')).toBe(true)
-		// 		expect(nano.raw.includes('._b')).toBe(true)
-		// 		expect(nano.raw.includes(':hover')).toBe(true)
-		// 		expect(nano.raw.includes('color:red')).toBe(true)
-		// 		expect(nano.raw.includes('color:blue')).toBe(true)
-		// 	}
-		// })
+		it('allows nesting', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+			const className = nano.virtual('&', {
+				color: 'red',
+				':hover': {
+					color: 'blue'
+				}
+			})
+
+			expect(className).toBe(' _a _b')
+
+			if (env.isServer) {
+				console.log('check result', nano.raw)
+				expect(nano.raw.includes('._a')).toBe(true)
+				expect(nano.raw.includes('._b')).toBe(true)
+				expect(nano.raw.includes(':hover')).toBe(true)
+				expect(nano.raw.includes('color:red')).toBe(true)
+				expect(nano.raw.includes('color:blue')).toBe(true)
+			}
+		})
 		//
 		// it('multiple styles', function() {
 		// 	const nano = createNano()
