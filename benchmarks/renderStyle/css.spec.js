@@ -12,6 +12,7 @@ import { StyleSheet, css as aphroditeCss } from 'aphrodite'
 // import jssPreset from 'jss-preset-default'
 // jss.setup(jssPreset())
 import { Server as StyletronServer } from 'styletron-engine-atomic'
+import { createRenderer as felaRenderer } from 'fela'
 const { addon: Rule } = require('nano-css/addon/rule')
 const { addon: Virtual } = require('nano-css/addon/virtual')
 const { addon: Prefixer } = require('nano-css/addon/prefixer')
@@ -50,6 +51,12 @@ const instance = new StyletronServer()
 
 suite.add('styletron', function () {
 	const className = instance.renderStyle(mockStyle)
+})
+
+const fela = felaRenderer()
+
+suite.add('fela', function () {
+	const className = fela.renderRule(() => mockStyle)
 })
 
 const camouflage = createCamoflage()

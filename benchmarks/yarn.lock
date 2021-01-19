@@ -561,6 +561,26 @@ fastest-stable-stringify@^2.0.2:
   resolved "https://registry.yarnpkg.com/fastest-stable-stringify/-/fastest-stable-stringify-2.0.2.tgz#3757a6774f6ec8de40c4e86ec28ea02417214c76"
   integrity sha512-bijHueCGd0LqqNK9b5oCMHc0MluJAx0cwqASgbWMvkO01lCYgIhacVRLcaDz3QnyYIRNJRDwMb41VuT6pHJ91Q==
 
+fela-plugin-fallback-value@^11.5.2:
+  version "11.5.2"
+  resolved "https://registry.yarnpkg.com/fela-plugin-fallback-value/-/fela-plugin-fallback-value-11.5.2.tgz#ddc69e29495425dd13e3672cf9126353c465663c"
+  integrity sha512-3g8QSDGRH8sJh+3RqtxokS4PeBcJxvHRzhOZQA9JDYwy2atuYKi6cZJ8x1abqpj9OEYRqDMtjm9CNtLm1WTITg==
+  dependencies:
+    css-in-js-utils "^3.0.0"
+    isobject "^3.0.1"
+
+fela-plugin-prefixer@^11.5.2:
+  version "11.5.2"
+  resolved "https://registry.yarnpkg.com/fela-plugin-prefixer/-/fela-plugin-prefixer-11.5.2.tgz#d950beb1ded478b81124411a4c297851c0e9095c"
+  integrity sha512-hO6aJO6H0iDiwyTh/XKmozMNvcYKtElgGKTemfW1KKOIPaAqeFJSIT88IlI1vsa6+SrWcbHfKlHdUhTYSUUlqw==
+  dependencies:
+    css-in-js-utils "^3.0.0"
+    fast-loops "^1.0.0"
+    fela-plugin-fallback-value "^11.5.2"
+    inline-style-prefixer "^5.1.0"
+    isobject "^3.0.1"
+    stylis "^4.0.6"
+
 fela-utils@^11.5.2:
   version "11.5.2"
   resolved "https://registry.yarnpkg.com/fela-utils/-/fela-utils-11.5.2.tgz#8396cfc5f449b891534106b4c05383d35520978d"

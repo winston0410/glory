@@ -12,6 +12,8 @@ import { StyleSheet, css as aphroditeCss } from 'aphrodite'
 // import jssPreset from 'jss-preset-default'
 // jss.setup(jssPreset())
 import { Server as StyletronServer } from 'styletron-engine-atomic'
+import { createRenderer as felaRenderer } from 'fela'
+import felaPrefixer from 'fela-plugin-prefixer'
 const { addon: Rule } = require('nano-css/addon/rule')
 const { addon: Virtual } = require('nano-css/addon/virtual')
 const { addon: Prefixer } = require('nano-css/addon/prefixer')
@@ -60,9 +62,13 @@ suite.add('goober', function () {
 // 	const className = aphroditeCss(styles.mock)
 // })
 
-// suite.add('fela', function() {
-// 	const className = aphroditeCss(styles.mock)
-// })
+const fela = felaRenderer({
+	plugins: [felaPrefixer()]
+})
+
+suite.add('fela', function () {
+	const className = fela.renderRule(() => mockStyle)
+})
 
 const instance = new StyletronServer()
 
