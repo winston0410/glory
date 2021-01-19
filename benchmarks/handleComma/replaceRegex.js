@@ -2,12 +2,7 @@ const handleComma = (parentSelector, childSelectors) => {
 	if (!childSelectors.includes(',')) {
 		return childSelectors
 	}
-	return childSelectors
-		.split(',')
-		.map((selector) => {
-			return `${parentSelector} ${selector}`
-		})
-		.join(',')
+	return childSelectors.replace(/(^\B|^\b|,)/gi, `$1${parentSelector} `)
 }
 
 module.exports = handleComma
