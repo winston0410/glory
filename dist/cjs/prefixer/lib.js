@@ -2,7 +2,7 @@
 
 Object.defineProperty(exports, '__esModule', { value: true })
 
-var rambda_esm = require('../rambda.esm-d9e99816.js')
+var rambda_esm = require('../rambda.esm-587358b5.js')
 
 // ::Placeholder is not handled by inline-prefix-style,
 // https://github.com/robinweser/inline-style-prefixer/issues/104
