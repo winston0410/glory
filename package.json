@@ -85,5 +85,23 @@
 			"pre-commit": "npx lint-staged",
 			"pre-push": "yarn test"
 		}
-	}
+	},
+	"keywords": [
+		"css",
+		"style",
+		"styles",
+		"pico",
+		"nano",
+		"lite",
+		"react",
+		"js",
+		"in-js",
+		"css-in-js",
+		"styled",
+		"component",
+		"styled-components",
+		"jsxstyle",
+		"rule",
+		"stylesheet"
+	]
 }
