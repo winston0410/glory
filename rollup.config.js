@@ -26,6 +26,9 @@ export default [
 					if (output === 'src/index.js') {
 						return 'index.js'
 					}
+					if (output === 'src/preset.js') {
+						return 'preset.js'
+					}
 					return output
 				}
 			}),
@@ -36,5 +39,3 @@ export default [
 		]
 	}
 ]
-
-// 'src/index.js'

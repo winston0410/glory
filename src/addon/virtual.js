@@ -4,7 +4,7 @@ import {
 	assembleClassName,
 	assembleRule,
 	assembleDecl,
-	cssifyObject
+	isAtRule
 } from '../helper'
 import safeIsObj from 'safe-is-obj'
 
@@ -32,13 +32,15 @@ const addOn = function (renderer) {
 	renderer.virtual = function (selectorTemplate, decls, atRule) {
 		let classNames = ''
 
-		const css = cssifyObject(decls)
-
 		for (const prop in decls) {
 			const value = decls[prop]
 			if (safeIsObj(value)) {
-				// console.log('check value', prop, value)
-				// classNames += ` ${renderer.atomic(prop, assembleDecl(prop, value), '')}`
+				// if (isAtRule(prop)) {
+				// 	renderer.atomic('', assembleDecl(prop, value), '')
+				// 	renderer.put(selector, value, prop)
+				// } else {
+				//
+				// }
 			} else {
 				classNames += ` ${renderer.atomic('', assembleDecl(prop, value), '')}`
 			}
