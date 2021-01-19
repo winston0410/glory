@@ -5,9 +5,7 @@ import { create } from '../src/index'
 import addonRule from '../src/addon/rule'
 import joli from '@blackblock/joli-string'
 
-const generator = joli({
-	chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_'
-})
+const next = joli('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_')
 
 function createNano(config) {
 	const nano = create(config)
@@ -56,7 +54,7 @@ describe('rule()', function () {
 
 		const css = { color: 'red' }
 		const classNames = nano.rule(css)
-		const computed = 'test-' + generator.next().value
+		const computed = 'test-' + next()
 
 		expect(nano.put).toHaveBeenCalledTimes(1)
 		expect(nano.put).toHaveBeenCalledWith(`.${classNames}`, css)
