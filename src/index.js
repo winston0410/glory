@@ -2,7 +2,7 @@
 import { isBrowser } from 'browser-or-node'
 import joli from '@blackblock/joli-string'
 import { isEmpty } from 'rambda'
-import { isAtRule, buildDecls } from './helper'
+import { isAtRule, buildDecls, wrapRule } from './helper'
 import { hyphenateProperty } from 'css-in-js-utils'
 const isProduction = process.env.NODE_ENV !== 'production'
 
@@ -72,9 +72,9 @@ const create = function (config) {
 			return ''
 		}
 
-		const withSelector = `${selector}{${declInString}}`
+		const withSelector = wrapRule(selector, declInString)
 
-		const withAtRule = atRule ? `${atRule}{${withSelector}}` : withSelector
+		const withAtRule = atRule ? wrapRule(atRule, withSelector) : withSelector
 
 		renderer.putRaw(withAtRule)
 

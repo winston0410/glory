@@ -34,4 +34,6 @@ function buildDecls(renderer, selector, decls, atRule) {
 	return result
 }
 
-export { assembleClassName, addPrefix, isAtRule, buildDecls }
+const wrapRule = (name, rule) => `${name}{${rule}}`
+
+export { assembleClassName, addPrefix, isAtRule, buildDecls, wrapRule }

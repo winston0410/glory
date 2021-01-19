@@ -1,6 +1,6 @@
 'use strict'
 
-import { assembleClassName } from '../helper'
+import { assembleClassName, wrapRule } from '../helper'
 
 const addOn = function (renderer) {
 	// Setting the cache outside this function may result in more persistant but unexpected behaviors
@@ -13,9 +13,9 @@ const addOn = function (renderer) {
 
 		const className = assembleClassName(renderer)
 
-		const rule = `.${className}{${rawDecl}}`
+		const rule = wrapRule(`.${className}`, rawDecl)
 
-		const style = atRule ? `${atRule}{${rule}}` : rule
+		const style = atRule ? wrapRule(atRule, rule) : rule
 
 		cache[`${atRule}${rawDecl}`] = className
 		renderer.putRaw(style)
