@@ -19,7 +19,6 @@ const addOn = function (renderer) {
 			const id = `${atRule}${selector}${prop}${value}`
 
 			if (cache[id]) {
-				console.log('found identical value')
 				classNames += cache[id]
 				continue
 			}
