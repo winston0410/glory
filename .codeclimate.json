@@ -11,6 +11,7 @@
 		"./*.config.js",
 		"./dist/**/*",
 		"./**/*.spec.js",
+		"./**/*.test.js",
 		"./benchmarks/**/*.js"
 	]
 }
