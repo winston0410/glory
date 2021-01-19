@@ -2,7 +2,7 @@
 import { isBrowser } from 'browser-or-node'
 import joli from '@blackblock/joli-string'
 import { isEmpty } from 'rambda'
-import { isAtRule, buildDecls, wrapRule } from './helper'
+import { buildDecls, assembleRule } from './helper'
 import { hyphenateProperty } from 'css-in-js-utils'
 const isProduction = process.env.NODE_ENV !== 'production'
 
@@ -16,7 +16,6 @@ const create = function (config) {
 		raw: '',
 		pfx: '',
 		client: isBrowser,
-		decl: (key, value) => `${hyphenateProperty(key)}:${value};`,
 		hash: (obj) => next(),
 		selector: (parent, selector) => {
 			return parent + shouldAddSpace(selector)
@@ -72,9 +71,11 @@ const create = function (config) {
 			return ''
 		}
 
-		const withSelector = wrapRule(selector, declInString)
+		const withSelector = assembleRule(selector, declInString)
 
-		const withAtRule = atRule ? wrapRule(atRule, withSelector) : withSelector
+		const withAtRule = atRule
+			? assembleRule(atRule, withSelector)
+			: withSelector
 
 		renderer.putRaw(withAtRule)
 

@@ -1,6 +1,6 @@
 'use strict'
 
-import { assembleClassName, wrapRule } from '../helper'
+import { assembleClassName, assembleRule } from '../helper'
 
 const addOn = function (renderer) {
 	// Setting the cache outside this function may result in more persistant but unexpected behaviors
@@ -13,9 +13,9 @@ const addOn = function (renderer) {
 
 		const className = assembleClassName(renderer)
 
-		const rule = wrapRule(`.${className}`, rawDecl)
+		const rule = assembleRule(`.${className}`, rawDecl)
 
-		const style = atRule ? wrapRule(atRule, rule) : rule
+		const style = atRule ? assembleRule(atRule, rule) : rule
 
 		cache[`${atRule}${rawDecl}`] = className
 		renderer.putRaw(style)
@@ -23,40 +23,18 @@ const addOn = function (renderer) {
 		return className
 	}
 
-	renderer.virtual = function (selectorTemplate, decls, atrule) {
-		selectorTemplate = selectorTemplate || '&'
-
+	renderer.virtual = function (selectorTemplate, decls, atRule) {
 		let classNames = ''
 
 		for (const prop in decls) {
 			const value = decls[prop]
-
-			if (prop.indexOf('keyframes') > -1) {
-				renderer.putAt('', value, prop)
-				continue
-			}
-
-			if (value instanceof Object && !(value instanceof Array)) {
-				if (prop[0] === '@') {
-					classNames += renderer.virtual(selectorTemplate, value, prop)
-				} else {
-					classNames += renderer.virtual(
-						renderer.selector(selectorTemplate, prop),
-						value,
-						atrule
-					)
-				}
-			} else {
-				const rawDecl = renderer.decl(prop, value)
-				const rawDecls = rawDecl.split(';')
-
-				for (let i = 0; i < rawDecls.length; i++) {
-					const d = rawDecls[i]
-					if (d)
-						classNames += ` ${renderer.atomic(selectorTemplate, d, atrule)}`
-				}
-			}
+			classNames += ` ${renderer.atomic('', `${prop}:${value};`, '')}`
 		}
+		// for (let i = 0; i < rawDecls.length; i++) {
+		// 	const d = rawDecls[i]
+		// 	if (d)
+		// 		classNames += ` ${renderer.atomic(selectorTemplate, d, atrule)}`
+		// }
 
 		return classNames
 	}

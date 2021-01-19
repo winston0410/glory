@@ -125,26 +125,29 @@ describe('virtual', function () {
 
 			expect(className).toBe(' _a')
 			if (env.isServer) {
-				expect(nano.raw).toBe('._a{color:red}')
+				expect(nano.raw).toBe('._a{color:red;}')
 			}
 		})
 
-		// it('makes styles atomic', function() {
-		// 	const nano = createNano()
-		// 	const className = nano.virtual('&', {
-		// 		color: 'red',
-		// 		background: 'black',
-		// 		textAlign: 'center'
-		// 	})
-		//
-		// 	expect(className).toBe(' _a _b _c')
-		//
-		// 	if (env.isServer) {
-		// 		expect(nano.raw.includes('color:red')).toBe(true)
-		// 		expect(nano.raw.includes('background:black')).toBe(true)
-		// 		expect(nano.raw.includes('text-align:center')).toBe(true)
-		// 	}
-		// })
+		it('makes styles atomic', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+			const className = nano.virtual('&', {
+				color: 'red',
+				background: 'black',
+				textAlign: 'center'
+			})
+
+			expect(className).toBe(' _a _b _c')
+
+			if (env.isServer) {
+				console.log('check raw result', nano.raw)
+				expect(nano.raw.includes('color:red')).toBe(true)
+				expect(nano.raw.includes('background:black')).toBe(true)
+				expect(nano.raw.includes('text-align:center')).toBe(true)
+			}
+		})
 		//
 		// it('allows nesting', function() {
 		// 	const nano = createNano()

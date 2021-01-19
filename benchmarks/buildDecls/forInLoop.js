@@ -1,10 +1,7 @@
 import { hyphenateProperty } from 'css-in-js-utils'
 import { is, isEmpty } from 'rambda'
 import safeIsObj from 'safe-is-obj'
-
-const isAtRule = (selector) => {
-	return selector[0] === '@' && selector !== '@font-face'
-}
+import { isAtRule, assembleDecl } from '../../src/helper'
 
 function buildDecls(renderer, selector, decls, atRule) {
 	let result = ''
@@ -12,7 +9,7 @@ function buildDecls(renderer, selector, decls, atRule) {
 		const value = decls[prop]
 		if (Array.isArray(value)) {
 			const expandedRules = value.reduce(
-				(acc, currentValue) => acc + renderer.decl(prop, currentValue),
+				(acc, currentValue) => acc + assembleDecl(prop, currentValue),
 				''
 			)
 			result += expandedRules
@@ -23,7 +20,7 @@ function buildDecls(renderer, selector, decls, atRule) {
 				result += renderer.put(renderer.selector(selector, prop), value, atRule)
 			}
 		} else {
-			result += `${hyphenateProperty(prop)}:${value};`
+			result += assembleDecl(prop, value)
 		}
 	}
 	return result

@@ -7,6 +7,10 @@ const assembleClassName = (renderer, name) => {
 	return renderer.pfx + (name || renderer.hash())
 }
 
+const assembleDecl = (prop, value) => `${hyphenateProperty(prop)}:${value};`
+
+const assembleRule = (name, rule) => `${name}{${rule}}`
+
 const addPrefix = prefixAll
 
 const isAtRule = (selector) => {
@@ -19,7 +23,7 @@ function buildDecls(renderer, selector, decls, atRule) {
 		const value = decls[prop]
 		if (Array.isArray(value)) {
 			for (const currentValue of value) {
-				result += renderer.decl(prop, currentValue)
+				result += assembleDecl(prop, currentValue)
 			}
 		} else if (safeIsObj(value)) {
 			if (isAtRule(prop)) {
@@ -28,12 +32,10 @@ function buildDecls(renderer, selector, decls, atRule) {
 				result += renderer.put(renderer.selector(selector, prop), value, atRule)
 			}
 		} else {
-			result += `${hyphenateProperty(prop)}:${value};`
+			result += assembleDecl(prop, value)
 		}
 	}
 	return result
 }
 
-const wrapRule = (name, rule) => `${name}{${rule}}`
-
-export { assembleClassName, addPrefix, isAtRule, buildDecls, wrapRule }
+export { assembleClassName, addPrefix, isAtRule, buildDecls, assembleRule }
