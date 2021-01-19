@@ -3,9 +3,11 @@
 
 const env = require('./env')
 import { create } from '../src/index'
+import addonRule from '../src/addon/rule'
 
 function createNano(config) {
 	const nano = create(config)
+	addonRule(nano)
 	return nano
 }
 

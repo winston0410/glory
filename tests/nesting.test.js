@@ -4,10 +4,12 @@
 const env = require('./env')
 import { create } from '../src/index'
 import addonNesting from '../src/addon/nesting'
+import addonRule from '../src/addon/rule'
 
 function createNano(config) {
 	const nano = create(config)
 
+	addonRule(nano)
 	addonNesting(nano)
 
 	return nano

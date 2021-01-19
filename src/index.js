@@ -1,9 +1,6 @@
 'use strict'
 import { isBrowser } from 'browser-or-node'
 import joli from '@blackblock/joli-string'
-import { isEmpty } from 'rambda'
-import { isAtRule, cssifyObject, assembleRule } from './helper'
-import { hyphenateProperty } from 'css-in-js-utils'
 const isProduction = process.env.NODE_ENV !== 'production'
 
 const shouldAddSpace = (selector) =>
@@ -21,14 +18,6 @@ const create = function (config) {
 			return parent + shouldAddSpace(selector)
 		},
 		...config
-	}
-
-	const handleNestedDecls = (selector, atRule) => (prop, value) => {
-		if (isAtRule(prop)) {
-			renderer.put(selector, value, prop)
-		} else {
-			renderer.put(renderer.selector(selector, prop), value, atRule)
-		}
 	}
 
 	if (renderer.client) {
@@ -70,20 +59,6 @@ const create = function (config) {
 		renderer.putRaw = function (rawCssRule) {
 			renderer.raw += rawCssRule
 		}
-	}
-
-	renderer.put = function (selector, decls, atRule) {
-		const css = cssifyObject(decls, handleNestedDecls(selector, atRule))
-
-		if (isEmpty(css)) {
-			return ''
-		}
-
-		const withSelector = assembleRule(selector, css)
-
-		renderer.putRaw(atRule ? assembleRule(atRule, withSelector) : withSelector)
-
-		return ''
 	}
 
 	return renderer

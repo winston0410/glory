@@ -2,8 +2,7 @@
 'use strict'
 const env = require('./env')
 import { create } from '../src/index'
-
-// import { create } from '../src/index'
+import addonRule from '../src/addon/rule'
 
 function findCssRuleAndDelete(selector) {
 	const sheets = document.styleSheets
@@ -27,13 +26,19 @@ function findCssRuleAndDelete(selector) {
 	return null
 }
 
+function createNano(config) {
+	const nano = create(config)
+	addonRule(nano)
+	return nano
+}
+
 describe('nano-css', function () {
 	it('exists', function () {
 		expect(typeof create).toBe('function')
 	})
 
 	it('can create renderer', function () {
-		const nano = create()
+		const nano = createNano()
 
 		expect(typeof nano).toBe('object')
 		expect(typeof nano.putRaw).toBe('function')
@@ -51,20 +56,18 @@ describe('nano-css', function () {
 	it('can set configuration', function () {
 		const h = function () {}
 		const stringify = function () {}
-		const nano = create({
+		const nano = createNano({
 			pfx: 'hello-',
-			h: h,
-			stringify: stringify
+			h: h
 		})
 
 		expect(nano.pfx).toBe('hello-')
 		expect(nano.h).toBe(h)
-		expect(nano.stringify).toBe(stringify)
 	})
 
 	describe('.put()', function () {
 		it('inserts CSS', function () {
-			const nano = create()
+			const nano = createNano()
 
 			nano.put('.foo', {
 				color: 'red'
@@ -83,7 +86,7 @@ describe('nano-css', function () {
 		})
 
 		it('puts many declarations', function () {
-			const nano = create()
+			const nano = createNano()
 
 			nano.put('.foo2', {
 				color: 'red',
@@ -109,7 +112,7 @@ describe('nano-css', function () {
 		})
 		//
 		it('supports nesting', function () {
-			const nano = create()
+			const nano = createNano()
 
 			nano.put('.foo3', {
 				'.nested': {
@@ -131,7 +134,7 @@ describe('nano-css', function () {
 		})
 		// //
 		it('supports nesting - 2', function () {
-			const renderer = create()
+			const renderer = createNano()
 
 			renderer.put('.foo', {
 				'.bar': {
@@ -158,7 +161,7 @@ describe('nano-css', function () {
 		})
 		//
 		it('supports pseudo selectors', function () {
-			const nano = create()
+			const nano = createNano()
 
 			nano.put('.foo3', {
 				':hover': {
@@ -180,7 +183,7 @@ describe('nano-css', function () {
 		})
 		//
 		it('can insert global styles', function () {
-			const nano = create()
+			const nano = createNano()
 			nano.putRaw = jest.fn()
 
 			nano.put('', {
@@ -205,7 +208,7 @@ describe('nano-css', function () {
 		})
 		//
 		it('supports @media queries', function () {
-			const nano = create()
+			const nano = createNano()
 			nano.putRaw = jest.fn()
 
 			nano.put('.foo', {
@@ -221,7 +224,7 @@ describe('nano-css', function () {
 		})
 		//
 		it('supports @media queries - 2', function () {
-			const nano = create()
+			const nano = createNano()
 			nano.putRaw = jest.fn()
 
 			nano.put('', {
@@ -239,7 +242,7 @@ describe('nano-css', function () {
 		})
 
 		it('supports @media queries - 3', function () {
-			const nano = create()
+			const nano = createNano()
 
 			if (env.isClient) {
 				nano.putRaw = jest.fn()
@@ -268,7 +271,7 @@ describe('nano-css', function () {
 		})
 
 		it('supports @font-face', function () {
-			const nano = create()
+			const nano = createNano()
 
 			if (env.isClient) {
 				nano.putRaw = jest.fn()

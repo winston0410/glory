@@ -51,7 +51,7 @@ const className = camouflage.virtual(style)
 
 ## Difference between `nano-css` and `camouflage`
 
-- `renderer.put()` is not longer the default.
+- `renderer.put()` is no longer the default.
 
 - Handle array values without needing `array` add-on.
 
@@ -98,4 +98,4 @@ This library is developed based on the good work of [nano-css](https://github.co
 
 ### [TailwindCSS](https://tailwindcss.com/) and [Styletron](https://www.styletron.org/)
 
-These two libraries has enlightened me with the potential of atomic css.
+These two libraries have enlightened me with the potential of atomic css.
