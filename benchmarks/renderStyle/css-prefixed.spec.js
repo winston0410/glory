@@ -28,6 +28,7 @@ const mockStyle = {
 const nano = create()
 
 Rule(nano)
+Prefixer(nano)
 
 suite.add('nano-css, rule()', function () {
 	const className = nano.rule(mockStyle)
@@ -37,24 +38,42 @@ const nano2 = create()
 
 Rule(nano2)
 Virtual(nano2)
+Prefixer(nano2)
 
 suite.add('nano-css, virtual()', function () {
 	const className = nano2.virtual('&', mockStyle)
 })
 
 suite.add('emotion', function () {
-	const className = css(mockStyle)
+	const className = css(addPrefix(mockStyle))
 })
+
+suite.add('goober', function () {
+	const className = gooberCss(mockStyle)
+})
+
+// Cannot get aphrodite to work properly
+// const styles = StyleSheet.create({
+// 	mock: mockStyle
+// })
+// suite.add('aphrodite', function() {
+// 	const className = aphroditeCss(styles.mock)
+// })
+
+// suite.add('fela', function() {
+// 	const className = aphroditeCss(styles.mock)
+// })
 
 const instance = new StyletronServer()
 
 suite.add('styletron', function () {
-	const className = instance.renderStyle(mockStyle)
+	const className = instance.renderStyle(addPrefix(mockStyle))
 })
 
 const camouflage = createCamoflage()
 
 RuleCamouflage(camouflage)
+PrefixerCamouflage(camouflage)
 
 suite.add('camouflage, rule()', function () {
 	const className = camouflage.rule(mockStyle)

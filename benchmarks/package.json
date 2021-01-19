@@ -8,6 +8,7 @@
 		"benchmark:keyframe": "node buildKeyframe/keyframes.spec.js",
 		"benchmark:decl": "node -r esm buildDecls/decls.spec.js",
 		"benchmark:css": "node -r esm renderStyle/css.spec.js",
+		"benchmark:css:prefixed": "node -r esm renderStyle/css-prefixed.spec.js",
 		"benchmark:css:keyframes": "node -r esm css renderStyle/keyframes.spec.js",
 		"benchmark:prefix:case": "node -r esm addPrefix/prefixer.spec.js"
 	},
@@ -21,8 +22,10 @@
 		"fela": "^11.5.2",
 		"goober": "^2.0.21",
 		"jss": "^10.5.0",
+		"jss-preset-default": "^10.5.0",
 		"nano-css": "^5.3.1",
 		"styled-components": "^5.2.1",
-		"styled-jsx": "^3.3.2"
+		"styled-jsx": "^3.3.2",
+		"styletron-engine-atomic": "^1.4.6"
 	}
 }
