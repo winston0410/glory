@@ -4,14 +4,14 @@ import joli from '@blackblock/joli-string'
 import { isEmpty } from 'rambda'
 import { isAtRule, buildDecls } from './helper'
 import { hyphenateProperty } from 'css-in-js-utils'
-const next = joli('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_')
-
 const isProduction = process.env.NODE_ENV !== 'production'
 
 const shouldAddSpace = (selector) =>
 	selector[0] === '@' || selector[0] === ':' ? selector : ` ${selector}`
 
 const create = function (config) {
+	const next = joli('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_')
+
 	const renderer = {
 		raw: '',
 		pfx: '',
