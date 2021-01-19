@@ -9,3 +9,5 @@ const handleComma = (parentSelector, childSelectors) => {
 		})
 		.join(',')
 }
+
+module.exports = handleComma

@@ -10,7 +10,8 @@
 		"benchmark:css": "node -r esm renderStyle/css.spec.js",
 		"benchmark:css:prefixed": "node -r esm renderStyle/css-prefixed.spec.js",
 		"benchmark:css:keyframes": "node -r esm css renderStyle/keyframes.spec.js",
-		"benchmark:prefix:case": "node -r esm addPrefix/prefixer.spec.js"
+		"benchmark:prefix:case": "node -r esm addPrefix/prefixer.spec.js",
+		"benchmark:comma": "node handleComma/handleComma.spec.js"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",

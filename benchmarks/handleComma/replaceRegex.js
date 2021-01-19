@@ -4,3 +4,5 @@ const handleComma = (parentSelector, childSelectors) => {
 	}
 	return childSelectors.replace(/(^\B|^\b|,)/gi, `$1${parentSelector} `)
 }
+
+module.exports = handleComma
