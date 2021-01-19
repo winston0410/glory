@@ -8,50 +8,59 @@ import {
 } from '../helper'
 import safeIsObj from 'safe-is-obj'
 
-const objectToClassNames = (callback, decls, selector = '', atRule = '') => {
-	let classNames = ''
-	for (const prop in decls) {
-		const value = decls[prop]
-		if (Array.isArray(value)) {
-			for (const currentValue of value) {
-				classNames += ` ${callback(assembleDecl(prop, currentValue))}`
-			}
-		} else if (safeIsObj(value)) {
-			if (isAtRule(prop)) {
-				classNames += objectToClassNames(callback, value, '', prop)
-			} else {
-				classNames += objectToClassNames(callback, value, prop)
-			}
-		} else {
-			classNames += ` ${callback(assembleDecl(prop, value), selector, atRule)}`
-		}
-	}
-	return classNames
-}
-
 const addOn = function (renderer) {
 	// Setting the cache outside this function may result in more persistant but unexpected behaviors
 	const cache = {}
 
-	renderer.atomic = function (rawDecl, selector = '', atRule = '') {
-		const id = `${atRule}${selector}${rawDecl}`
+	const objectToClassNames = (decls, selector = '', atRule = '') => {
+		let classNames = ''
+		for (const prop in decls) {
+			const value = decls[prop]
+			const id = `${atRule}${selector}${prop}${value}`
 
-		if (cache[id]) {
-			return cache[id]
+			if (cache[id]) {
+				console.log('found identical value')
+				classNames += cache[id]
+				continue
+			}
+
+			if (Array.isArray(value)) {
+				for (const currentValue of value) {
+					const result = ` ${renderer.atomic(assembleDecl(prop, currentValue))}`
+					cache[id] = result
+					classNames += result
+				}
+			} else if (safeIsObj(value)) {
+				if (isAtRule(prop)) {
+					classNames += objectToClassNames(value, '', prop)
+				} else {
+					classNames += objectToClassNames(value, prop)
+				}
+			} else {
+				const result = ` ${renderer.atomic(
+					assembleDecl(prop, value),
+					selector,
+					atRule
+				)}`
+				cache[id] = result
+				classNames += result
+			}
 		}
+		return classNames
+	}
 
+	renderer.atomic = function (rawDecl, selector = '', atRule = '') {
 		const className = assembleClassName(renderer)
 
 		const rule = assembleRule(`.${className}${selector}`, rawDecl)
 
-		cache[id] = className
 		renderer.putRaw(atRule ? assembleRule(atRule, rule) : rule)
 
 		return className
 	}
 
 	// Only media queries should be supported in virtual
-	renderer.virtual = (decls) => objectToClassNames(renderer.atomic, decls)
+	renderer.virtual = (decls) => objectToClassNames(decls)
 
 	renderer.rule = renderer.virtual
 }

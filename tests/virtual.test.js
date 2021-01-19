@@ -55,15 +55,6 @@ describe('virtual', function () {
 			}
 		})
 
-		it('caches basic declarations', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-
-			expect(nano.atomic('color:red;')).toBe('_a')
-			expect(nano.atomic('color:red;')).toBe('_a')
-		})
-
 		it('at-rules', function () {
 			const nano = createNano({
 				pfx: '_'
@@ -74,18 +65,6 @@ describe('virtual', function () {
 			if (env.isServer) {
 				expect(nano.raw).toBe('@media screen{._a{color:red;}}')
 			}
-		})
-
-		it('caches at-rules', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-
-			const className = nano.atomic('color:red;', '', '@media screen')
-
-			const cachedClassName = nano.atomic('color:red;', '', '@media screen')
-
-			expect(className).toBe(cachedClassName)
 		})
 
 		it('handles pesudo-classes', function () {
@@ -141,6 +120,42 @@ describe('virtual', function () {
 				expect(nano.raw.includes('background:black')).toBe(true)
 				expect(nano.raw.includes('text-align:center')).toBe(true)
 			}
+		})
+
+		it('caches basic declarations', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+
+			const className = nano.virtual({
+				color: 'red'
+			})
+
+			const cachedClassName = nano.virtual({
+				color: 'red'
+			})
+
+			expect(className).toBe(cachedClassName)
+		})
+
+		it('caches at-rules', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+
+			const className = nano.virtual({
+				'@media screen': {
+					color: 'red'
+				}
+			})
+
+			const cachedClassName = nano.virtual({
+				'@media screen': {
+					color: 'red'
+				}
+			})
+
+			expect(className).toBe(cachedClassName)
 		})
 
 		it('allows nesting', function () {
