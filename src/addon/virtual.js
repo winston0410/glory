@@ -1,6 +1,11 @@
 'use strict'
 
-import { assembleClassName, assembleRule, assembleDecl } from '../helper'
+import {
+	assembleClassName,
+	assembleRule,
+	assembleDecl,
+	cssifyObject
+} from '../helper'
 import safeIsObj from 'safe-is-obj'
 
 const addOn = function (renderer) {
@@ -18,16 +23,16 @@ const addOn = function (renderer) {
 
 		const rule = assembleRule(`.${className}`, rawDecl)
 
-		const style = atRule ? assembleRule(atRule, rule) : rule
-
 		cache[id] = className
-		renderer.putRaw(style)
+		renderer.putRaw(atRule ? assembleRule(atRule, rule) : rule)
 
 		return className
 	}
 
 	renderer.virtual = function (selectorTemplate, decls, atRule) {
 		let classNames = ''
+
+		const css = cssifyObject(decls)
 
 		for (const prop in decls) {
 			const value = decls[prop]
@@ -38,11 +43,6 @@ const addOn = function (renderer) {
 				classNames += ` ${renderer.atomic('', assembleDecl(prop, value), '')}`
 			}
 		}
-		// for (let i = 0; i < rawDecls.length; i++) {
-		// 	const d = rawDecls[i]
-		// 	if (d)
-		// 		classNames += ` ${renderer.atomic(selectorTemplate, d, atrule)}`
-		// }
 
 		return classNames
 	}

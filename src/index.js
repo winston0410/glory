@@ -81,11 +81,7 @@ const create = function (config) {
 
 		const withSelector = assembleRule(selector, css)
 
-		const withAtRule = atRule
-			? assembleRule(atRule, withSelector)
-			: withSelector
-
-		renderer.putRaw(withAtRule)
+		renderer.putRaw(atRule ? assembleRule(atRule, withSelector) : withSelector)
 
 		return ''
 	}
