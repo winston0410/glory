@@ -9,6 +9,8 @@ module.exports = async () => {
 		// testEnvironment: 'jest-environment-node',
 		testRegex: '.*/tests/.*\\.(test|spec)\\.(jsx?)$',
 		setupFiles: ['./tests/setup.js'],
-		moduleFileExtensions: ['js', 'jsx', 'json']
+		moduleFileExtensions: ['js', 'jsx', 'json'],
+		collectCoverage: true,
+		coverageReporters: ['lcov']
 	}
 }
