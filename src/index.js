@@ -2,6 +2,8 @@
 import { isBrowser } from 'browser-or-node'
 import joli from '@blackblock/joli-string'
 import greenlet from 'greenlet'
+import Worker from 'tiny-worker'
+import Blob from 'cross-blob'
 const isProduction = process.env.NODE_ENV !== 'production'
 
 const shouldAddSpace = (selector) =>
