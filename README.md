@@ -14,11 +14,13 @@ Don't you believe me? Check out the [benchmark](https://github.com/winston0410/c
 
 - :fire: Blazing **fast**.
 
+- :earth_asia: **Framework agonistic**.
+
 - :white_check_mark: **Well-tested**.
 
-- :ambulance: Provide optional **prefixer** plugin
+- :ambulance: Provide optional **prefixer** plugin.
 
-- :nail_care: Support **nesting** and **media-queries**
+- :nail_care: Support **nesting** and **media-queries**.
 
 - :construction: Support SSG **style rehydration**. Unnecessary re-render is avoided.
 
@@ -50,12 +52,6 @@ const style = {
 const className = camouflage.virtual(style)
 //return 'a b' as class name for maximum performance
 ```
-
-## Difference between `nano-css` and `camouflage`
-
-- `renderer.put()` is no longer the default.
-
-- Handle array values without needing `array` add-on.
 
 ## Made in Hong Kong
 
@@ -91,6 +87,14 @@ camouflage, rule() x 299,107 ops/sec ±2.54% (74 runs sampled)
 camouflage, virtual() x 1,319,239 ops/sec ±2.12% (93 runs sampled)
 Fastest is camouflage, virtual()
 ```
+
+## Difference between `nano-css` and `camouflage`
+
+This library is a folk of `nano-css`, with the following difference:
+
+- `renderer.put()` is no longer the default.
+
+- Handle array values without needing `array` add-on.
 
 ## Inspirations
 
