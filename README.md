@@ -22,7 +22,7 @@ Don't you believe me? Check out the [benchmark](https://github.com/winston0410/c
 
 - :nail_care: Support **nesting** and **media-queries**.
 
-- :construction: Support SSR/SSG server side render **style rehydration**. Unnecessary re-render is avoided.
+- :construction: **Isomorphic**. Support SSR/SSG server side render **style rehydration**. Unnecessary re-render is avoided.
 
 ## Installation
 
@@ -33,6 +33,8 @@ A 0.1.0 will be released soon.
 Support this package by becoming our sponsor.
 
 ## Getting started
+
+See our [quick start guide](https://github.com/winston0410/camouflage/blob/master/docs/README.md) for more details.
 
 ```javascript
 import { create as createCamoflage } from 'camouflage'
