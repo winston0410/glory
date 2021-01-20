@@ -74,13 +74,14 @@ You can test the benchmark in your computer by cloning this repo and `cd benchma
 
 ```markdownify
 $ node -r esm renderStyle/css.spec.js
-nano-css, rule() x 110,797 ops/sec ±20.79% (63 runs sampled)
-nano-css, virtual() x 401,680 ops/sec ±1.72% (94 runs sampled)
-emotion x 371,025 ops/sec ±0.54% (97 runs sampled)
-styletron x 794,703 ops/sec ±0.58% (94 runs sampled)
-camouflage, rule() x 288,544 ops/sec ±67.24% (49 runs sampled)
-camouflage, virtual() x 1,272,858 ops/sec ±5.03% (90 runs sampled)
-Fastest is camouflage, virtual()
+nano-css("^5.3.1"), rule() x 121,604 ops/sec ±20.27% (64 runs sampled)
+nano-css("^5.3.1"), virtual() x 395,781 ops/sec ±0.38% (92 runs sampled)
+emotion("^11.1.3") x 381,874 ops/sec ±0.32% (98 runs sampled)
+styletron("^1.4.6") x 816,730 ops/sec ±0.31% (97 runs sampled)
+fela("^11.5.2") x 1,352,522 ops/sec ±1.11% (93 runs sampled)
+camouflage, rule() x 324,168 ops/sec ±49.39% (56 runs sampled)
+camouflage, virtual() x 1,357,795 ops/sec ±0.63% (94 runs sampled)
+Fastest is camouflage, virtual(),fela("^11.5.2")
 ```
 
 ### With prefixer
