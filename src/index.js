@@ -1,6 +1,7 @@
 'use strict'
 import { isBrowser } from 'browser-or-node'
 import joli from '@blackblock/joli-string'
+import greenlet from 'greenlet'
 const isProduction = process.env.NODE_ENV !== 'production'
 
 const shouldAddSpace = (selector) =>
@@ -35,7 +36,7 @@ const create = function (config) {
 	}
 
 	if (renderer.client) {
-		renderer.putRaw = function (rawCssRule) {
+		renderer.putRaw = async function (rawCssRule) {
 			if (isProduction) {
 				const sheet = renderer.sh.sheet
 
@@ -57,7 +58,7 @@ const create = function (config) {
 			}
 		}
 	} else {
-		renderer.putRaw = function (rawCssRule) {
+		renderer.putRaw = async function (rawCssRule) {
 			renderer.raw += rawCssRule
 		}
 	}
