@@ -6,6 +6,7 @@ import { create } from '../src/index'
 import addOnHydration from '../src/addon/hydration'
 import addOnRule from '../src/addon/rule'
 import addonVirtual from '../src/virtual'
+import addonKeyframes from '../src/keyframes'
 
 function createRuleNano(config) {
 	const nano = create(config)
@@ -17,6 +18,13 @@ function createRuleNano(config) {
 function createVirtualNano(config) {
 	const nano = create(config)
 	addonVirtual(nano)
+	addOnHydration(nano)
+	return nano
+}
+
+function createKeyframesNano(config) {
+	const nano = create(config)
+	addonKeyframes(nano)
 	addOnHydration(nano)
 	return nano
 }
@@ -122,7 +130,21 @@ describe('hydration', function () {
 	// 	expect(putMock).toHaveBeenCalledTimes(0)
 	// })
 
-	// it('should prevent keyframes found in stylesheet from re-rendering', function() {
-	//
-	// })
+	describe('when using keyframes()', function () {
+		it('should prevent keyframes found in stylesheet from re-rendering', function () {
+			const mockStylesheet = document.createElement('style')
+			mockStylesheet.textContent = '.one{display:block;}'
+			document.head.appendChild(mockStylesheet)
+
+			const nano = createKeyframesNano({
+				sh: mockStylesheet
+			})
+
+			const keyframesMock = jest.spyOn(nano, 'keyframes')
+
+			nano.keyframes()
+
+			expect(keyframesMock).toHaveBeenCalledTimes(0)
+		})
+	})
 })
