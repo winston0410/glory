@@ -4,47 +4,100 @@
 const env = require('./env')
 import { create } from '../src/index'
 import addOnHydration from '../src/addon/hydration'
+import addOnRule from '../src/addon/rule'
+import addonVirtual from '../src/virtual'
+
+function createRuleNano(config) {
+	const nano = create(config)
+	addOnRule(nano)
+	addOnHydration(nano)
+	return nano
+}
+
+function createVirtualNano(config) {
+	const nano = create(config)
+	addonVirtual(nano)
+	addOnHydration(nano)
+	return nano
+}
 
 describe('hydration', function () {
-	it('should prevent basic declaration found in stylesheet from re-rendering', function () {
-		const mockStylesheet = document.createElement('style')
-		mockStylesheet.textContent = '.one{display:block;}'
-		document.head.appendChild(mockStylesheet)
+	describe('when using put() or rule()', function () {
+		it('should prevent basic declaration found in stylesheet from re-rendering', function () {
+			const mockStylesheet = document.createElement('style')
+			mockStylesheet.textContent = '.one{display:block;}'
+			document.head.appendChild(mockStylesheet)
 
-		const nano = create({
-			sh: mockStylesheet
+			const nano = createRuleNano({
+				sh: mockStylesheet
+			})
+
+			const putMock = jest.spyOn(nano, 'put')
+
+			nano.put('.one', {
+				display: 'block'
+			})
+
+			expect(putMock).toHaveBeenCalledTimes(0)
 		})
 
-		const putMock = jest.spyOn(nano, 'put')
+		it('should re-render basic declaration, if props in stylesheet and in Javascript are different', function () {
+			const mockStylesheet = document.createElement('style')
+			mockStylesheet.textContent = '.one{display:block;}'
+			document.head.appendChild(mockStylesheet)
 
-		addOnHydration(nano)
+			const nano = createRuleNano({
+				sh: mockStylesheet
+			})
 
-		nano.put('.one', {
-			display: 'block'
+			const putMock = jest.spyOn(nano, 'put')
+
+			nano.put('.one', {
+				display: 'block',
+				color: 'red'
+			})
+
+			expect(putMock).toHaveBeenCalledTimes(1)
 		})
-
-		expect(putMock).toHaveBeenCalledTimes(0)
 	})
 
-	it('should re-render basic declaration, if props in stylesheet and in Javascript are different', function () {
-		const mockStylesheet = document.createElement('style')
-		mockStylesheet.textContent = '.one{display:block;}'
-		document.head.appendChild(mockStylesheet)
+	describe('when using virtual()', function () {
+		it('should prevent basic declaration found in stylesheet from re-rendering', function () {
+			const mockStylesheet = document.createElement('style')
+			mockStylesheet.textContent = '.one{display:block;}'
+			document.head.appendChild(mockStylesheet)
 
-		const nano = create({
-			sh: mockStylesheet
+			const nano = createVirtualNano({
+				sh: mockStylesheet
+			})
+
+			const virtualMock = jest.spyOn(nano, 'virtual')
+
+			nano.virtual({
+				display: 'block'
+			})
+
+			expect(virtualMock).toHaveBeenCalledTimes(0)
 		})
 
-		const putMock = jest.spyOn(nano, 'put')
+		it('should re-render basic declaration, if props in stylesheet and in Javascript are different', function () {
+			const mockStylesheet = document.createElement('style')
+			mockStylesheet.textContent = '.one{display:block;}'
+			document.head.appendChild(mockStylesheet)
 
-		addOnHydration(nano)
+			const nano = createVirtualNano({
+				sh: mockStylesheet
+			})
 
-		nano.put('.one', {
-			display: 'block',
-			color: 'red'
+			const virtualMock = jest.spyOn(nano, 'virtual')
+
+			nano.virtual({
+				display: 'block',
+				color: 'red'
+			})
+
+			expect(virtualMock).toHaveBeenCalledTimes(1)
 		})
-
-		expect(putMock).toHaveBeenCalledTimes(1)
 	})
 
 	// it('should prevent media-queries found in stylesheet from re-rendering', function() {
