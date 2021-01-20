@@ -20,7 +20,7 @@ Don't you believe me? Check out the [benchmark](https://github.com/winston0410/c
 
 - :ambulance: Provide optional **prefixer** plugin.
 
-- :nail_care: Support **nesting** and **media-queries**.
+- :nail_care: Support **nesting**, **keyframes** and **media-queries**.
 
 - :construction: **Isomorphic**. Support SSR/SSG server side render **style rehydration**. Unnecessary re-render is avoided.
 
@@ -43,7 +43,7 @@ import hydration from 'camouflage/hydration'
 import virtual from 'camouflage/virtual'
 
 const camouflage = create({
-    //Config renderer here
+	//Config renderer here
 })
 
 //Use plugin to upgrade the default renderer
@@ -56,14 +56,16 @@ prefixer(camouflage)
 hydration(camouflage)
 
 const style = {
-    color: 'red',
-    paddingTop: '100px',
-    '@media screen': {
-        color: 'red'
-    },
-    ':hover': {
-        backgroundColor: 'blue'
-    }
+	color: 'red',
+	paddingTop: '100px',
+	'@media screen': {
+		//supports media queries
+		color: 'red'
+	},
+	':hover': {
+		//supports pesudo-classes and selectors
+		backgroundColor: 'blue'
+	}
 }
 
 const className = camouflage.virtual(style)
@@ -116,6 +118,14 @@ This library is a folk of `nano-css`, with the following difference:
 - `renderer.put()` is no longer the default.
 
 - Handle array values without needing `array` add-on.
+
+## Contribution
+
+TODO
+
+## Roadmap
+
+You can check our [development roadmap here](https://github.com/winston0410/camouflage/projects/1)
 
 ## Inspirations
 
