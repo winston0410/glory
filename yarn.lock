@@ -2329,6 +2329,11 @@ graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.2.4:
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.4.tgz#2256bde14d3632958c465ebc96dc467ca07a29fb"
   integrity sha512-WjKPNJF79dtJAVniUlGGWHYGz2jWxT6VhN/4m1NdkbZ2nOsEF+cI1Edgql5zCRhs/VsQYRvrXctxktVXZUkixw==
 
+greenlet@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/greenlet/-/greenlet-1.1.0.tgz#a35f119abc1ba5af052b61e46b4f1cbd7559de0b"
+  integrity sha512-W/kKzq7ZSF/LFItIjaSaccw8L6js+9SMSS5buXZs/Td7qZAT91Kd0LTxuUjSWDwuyv4MPo/fhZdkRLV1zsuClg==
+
 growl@1.10.5:
   version "1.10.5"
   resolved "https://registry.yarnpkg.com/growl/-/growl-1.10.5.tgz#f2735dc2283674fa67478b10181059355c369e5e"

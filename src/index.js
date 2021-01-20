@@ -41,7 +41,6 @@ const create = function (config) {
 
 				try {
 					sheet.insertRule(rawCssRule, sheet.cssRules.length)
-					// eslint-disable-next-line no-empty
 				} catch (error) {
 					console.log(error)
 				}
