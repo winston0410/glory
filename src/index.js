@@ -26,15 +26,17 @@ const create = function (config) {
 			document.head.appendChild(renderer.sh)
 		}
 
-		if (process.env.NODE_ENV !== 'production') {
+		if (!isProduction) {
 			renderer.sh.setAttribute('data-nano-css-dev', '')
 			renderer.shTest = document.createElement('style')
 			renderer.shTest.setAttribute('data-nano-css-dev-tests', '')
 			document.head.appendChild(renderer.shTest)
 		}
+	}
 
+	if (renderer.client) {
 		renderer.putRaw = function (rawCssRule) {
-			if (process.env.NODE_ENV === 'production') {
+			if (isProduction) {
 				const sheet = renderer.sh.sheet
 
 				try {
