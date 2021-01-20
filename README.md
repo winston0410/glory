@@ -43,7 +43,7 @@ import hydration from 'camouflage/hydration'
 import virtual from 'camouflage/virtual'
 
 const camouflage = create({
-  //Config renderer here
+    //Config renderer here
 })
 
 //Use plugin to upgrade the default renderer
@@ -56,12 +56,20 @@ prefixer(camouflage)
 hydration(camouflage)
 
 const style = {
-  color: 'red',
-  paddingTop: '100px';
+    color: 'red',
+    paddingTop: '100px',
+    '@media screen': {
+        color: 'red'
+    },
+    ':hover': {
+        backgroundColor: 'blue'
+    }
 }
 
 const className = camouflage.virtual(style)
-//return 'a b' as class name for maximum performance
+//return 'a b c d' as class name for maximum performance
+
+//Insert .a{color:red;}.b{padding-top:100px;}@media screen{.c{color:red;}}.d:hover{background-color:blue;} as styling
 ```
 
 ## Made in Hong Kong
