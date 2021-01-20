@@ -30,7 +30,7 @@ const nano = create()
 
 Rule(nano)
 
-suite.add('nano-css, rule()', function () {
+suite.add('nano-css("^5.3.1"), rule()', function () {
 	const className = nano.rule(mockStyle)
 })
 
@@ -39,23 +39,23 @@ const nano2 = create()
 Rule(nano2)
 Virtual(nano2)
 
-suite.add('nano-css, virtual()', function () {
+suite.add('nano-css("^5.3.1"), virtual()', function () {
 	const className = nano2.virtual('&', mockStyle)
 })
 
-suite.add('emotion', function () {
+suite.add('emotion("^11.1.3")', function () {
 	const className = css(mockStyle)
 })
 
 const instance = new StyletronServer()
 
-suite.add('styletron', function () {
+suite.add('styletron("^1.4.6")', function () {
 	const className = instance.renderStyle(mockStyle)
 })
 
 const fela = felaRenderer()
 
-suite.add('fela', function () {
+suite.add('fela("^11.5.2")', function () {
 	const className = fela.renderRule(() => mockStyle)
 })
 

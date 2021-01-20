@@ -1,8 +1,8 @@
 # Camouflage
 
-:rocket::rocket::rocket: The world **fastest** CSS-in-JS library.
+:rocket::rocket::rocket: The world **fastest** **framework agonistic** CSS-in-JS library.
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/37576126acb783f17c77/maintainability)](https://codeclimate.com/github/winston0410/camouflage/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/37576126acb783f17c77/test_coverage)](https://codeclimate.com/github/winston0410/camouflage/test_coverage) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/30027259349b45ef8cdc73711f17859c)](https://www.codacy.com/gh/winston0410/camouflage/dashboard?utm_source=github.com&utm_medium=referral&utm_content=winston0410/camouflage&utm_campaign=Badge_Grade) [![Known Vulnerabilities](https://snyk.io/test/github/winston0410/camouflage/badge.svg?targetFile=package.json)](https://snyk.io/test/github/winston0410/camouflage?targetFile=package.json)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/37576126acb783f17c77/test_coverage)](https://codeclimate.com/github/winston0410/camouflage/test_coverage) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/30027259349b45ef8cdc73711f17859c)](https://www.codacy.com/gh/winston0410/camouflage/dashboard?utm_source=github.com&utm_medium=referral&utm_content=winston0410/camouflage&utm_campaign=Badge_Grade) [![Known Vulnerabilities](https://snyk.io/test/github/winston0410/camouflage/badge.svg?targetFile=package.json)](https://snyk.io/test/github/winston0410/camouflage?targetFile=package.json)
 
 Out run big-name popular CSS-in-JS libraries like [Emotion](https://github.com/emotion-js/emotion), [Styletron](https://github.com/styletron/styletron) and [Fela](https://github.com/robinweser/fela) but with identical or even better supports.
 
@@ -22,17 +22,22 @@ Don't you believe me? Check out the [benchmark](https://github.com/winston0410/c
 
 - :nail_care: Support **nesting** and **media-queries**.
 
-- :construction: Support SSG **style rehydration**. Unnecessary re-render is avoided.
+- :construction: Support SSR/SSG server side render **style rehydration**. Unnecessary re-render is avoided.
 
 ## Installation
 
 A 0.1.0 will be released soon.
+
+## Sponsor
+
+Support this package by becoming our sponsor.
 
 ## Getting started
 
 ```javascript
 import { create as createCamoflage } from 'camouflage'
 import prefixer from 'camouflage/prefixer'
+import hydration from 'camouflage/hydration'
 import virtual from 'camouflage/virtual'
 
 const camouflage = create({
@@ -41,8 +46,12 @@ const camouflage = create({
 
 //Use plugin to upgrade the default renderer
 
+//Select your preferred styling interface
 virtual(camouflage)
+//Add support for auto-prefixing if needed
 prefixer(camouflage)
+//Add style hydration supports, if you will render styling beforehand in server
+hydration(camouflage)
 
 const style = {
   color: 'red',
@@ -78,13 +87,14 @@ Fastest is camouflage, virtual()
 
 ```markdownify
 $ node -r esm renderStyle/css-prefixed.spec.js
-nano-css, rule() x 77,897 ops/sec ±17.56% (74 runs sampled)
-nano-css, virtual() x 172,023 ops/sec ±3.60% (93 runs sampled)
-emotion x 266,858 ops/sec ±0.58% (96 runs sampled)
-goober x 120,452 ops/sec ±0.55% (76 runs sampled)
-styletron x 431,801 ops/sec ±0.14% (93 runs sampled)
-camouflage, rule() x 299,107 ops/sec ±2.54% (74 runs sampled)
-camouflage, virtual() x 1,319,239 ops/sec ±2.12% (93 runs sampled)
+nano-css("^5.3.1"), rule() x 89,522 ops/sec ±3.57% (79 runs sampled)
+nano-css("^5.3.1"), virtual() x 153,129 ops/sec ±25.06% (93 runs sampled)
+emotion("^11.1.3") x 274,224 ops/sec ±0.34% (96 runs sampled)
+goober("^2.0.21") x 122,191 ops/sec ±0.55% (71 runs sampled)
+fela("^11.5.2") x 409,797 ops/sec ±4.20% (93 runs sampled)
+styletron("^1.4.6") x 425,428 ops/sec ±0.27% (92 runs sampled)
+camouflage, rule() x 296,678 ops/sec ±2.72% (72 runs sampled)
+camouflage, virtual() x 1,235,626 ops/sec ±4.58% (89 runs sampled)
 Fastest is camouflage, virtual()
 ```
 
