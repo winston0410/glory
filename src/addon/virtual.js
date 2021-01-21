@@ -23,11 +23,13 @@ const addOn = function (renderer) {
 			}
 
 			if (Array.isArray(value)) {
+				let concatedDecl = ''
 				for (const currentValue of value) {
-					const result = ` ${renderer.atomic(assembleDecl(prop, currentValue))}`
-					cache[id] = result
-					classNames += result
+					concatedDecl += assembleDecl(prop, currentValue)
 				}
+				const result = ` ${renderer.atomic(concatedDecl)}`
+				cache[id] = result
+				classNames += result
 			} else if (safeIsObj(value)) {
 				if (isAtRule(prop)) {
 					classNames += objectToClassNames(value, '', prop)
