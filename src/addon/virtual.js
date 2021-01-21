@@ -7,6 +7,14 @@ import {
 } from '../helper'
 import safeIsObj from 'safe-is-obj'
 
+const concatAssembledDecl = (prop, value) => {
+	let concatedDecl = ''
+	for (const currentValue of value) {
+		concatedDecl += assembleDecl(prop, currentValue)
+	}
+	return concatedDecl
+}
+
 const addOn = function (renderer) {
 	// Setting the cache outside this function may result in more persistant but unexpected behaviors
 	const cache = {}
@@ -23,11 +31,7 @@ const addOn = function (renderer) {
 			}
 
 			if (Array.isArray(value)) {
-				let concatedDecl = ''
-				for (const currentValue of value) {
-					concatedDecl += assembleDecl(prop, currentValue)
-				}
-				const result = ` ${renderer.atomic(concatedDecl)}`
+				const result = ` ${renderer.atomic(concatAssembledDecl(prop, value))}`
 				cache[id] = result
 				classNames += result
 			} else if (safeIsObj(value)) {
