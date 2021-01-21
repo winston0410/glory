@@ -13,15 +13,21 @@ const assembleRule = (name, rule) => `${name}{${rule}}`
 
 const isAtRule = (selector) => selector[0] === '@' && selector !== '@font-face'
 
+const cssifyArray = (prop, value) => {
+	let concatedDecl = ''
+	for (const currentValue of value) {
+		concatedDecl += assembleDecl(prop, currentValue)
+	}
+	return concatedDecl
+}
+
 function cssifyObject(decls, callback) {
 	let css = ''
 	for (const prop in decls) {
 		const value = decls[prop]
 		if (Array.isArray(value)) {
-			for (const currentValue of value) {
-				css += assembleDecl(prop, currentValue)
-			}
-		} else if (safeIsObj(value)) {
+			css += cssifyArray(prop, value)
+		} else if (safeIsObj(value) && callback) {
 			callback(prop, value)
 		} else {
 			css += assembleDecl(prop, value)
@@ -35,6 +41,7 @@ export {
 	addPrefix,
 	isAtRule,
 	cssifyObject,
+	cssifyArray,
 	assembleRule,
 	assembleDecl
 }
