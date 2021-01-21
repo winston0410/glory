@@ -15,8 +15,7 @@ const addOn = function (renderer) {
 	}
 
 	if (renderer.virtual) {
-		const virtual = renderer.virtual
-		renderer.virtual = (decls) => virtual(addPrefix(decls))
+		renderer.prefixer = addPrefix
 	}
 }
 

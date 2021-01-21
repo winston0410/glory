@@ -3,17 +3,11 @@ import {
 	assembleClassName,
 	assembleRule,
 	assembleDecl,
-	isAtRule
+	isAtRule,
+	cssifyArray,
+	cssifyObject
 } from '../helper'
 import safeIsObj from 'safe-is-obj'
-
-const concatAssembledDecl = (prop, value) => {
-	let concatedDecl = ''
-	for (const currentValue of value) {
-		concatedDecl += assembleDecl(prop, currentValue)
-	}
-	return concatedDecl
-}
 
 const addOn = function (renderer) {
 	// Setting the cache outside this function may result in more persistant but unexpected behaviors
@@ -31,7 +25,7 @@ const addOn = function (renderer) {
 			}
 
 			if (Array.isArray(value)) {
-				const result = ` ${renderer.atomic(concatAssembledDecl(prop, value))}`
+				const result = ` ${renderer.atomic(cssifyArray(prop, value))}`
 				cache[id] = result
 				classNames += result
 			} else if (safeIsObj(value)) {
@@ -41,11 +35,16 @@ const addOn = function (renderer) {
 					classNames += objectToClassNames(value, prop)
 				}
 			} else {
-				const result = ` ${renderer.atomic(
-					assembleDecl(prop, value),
-					selector,
-					atRule
-				)}`
+				let prefixedRawDecls = ''
+
+				if (renderer.prefixer) {
+					const prefixed = renderer.prefixer({ [prop]: value })
+					prefixedRawDecls = cssifyObject(prefixed)
+				} else {
+					prefixedRawDecls = assembleDecl(prop, value)
+				}
+
+				const result = ` ${renderer.atomic(prefixedRawDecls, selector, atRule)}`
 				cache[id] = result
 				classNames += result
 			}
