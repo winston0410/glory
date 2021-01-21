@@ -83,8 +83,6 @@ describe('prefixer', function () {
 
 			const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
 
-			// console.log('check result', result)
-
 			const userSelectPrefix = [
 				'-ms-user-select',
 				'-moz-user-select',
@@ -96,6 +94,27 @@ describe('prefixer', function () {
 				expect(result.includes(key)).toBe(true)
 			})
 		})
+
+		it("doesn't kebab values", function () {
+			const nano = createVirtualNano()
+			const decl = {
+				backgroundImage:
+					"url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='36' viewBox='0 0 48 36' fill='rgb(28,28,28)'%3E%3Crect x='16' y='12' width='16' height='2' /%3E%3Crect x='16' y='17' width='16' height='2' /%3E%3Crect x='16' y='22' width='16' height='2' /%3E%3C/svg>\")"
+			}
+
+			nano.putRaw = jest.fn()
+
+			nano.virtual(decl)
+
+			const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
+			const expected =
+				"{background-image:url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='36' viewBox='0 0 48 36' fill='rgb(28,28,28)'%3E%3Crect x='16' y='12' width='16' height='2' /%3E%3Crect x='16' y='17' width='16' height='2' /%3E%3Crect x='16' y='22' width='16' height='2' /%3E%3C/svg>\");}"
+			expect(result.includes(expected)).toBe(true)
+		})
+	})
+
+	describe('using keyframes() interface', function () {
+		//Add test here later
 	})
 	//
 	// it('prefixes "placeholder" correctly', function() {
