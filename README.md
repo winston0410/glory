@@ -100,14 +100,14 @@ Fastest is camouflage, virtual(),fela("^11.5.2")
 
 ```markdownify
 $ node -r esm renderStyle/css-prefixed.spec.js
-nano-css("^5.3.1"), rule() x 89,522 ops/sec ±3.57% (79 runs sampled)
-nano-css("^5.3.1"), virtual() x 153,129 ops/sec ±25.06% (93 runs sampled)
-emotion("^11.1.3") x 274,224 ops/sec ±0.34% (96 runs sampled)
-goober("^2.0.21") x 122,191 ops/sec ±0.55% (71 runs sampled)
-fela("^11.5.2") x 409,797 ops/sec ±4.20% (93 runs sampled)
-styletron("^1.4.6") x 425,428 ops/sec ±0.27% (92 runs sampled)
-camouflage, rule() x 296,678 ops/sec ±2.72% (72 runs sampled)
-camouflage, virtual() x 1,235,626 ops/sec ±4.58% (89 runs sampled)
+nano-css("^5.3.1"), rule() x 79,994 ops/sec ±16.18% (70 runs sampled)
+nano-css("^5.3.1"), virtual() x 174,209 ops/sec ±1.19% (85 runs sampled)
+emotion("^11.1.3") x 252,219 ops/sec ±1.64% (90 runs sampled)
+goober("^2.0.21") x 98,742 ops/sec ±2.60% (57 runs sampled)
+fela("^11.5.2") x 437,485 ops/sec ±3.97% (82 runs sampled)
+styletron("^1.4.6") x 394,933 ops/sec ±1.32% (90 runs sampled)
+camouflage, rule() x 249,918 ops/sec ±4.25% (57 runs sampled)
+camouflage, virtual() x 1,002,094 ops/sec ±5.58% (72 runs sampled)
 Fastest is camouflage, virtual()
 ```
 
