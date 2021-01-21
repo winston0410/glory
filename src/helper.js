@@ -3,9 +3,8 @@ import { camelCaseProperty, hyphenateProperty } from 'css-in-js-utils'
 import { pipe, map } from 'rambda'
 import safeIsObj from 'safe-is-obj'
 
-const assembleClassName = (renderer, name = '') => {
-	return renderer.pfx + (name || renderer.hash())
-}
+const assembleClassName = (renderer, name = '') =>
+	renderer.pfx + (name || renderer.hash())
 
 const assembleDecl = (prop, value) => `${hyphenateProperty(prop)}:${value};`
 
@@ -21,7 +20,7 @@ const cssifyArray = (prop, value) => {
 	return concatedDecl
 }
 
-function cssifyObject(decls, callback) {
+const cssifyObject = (decls, callback) => {
 	let css = ''
 	for (const prop in decls) {
 		const value = decls[prop]
