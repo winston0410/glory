@@ -4,7 +4,7 @@ import joli from '@blackblock/joli-string'
 import greenlet from 'greenlet'
 import Worker from 'tiny-worker'
 import Blob from 'cross-blob'
-const isProduction = process.env.NODE_ENV !== 'production'
+const isProduction = process.env.NODE_ENV === 'production'
 
 const shouldAddSpace = (selector) =>
 	selector[0] === '@' || selector[0] === ':' ? selector : ` ${selector}`
@@ -41,7 +41,7 @@ const create = function (config) {
 		renderer.putRaw = async function (rawCssRule) {
 			if (isProduction) {
 				const sheet = renderer.sh.sheet
-
+				// await console.log('from microtask')
 				try {
 					sheet.insertRule(rawCssRule, sheet.cssRules.length)
 				} catch (error) {

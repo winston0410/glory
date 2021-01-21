@@ -4,6 +4,8 @@ const env = require('./env')
 import { create } from '../src/index'
 import addonRule from '../src/addon/rule'
 
+console.log('check env', process.env.NODE_ENV)
+
 function findCssRuleAndDelete(selector) {
 	const sheets = document.styleSheets
 
@@ -66,7 +68,7 @@ describe('nano-css', function () {
 	})
 
 	describe('.put()', function () {
-		it('inserts CSS', function () {
+		it('inserts CSS', async function () {
 			const nano = createNano()
 
 			nano.put('.foo', {
