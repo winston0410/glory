@@ -180,6 +180,26 @@ describe('virtual', function () {
 			}
 		})
 
+		it('handles values in array in a single class', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+
+			const atomic = jest.spyOn(nano, 'atomic')
+
+			const className = nano.virtual({
+				display: ['flex', '-webkit-flex']
+			})
+
+			expect(className).toBe(' _a')
+			expect(atomic).toHaveBeenCalledTimes(1)
+			expect(atomic).toHaveBeenCalledWith('display:flex;display:-webkit-flex;')
+
+			if (env.isServer) {
+				expect(nano.raw).toBe('._a{display:flex;display:-webkit-flex;}')
+			}
+		})
+
 		it('multiple styles', function () {
 			const nano = createNano()
 
@@ -200,20 +220,6 @@ describe('virtual', function () {
 			})
 
 			expect(nano.atomic).toHaveBeenCalledTimes(7)
-		})
-
-		it('extrapolates array values', function () {
-			const nano = createNano()
-
-			nano.atomic = jest.fn()
-
-			const className = nano.virtual({
-				color: ['blue', 'red']
-			})
-
-			expect(nano.atomic).toHaveBeenCalledTimes(2)
-			expect(nano.atomic).toHaveBeenCalledWith('color:blue;')
-			expect(nano.atomic).toHaveBeenCalledWith('color:red;')
 		})
 	})
 })
