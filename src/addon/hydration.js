@@ -1,4 +1,8 @@
 'use strict'
+// import {
+// cssifyObject
+// } from '../helper.js'
+
 const compare = (original, updated) => {
 	const diff = {}
 
@@ -14,7 +18,7 @@ const compare = (original, updated) => {
 	}
 }
 
-const ruleToObj = (rule) => {
+const CSSRuleToObj = (rule) => {
 	const obj = {}
 	for (let i = 0; i < rule.style.length; i++) {
 		const prop = rule.style[i]
@@ -33,26 +37,46 @@ const addOn = function (renderer) {
 			if (rule.media) {
 				// console.log('check rule', rule)
 				// hydrated[`@media ${rule.media.mediaText}`] = '1'
-				// hydrated[rule.selectorText] = ruleToObj(rule)
+				// hydrated[rule.selectorText] = CSSRuleToObj(rule)
 			} else {
-				hydrated[rule.selectorText] = ruleToObj(rule)
+				hydrated[rule.selectorText] = CSSRuleToObj(rule)
 			}
 		}
 	}
 
 	if (renderer.client) {
-		if (renderer.sh) renderer.hydrate(renderer.sh)
+		if (renderer.sh) {
+			renderer.hydrate(renderer.sh)
+		}
 
-		const put = renderer.put
-
-		renderer.put = function (selector, decls, atRule) {
-			if (selector in hydrated) {
-				const compareResult = compare(hydrated[selector], decls)
-				if (!compareResult.isEql) {
-					put(selector, compareResult.diff, atRule)
+		if (renderer.put) {
+			const put = renderer.put
+			renderer.put = function (selector, decls, atRule) {
+				if (selector in hydrated) {
+					const { isEql, diff } = compare(hydrated[selector], decls)
+					if (!isEql) {
+						return put(selector, diff, atRule)
+					}
+				} else {
+					return put(selector, decls, atRule)
 				}
-			} else {
-				put(selector, decls, atRule)
+			}
+		}
+
+		if (renderer.virtual) {
+			const virtual = renderer.virtual
+			renderer.virtual = function (decls) {
+				// console.log(
+				// 	'check hydrated cache',
+				// 	hydrated,
+				// 	typeof hydrated['.a'],
+				// 	compare(hydrated['.a'], decls)
+				// )
+				// console.log('check decls', decls)
+				// if (decls) {
+				// 	const { isEql, diff} = compare(hydrated[selector], decls)
+				// }
+				return virtual(decls)
 			}
 		}
 	}
