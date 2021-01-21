@@ -3,15 +3,23 @@
 
 const env = require('./env')
 import { create } from '../src/index'
+import addonRule from '../src/addon/rule'
+import addonVirtual from '../src/addon/virtual'
 import addonPrefixer from '../src/addon/prefixer'
 import addonNesting from '../src/addon/nesting'
 const { removeLineAndSpace } = require('./helper.js')
 
 function createNano(config) {
 	const nano = create(config)
-
+	addonRule(nano)
 	addonPrefixer(nano)
+	return nano
+}
 
+function createVirtualNano(config) {
+	const nano = create(config)
+	addonVirtual(nano)
+	addonPrefixer(nano)
 	return nano
 }
 
@@ -21,44 +29,73 @@ describe('prefixer', function () {
 		expect(nano).toBeDefined()
 	})
 
-	it('handles "user-select" correctly', function () {
-		const nano = createNano()
+	describe('using put() and rule() interface', function () {
+		it('handles "user-select" correctly', function () {
+			const nano = createNano()
 
-		nano.putRaw = jest.fn()
+			nano.putRaw = jest.fn()
 
-		nano.put('.one', {
-			userSelect: 'none'
+			nano.put('.one', {
+				userSelect: 'none'
+			})
+
+			const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
+
+			const userSelectPrefix = [
+				'-ms-user-select',
+				'-moz-user-select',
+				'-webkit-user-select',
+				'user-select'
+			]
+
+			userSelectPrefix.forEach(function (key) {
+				expect(result.includes(key)).toBe(true)
+			})
 		})
 
-		const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
+		it("doesn't kebab values", function () {
+			const nano = createNano()
+			const decl = {
+				backgroundImage:
+					"url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='36' viewBox='0 0 48 36' fill='rgb(28,28,28)'%3E%3Crect x='16' y='12' width='16' height='2' /%3E%3Crect x='16' y='17' width='16' height='2' /%3E%3Crect x='16' y='22' width='16' height='2' /%3E%3C/svg>\")"
+			}
 
-		const userSelectPrefix = [
-			'-ms-user-select',
-			'-moz-user-select',
-			'-webkit-user-select',
-			'user-select'
-		]
+			nano.putRaw = jest.fn()
 
-		userSelectPrefix.forEach(function (key) {
-			expect(result.includes(key)).toBe(true)
+			nano.put('.one', decl)
+
+			const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
+			const expected =
+				".one{background-image:url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='36' viewBox='0 0 48 36' fill='rgb(28,28,28)'%3E%3Crect x='16' y='12' width='16' height='2' /%3E%3Crect x='16' y='17' width='16' height='2' /%3E%3Crect x='16' y='22' width='16' height='2' /%3E%3C/svg>\");}"
+			expect(result).toEqual(expected)
 		})
 	})
 
-	it("doesn't kebab values", function () {
-		const nano = createNano()
-		const decl = {
-			backgroundImage:
-				"url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='36' viewBox='0 0 48 36' fill='rgb(28,28,28)'%3E%3Crect x='16' y='12' width='16' height='2' /%3E%3Crect x='16' y='17' width='16' height='2' /%3E%3Crect x='16' y='22' width='16' height='2' /%3E%3C/svg>\")"
-		}
+	describe('using virtual() interface', function () {
+		it('handles "user-select" correctly', function () {
+			const nano = createVirtualNano()
 
-		nano.putRaw = jest.fn()
+			nano.putRaw = jest.fn()
 
-		nano.put('.one', decl)
+			nano.virtual({
+				userSelect: 'none'
+			})
 
-		const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
-		const expected =
-			".one{background-image:url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='36' viewBox='0 0 48 36' fill='rgb(28,28,28)'%3E%3Crect x='16' y='12' width='16' height='2' /%3E%3Crect x='16' y='17' width='16' height='2' /%3E%3Crect x='16' y='22' width='16' height='2' /%3E%3C/svg>\");}"
-		expect(result).toEqual(expected)
+			const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
+
+			// console.log('check result', result)
+
+			const userSelectPrefix = [
+				'-ms-user-select',
+				'-moz-user-select',
+				'-webkit-user-select',
+				'user-select'
+			]
+
+			userSelectPrefix.forEach(function (key) {
+				expect(result.includes(key)).toBe(true)
+			})
+		})
 	})
 	//
 	// it('prefixes "placeholder" correctly', function() {
