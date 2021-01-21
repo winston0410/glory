@@ -9,7 +9,14 @@ import {
 import { hyphenateProperty } from 'css-in-js-utils'
 import { isEmpty } from 'rambda'
 
+const shouldAddSpace = (selector) =>
+	selector[0] === '@' || selector[0] === ':' ? selector : ` ${selector}`
+
 const addOn = function (renderer) {
+	renderer.selector = (parent, selector) => {
+		return parent + shouldAddSpace(selector)
+	}
+
 	const handleNestedDecls = (selector, atRule) => (prop, value) => {
 		if (isAtRule(prop)) {
 			renderer.put(selector, value, prop)

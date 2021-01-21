@@ -28,6 +28,11 @@ const addOn = function (renderer) {
 				const result = ` ${renderer.atomic(cssifyArray(prop, value))}`
 				cache[id] = result
 				classNames += result
+				// Potential transformation to do for terser code. Which babel plugin to use?
+
+				// classNames += cache[id] = ` ${renderer.atomic(
+				// 	cssifyArray(prop, value)
+				// )}`
 			} else if (safeIsObj(value)) {
 				if (isAtRule(prop)) {
 					classNames += objectToClassNames(value, '', prop)

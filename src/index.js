@@ -4,9 +4,6 @@ import joli from '@blackblock/joli-string'
 import greenlet from 'greenlet'
 const isProduction = process.env.NODE_ENV === 'production'
 
-const shouldAddSpace = (selector) =>
-	selector[0] === '@' || selector[0] === ':' ? selector : ` ${selector}`
-
 const create = function (config) {
 	const renderer = {
 		raw: '',
@@ -14,9 +11,6 @@ const create = function (config) {
 		client: isBrowser,
 		hasher: joli,
 		hashChars: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_',
-		selector: (parent, selector) => {
-			return parent + shouldAddSpace(selector)
-		},
 		...config
 	}
 
