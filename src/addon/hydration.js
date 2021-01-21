@@ -1,5 +1,5 @@
 'use strict'
-import { cssifyObject, assembleClassName } from '../helper.js'
+import { cssifyObject, assembleClassName, isAtRule } from '../helper.js'
 
 const compare = (original, updated) => {
 	const diff = {}
@@ -33,9 +33,11 @@ const addOn = function (renderer) {
 
 		for (const rule of cssRules) {
 			if (rule.media) {
-				// console.log('check rule', rule)
-				// hydrated[`@media ${rule.media.mediaText}`] = '1'
-				// hydrated[rule.selectorText] = CSSRuleToObj(rule)
+				// for (const basicRule of rule.cssRules) {
+				// 	hydrated[
+				// 		`@media ${rule.media.mediaText} ${basicRule.selectorText}`
+				// 	] = CSSRuleToObj(basicRule)
+				// }
 			} else {
 				hydrated[rule.selectorText] = CSSRuleToObj(rule)
 			}
@@ -47,26 +49,14 @@ const addOn = function (renderer) {
 			renderer.hydrate(renderer.sh)
 		}
 
-		if (renderer.put) {
-			const put = renderer.put
-			renderer.put = function (selector, decls, atRule) {
-				if (selector in hydrated) {
-					const { isEql, diff } = compare(hydrated[selector], decls)
-					if (!isEql) {
-						return put(selector, diff, atRule)
-					}
-				} else {
-					return put(selector, decls, atRule)
-				}
-			}
-		}
-
 		if (renderer.virtual) {
 			const next = renderer.hasher(renderer.hashChars)
 			const virtual = renderer.virtual
 			renderer.virtual = function (decls) {
 				// Refactor with assembleClassName later
+				console.log('check hydrated', hydrated)
 				const selector = `.${renderer.pfx}${next()}`
+				console.log('check decls and selector', decls, selector)
 				if (hydrated[selector]) {
 					const { isEql, diff } = compare(hydrated[selector], decls)
 					if (isEql) {
@@ -81,3 +71,34 @@ const addOn = function (renderer) {
 }
 
 export default addOn
+
+// if (renderer.put) {
+// 	const put = renderer.put
+// 	renderer.put = function(selector, decls, atRule) {
+// 		if (selector in hydrated) {
+// 			const { isEql, diff } = compare(hydrated[selector], decls)
+// 			if (!isEql) {
+// 				return put(selector, diff, atRule)
+// 			}
+// 		} else {
+// 			return put(selector, decls, atRule)
+// 		}
+// 	}
+// }
+//
+// if (renderer.rule) {
+// 	const next = renderer.hasher(renderer.hashChars)
+// 	const rule = renderer.rule
+// 	renderer.rule = function(decls) {
+// 		// Refactor with assembleClassName later
+// 		const selector = `.${renderer.pfx}${next()}`
+// 		if (hydrated[selector]) {
+// 			const { isEql, diff } = compare(hydrated[selector], decls)
+// 			if (isEql) {
+// 				return selector
+// 			}
+// 			return rule(diff)
+// 		}
+// 		return rule(decls)
+// 	}
+// }

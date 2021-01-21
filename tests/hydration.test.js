@@ -109,6 +109,29 @@ describe('hydration', function () {
 
 			expect(virtualMock).toHaveBeenCalledTimes(1)
 		})
+
+		it('should prevent media-queries found in stylesheet from re-rendering', function () {
+			const mockStylesheet = document.createElement('style')
+			mockStylesheet.textContent =
+				'.a{color:red;}@media screen{.b{display:block;}}'
+			document.head.appendChild(mockStylesheet)
+
+			const nano = createVirtualNano({
+				sh: mockStylesheet
+			})
+
+			const virtualMock = jest.spyOn(nano, 'virtual')
+
+			addOnHydration(nano)
+
+			nano.virtual({
+				'@media screen': {
+					display: 'block'
+				}
+			})
+
+			// expect(virtualMock).toHaveBeenCalledTimes(1)
+		})
 	})
 
 	// it('should prevent media-queries found in stylesheet from re-rendering', function() {
