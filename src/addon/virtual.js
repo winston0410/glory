@@ -35,14 +35,9 @@ const addOn = function (renderer) {
 					classNames += objectToClassNames(value, prop)
 				}
 			} else {
-				let prefixedRawDecls = ''
-
-				if (renderer.prefixer) {
-					const prefixed = renderer.prefixer({ [prop]: value })
-					prefixedRawDecls = cssifyObject(prefixed)
-				} else {
-					prefixedRawDecls = assembleDecl(prop, value)
-				}
+				const prefixedRawDecls = renderer.prefixer
+					? cssifyObject(renderer.prefixer({ [prop]: value }))
+					: assembleDecl(prop, value)
 
 				const result = ` ${renderer.atomic(prefixedRawDecls, selector, atRule)}`
 				cache[id] = result
