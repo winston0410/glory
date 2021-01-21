@@ -5,8 +5,8 @@ const env = require('./env')
 import { create } from '../src/index'
 import addOnHydration from '../src/addon/hydration'
 import addOnRule from '../src/addon/rule'
-import addonVirtual from '../src/virtual'
-import addonKeyframes from '../src/keyframes'
+import addonVirtual from '../src/addon/virtual'
+import addonKeyframes from '../src/addon/keyframes'
 
 function createRuleNano(config) {
 	const nano = create(config)
@@ -18,7 +18,6 @@ function createRuleNano(config) {
 function createVirtualNano(config) {
 	const nano = create(config)
 	addonVirtual(nano)
-	addOnHydration(nano)
 	return nano
 }
 
@@ -72,7 +71,7 @@ describe('hydration', function () {
 	describe('when using virtual()', function () {
 		it('should prevent basic declaration found in stylesheet from re-rendering', function () {
 			const mockStylesheet = document.createElement('style')
-			mockStylesheet.textContent = '.one{display:block;}'
+			mockStylesheet.textContent = '.a{display:block;}'
 			document.head.appendChild(mockStylesheet)
 
 			const nano = createVirtualNano({
@@ -80,6 +79,8 @@ describe('hydration', function () {
 			})
 
 			const virtualMock = jest.spyOn(nano, 'virtual')
+
+			addOnHydration(nano)
 
 			nano.virtual({
 				display: 'block'
@@ -90,7 +91,7 @@ describe('hydration', function () {
 
 		it('should re-render basic declaration, if props in stylesheet and in Javascript are different', function () {
 			const mockStylesheet = document.createElement('style')
-			mockStylesheet.textContent = '.one{display:block;}'
+			mockStylesheet.textContent = '.a{display:block;}'
 			document.head.appendChild(mockStylesheet)
 
 			const nano = createVirtualNano({
@@ -98,6 +99,8 @@ describe('hydration', function () {
 			})
 
 			const virtualMock = jest.spyOn(nano, 'virtual')
+
+			addOnHydration(nano)
 
 			nano.virtual({
 				display: 'block',

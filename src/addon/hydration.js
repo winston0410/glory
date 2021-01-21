@@ -1,7 +1,5 @@
 'use strict'
-// import {
-// cssifyObject
-// } from '../helper.js'
+import { cssifyObject, assembleClassName } from '../helper.js'
 
 const compare = (original, updated) => {
 	const diff = {}
@@ -64,18 +62,18 @@ const addOn = function (renderer) {
 		}
 
 		if (renderer.virtual) {
+			const next = renderer.hasher(renderer.hashChars)
 			const virtual = renderer.virtual
 			renderer.virtual = function (decls) {
-				// console.log(
-				// 	'check hydrated cache',
-				// 	hydrated,
-				// 	typeof hydrated['.a'],
-				// 	compare(hydrated['.a'], decls)
-				// )
-				// console.log('check decls', decls)
-				// if (decls) {
-				// 	const { isEql, diff} = compare(hydrated[selector], decls)
-				// }
+				// Refactor with assembleClassName later
+				const selector = `.${renderer.pfx}${next()}`
+				if (hydrated[selector]) {
+					const { isEql, diff } = compare(hydrated[selector], decls)
+					if (isEql) {
+						return selector
+					}
+					return virtual(diff)
+				}
 				return virtual(decls)
 			}
 		}

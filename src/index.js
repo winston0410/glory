@@ -8,18 +8,19 @@ const shouldAddSpace = (selector) =>
 	selector[0] === '@' || selector[0] === ':' ? selector : ` ${selector}`
 
 const create = function (config) {
-	const next = joli('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_')
-
 	const renderer = {
 		raw: '',
 		pfx: '',
 		client: isBrowser,
-		hash: (obj) => next(),
+		hasher: joli,
+		hashChars: 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_',
 		selector: (parent, selector) => {
 			return parent + shouldAddSpace(selector)
 		},
 		...config
 	}
+
+	renderer.hash = renderer.hasher(renderer.hashChars)
 
 	if (renderer.client) {
 		if (!renderer.sh) {
