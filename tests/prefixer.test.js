@@ -8,6 +8,7 @@ import addonVirtual from '../src/addon/virtual'
 import addonPrefixer from '../src/addon/prefixer'
 import addonNesting from '../src/addon/nesting'
 const { removeLineAndSpace } = require('./helper.js')
+import { prefix } from 'inline-style-prefixer'
 
 function createNano(config) {
 	const nano = create(config)
@@ -109,6 +110,28 @@ describe('prefixer', function () {
 			const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
 			const expected =
 				"{background-image:url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='36' viewBox='0 0 48 36' fill='rgb(28,28,28)'%3E%3Crect x='16' y='12' width='16' height='2' /%3E%3Crect x='16' y='17' width='16' height='2' /%3E%3Crect x='16' y='22' width='16' height='2' /%3E%3C/svg>\");}"
+			expect(result.includes(expected)).toBe(true)
+		})
+
+		it('prefixes transform correctly', function () {
+			const nano = createVirtualNano()
+			const decl = {
+				transform: 'translateX(2em) rotate(0.5turn)'
+			}
+
+			const mockDecl = {
+				transform: 'translateX(2em)'
+			}
+
+			// console.log('prefixer result', prefix(mockDecl))
+
+			nano.putRaw = jest.fn()
+
+			nano.virtual(decl)
+
+			const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
+			const expected =
+				'{-webkit-transform: translateX(2em);-ms-transform: translateX(2em);transform:translateX(2em);}'
 			expect(result.includes(expected)).toBe(true)
 		})
 	})
