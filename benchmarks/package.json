@@ -12,7 +12,8 @@
 		"benchmark:css:keyframes": "node -r esm css renderStyle/keyframes.spec.js",
 		"benchmark:prefix:case": "node -r esm addPrefix/prefixer.spec.js",
 		"benchmark:comma": "node handleComma/handleComma.spec.js",
-		"benchmark:cache": "node -r esm cacheStyle/index.spec.js"
+		"benchmark:cache": "node -r esm cacheStyle/index.spec.js",
+		"benchmark:worker": "node -r esm webWorker/index.spec.js"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",

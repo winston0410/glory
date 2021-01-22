@@ -1,4 +1,4 @@
-import { c as curry } from '../rambda.esm-ed860ee4.js'
+function curry(fn, args = []) {}
 
 // ::Placeholder is not handled by inline-prefix-style,
 // https://github.com/robinweser/inline-style-prefixer/issues/104
