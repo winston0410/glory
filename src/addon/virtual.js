@@ -22,6 +22,7 @@ const addOn = function (renderer) {
 
 			if (renderer.cache[id]) {
 				classNames += renderer.cache[id]
+				renderer.hash() // Run this to make className consistant
 				continue
 			}
 

@@ -98,6 +98,8 @@ describe('hydration', function () {
 				sh: mockStylesheet
 			})
 
+			nano.putRaw = jest.fn()
+
 			const atomicMock = jest.spyOn(nano, 'atomic')
 
 			addOnHydration(nano)
@@ -106,6 +108,11 @@ describe('hydration', function () {
 				display: 'block',
 				color: 'red'
 			})
+
+			if (env.isClient) {
+				const result = nano.putRaw.mock.calls[0][0]
+				expect(result).toBe('.b{color:red;}')
+			}
 
 			expect(atomicMock).toHaveBeenCalledTimes(1)
 		})
