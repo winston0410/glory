@@ -25,17 +25,11 @@ const addOn = function (renderer) {
 			}
 
 			if (Array.isArray(value)) {
-				const result = ` ${renderer.atomic(cssifyArray(prop, value))}`
-				cache[id] = result
-				classNames += result
-				// Potential transformation to do for terser code. Which babel plugin to use?
-
-				// classNames += cache[id] = ` ${renderer.atomic(
-				// 	cssifyArray(prop, value)
-				// )}`
+				classNames += cache[id] = ` ${renderer.atomic(
+					cssifyArray(prop, value)
+				)}`
 			} else if (safeIsObj(value)) {
 				if (isAtRule(prop)) {
-					console.log('check data if is atRule', prop, value)
 					classNames += objectToClassNames(value, '', prop)
 				} else {
 					classNames += objectToClassNames(value, prop)
@@ -45,9 +39,11 @@ const addOn = function (renderer) {
 					? cssifyObject(renderer.prefixer({ [prop]: value }))
 					: assembleDecl(prop, value)
 
-				const result = ` ${renderer.atomic(prefixedRawDecls, selector, atRule)}`
-				cache[id] = result
-				classNames += result
+				classNames += cache[id] = ` ${renderer.atomic(
+					prefixedRawDecls,
+					selector,
+					atRule
+				)}`
 			}
 		}
 		return classNames
