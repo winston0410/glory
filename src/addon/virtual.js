@@ -31,9 +31,9 @@ const addOn = function (renderer) {
 			} else if (safeIsObj(value)) {
 				if (isAtRule(prop)) {
 					classNames += objectToClassNames(value, '', prop)
-				} else {
-					classNames += objectToClassNames(value, prop)
+					continue
 				}
+				classNames += objectToClassNames(value, prop)
 			} else {
 				const prefixedRawDecls = renderer.prefixer
 					? cssifyObject(renderer.prefixer({ [prop]: value }))
