@@ -6,9 +6,6 @@ import {
 	assembleRule
 } from '../helper'
 
-import { hyphenateProperty } from 'css-in-js-utils'
-import { isEmpty } from 'rambda'
-
 const shouldAddSpace = (selector) =>
 	selector[0] === '@' || selector[0] === ':' ? selector : ` ${selector}`
 
@@ -28,7 +25,7 @@ const addOn = function (renderer) {
 	renderer.put = function (selector, decls, atRule) {
 		const css = cssifyObject(decls, handleNestedDecls(selector, atRule))
 
-		if (isEmpty(css)) {
+		if (css === '') {
 			return ''
 		}
 
