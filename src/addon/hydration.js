@@ -1,5 +1,10 @@
 'use strict'
-import { cssifyObject, assembleClassName, isAtRule } from '../helper.js'
+import {
+	cssifyObject,
+	assembleClassName,
+	isAtRule,
+	createCache
+} from '../helper.js'
 
 const compare = (original, updated) => {
 	const diff = {}
@@ -26,20 +31,22 @@ const CSSRuleToObj = (rule) => {
 }
 
 const addOn = function (renderer) {
-	const hydrated = {}
+	createCache(renderer)
 
 	renderer.hydrate = function (sh) {
 		const cssRules = sh.cssRules || sh.sheet.cssRules
 
 		for (const rule of cssRules) {
 			if (rule.media) {
-				// for (const basicRule of rule.cssRules) {
-				// 	hydrated[
-				// 		`@media ${rule.media.mediaText} ${basicRule.selectorText}`
-				// 	] = CSSRuleToObj(basicRule)
-				// }
+				for (const basicRule of rule.cssRules) {
+					renderer.cache[
+						`@media ${rule.media.mediaText}${cssifyObject(
+							CSSRuleToObj(basicRule)
+						)}`
+					] = basicRule.selectorText
+				}
 			} else {
-				hydrated[rule.selectorText] = CSSRuleToObj(rule)
+				renderer.cache[cssifyObject(CSSRuleToObj(rule))] = rule.selectorText
 			}
 		}
 	}
@@ -47,25 +54,6 @@ const addOn = function (renderer) {
 	if (renderer.client) {
 		if (renderer.sh) {
 			renderer.hydrate(renderer.sh)
-		}
-
-		if (renderer.virtual) {
-			const next = renderer.hasher(renderer.hashChars)
-			const virtual = renderer.virtual
-			renderer.virtual = function (decls) {
-				// Refactor with assembleClassName later
-				console.log('check hydrated', hydrated)
-				const selector = `.${renderer.pfx}${next()}`
-				console.log('check decls and selector', decls, selector)
-				if (hydrated[selector]) {
-					const { isEql, diff } = compare(hydrated[selector], decls)
-					if (isEql) {
-						return selector
-					}
-					return virtual(diff)
-				}
-				return virtual(decls)
-			}
 		}
 	}
 }

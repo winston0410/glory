@@ -78,7 +78,7 @@ describe('hydration', function () {
 				sh: mockStylesheet
 			})
 
-			const virtualMock = jest.spyOn(nano, 'virtual')
+			const atomicMock = jest.spyOn(nano, 'atomic')
 
 			addOnHydration(nano)
 
@@ -86,7 +86,7 @@ describe('hydration', function () {
 				display: 'block'
 			})
 
-			expect(virtualMock).toHaveBeenCalledTimes(0)
+			expect(atomicMock).toHaveBeenCalledTimes(0)
 		})
 
 		it('should re-render basic declaration, if props in stylesheet and in Javascript are different', function () {
@@ -98,7 +98,7 @@ describe('hydration', function () {
 				sh: mockStylesheet
 			})
 
-			const virtualMock = jest.spyOn(nano, 'virtual')
+			const atomicMock = jest.spyOn(nano, 'atomic')
 
 			addOnHydration(nano)
 
@@ -107,20 +107,19 @@ describe('hydration', function () {
 				color: 'red'
 			})
 
-			expect(virtualMock).toHaveBeenCalledTimes(1)
+			expect(atomicMock).toHaveBeenCalledTimes(1)
 		})
 
 		it('should prevent media-queries found in stylesheet from re-rendering', function () {
 			const mockStylesheet = document.createElement('style')
-			mockStylesheet.textContent =
-				'.a{color:red;}@media screen{.b{display:block;}}'
+			mockStylesheet.textContent = '@media screen{.a{display:block;}}'
 			document.head.appendChild(mockStylesheet)
 
 			const nano = createVirtualNano({
 				sh: mockStylesheet
 			})
 
-			const virtualMock = jest.spyOn(nano, 'virtual')
+			const atomicMock = jest.spyOn(nano, 'atomic')
 
 			addOnHydration(nano)
 
@@ -130,7 +129,7 @@ describe('hydration', function () {
 				}
 			})
 
-			// expect(virtualMock).toHaveBeenCalledTimes(1)
+			expect(atomicMock).toHaveBeenCalledTimes(0)
 		})
 	})
 

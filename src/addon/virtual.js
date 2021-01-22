@@ -5,27 +5,28 @@ import {
 	assembleDecl,
 	isAtRule,
 	cssifyArray,
-	cssifyObject
+	cssifyObject,
+	createCache
 } from '../helper'
 import safeIsObj from 'safe-is-obj'
 
 const addOn = function (renderer) {
 	// Setting the cache outside this function may result in more persistant but unexpected behaviors
-	const cache = {}
+	createCache(renderer)
 
 	const objectToClassNames = (decls, selector = '', atRule = '') => {
 		let classNames = ''
 		for (const prop in decls) {
 			const value = decls[prop]
-			const id = `${atRule}${selector}${prop}${value}`
+			const id = `${atRule}${selector}${prop}:${value};`
 
-			if (cache[id]) {
-				classNames += cache[id]
+			if (renderer.cache[id]) {
+				classNames += renderer.cache[id]
 				continue
 			}
 
 			if (Array.isArray(value)) {
-				classNames += cache[id] = ` ${renderer.atomic(
+				classNames += renderer.cache[id] = ` ${renderer.atomic(
 					cssifyArray(prop, value)
 				)}`
 			} else if (safeIsObj(value)) {
@@ -39,7 +40,7 @@ const addOn = function (renderer) {
 					? cssifyObject(renderer.prefixer({ [prop]: value }))
 					: assembleDecl(prop, value)
 
-				classNames += cache[id] = ` ${renderer.atomic(
+				classNames += renderer.cache[id] = ` ${renderer.atomic(
 					prefixedRawDecls,
 					selector,
 					atRule

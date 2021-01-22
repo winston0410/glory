@@ -35,6 +35,12 @@ const cssifyObject = (decls, callback) => {
 	return css
 }
 
+const createCache = (renderer) => {
+	if (!renderer.cache) {
+		renderer.cache = {}
+	}
+}
+
 export {
 	assembleClassName,
 	addPrefix,
@@ -42,5 +48,6 @@ export {
 	cssifyObject,
 	cssifyArray,
 	assembleRule,
-	assembleDecl
+	assembleDecl,
+	createCache
 }
