@@ -55,6 +55,9 @@ const addOn = function (renderer) {
 		if (renderer.sh) {
 			renderer.hydrate(renderer.sh)
 		}
+		if (renderer.ksh) {
+			renderer.hydrate(renderer.ksh)
+		}
 	}
 }
 
