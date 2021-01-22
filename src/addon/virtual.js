@@ -35,6 +35,7 @@ const addOn = function (renderer) {
 				// )}`
 			} else if (safeIsObj(value)) {
 				if (isAtRule(prop)) {
+					console.log('check data if is atRule', prop, value)
 					classNames += objectToClassNames(value, '', prop)
 				} else {
 					classNames += objectToClassNames(value, prop)

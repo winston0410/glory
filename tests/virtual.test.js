@@ -55,7 +55,7 @@ describe('virtual', function () {
 			}
 		})
 
-		it('at-rules', function () {
+		it('handles at-rules', function () {
 			const nano = createNano({
 				pfx: '_'
 			})
@@ -103,7 +103,7 @@ describe('virtual', function () {
 			}
 		})
 
-		it('makes styles atomic', function () {
+		it('makes basic declarations atomic', function () {
 			const nano = createNano({
 				pfx: '_'
 			})
@@ -119,6 +119,31 @@ describe('virtual', function () {
 				expect(nano.raw.includes('color:red')).toBe(true)
 				expect(nano.raw.includes('background:black')).toBe(true)
 				expect(nano.raw.includes('text-align:center')).toBe(true)
+			}
+		})
+
+		it('makes basic declarations in media-queries atomic', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+			const className = nano.virtual({
+				'@media screen': {
+					color: 'red',
+					background: 'black',
+					textAlign: 'center'
+				}
+			})
+
+			expect(className).toBe(' _a _b _c')
+
+			if (env.isServer) {
+				expect(nano.raw).toBe(
+					'@media screen{._a{color:red;}}@media screen{._b{background:black;}}@media screen{._c{text-align:center;}}'
+				)
+				// Should optimize output of virtual() to this without harming performance.
+				// expect(nano.raw).toBe(
+				// 	'@media screen{._a{color:red;}._b{background:black;}._c{text-align:center;}}'
+				// )
 			}
 		})
 
