@@ -110,6 +110,7 @@ describe('hydration', function () {
 			})
 
 			if (env.isClient) {
+				expect(nano.putRaw).toHaveBeenCalledTimes(1)
 				const result = nano.putRaw.mock.calls[0][0]
 				expect(result).toBe('.b{color:red;}')
 			}
@@ -138,6 +139,27 @@ describe('hydration', function () {
 
 			expect(atomicMock).toHaveBeenCalledTimes(0)
 		})
+
+		it('should not generate wrong className if third party styling is inserted before generated styling', function () {
+			const mockStylesheet = document.createElement('style')
+			mockStylesheet.textContent = 'body{display:block;}.a{display:block;}'
+			document.head.appendChild(mockStylesheet)
+
+			const nano = createVirtualNano({
+				sh: mockStylesheet
+			})
+
+			const atomicMock = jest.spyOn(nano, 'atomic')
+
+			addOnHydration(nano)
+
+			const className = nano.virtual({
+				display: 'block'
+			})
+
+			expect(className).toBe('.a')
+			expect(atomicMock).toHaveBeenCalledTimes(0)
+		})
 	})
 
 	// it('should prevent media-queries found in stylesheet from re-rendering', function() {
@@ -162,21 +184,21 @@ describe('hydration', function () {
 	// 	expect(putMock).toHaveBeenCalledTimes(0)
 	// })
 
-	describe('when using keyframes()', function () {
-		it('should prevent keyframes found in stylesheet from re-rendering', function () {
-			const mockStylesheet = document.createElement('style')
-			mockStylesheet.textContent = '.one{display:block;}'
-			document.head.appendChild(mockStylesheet)
-
-			const nano = createKeyframesNano({
-				sh: mockStylesheet
-			})
-
-			const keyframesMock = jest.spyOn(nano, 'keyframes')
-
-			nano.keyframes()
-
-			expect(keyframesMock).toHaveBeenCalledTimes(0)
-		})
-	})
+	// describe('when using keyframes()', function() {
+	// 	it('should prevent keyframes found in stylesheet from re-rendering', function() {
+	// 		const mockStylesheet = document.createElement('style')
+	// 		mockStylesheet.textContent = '.one{display:block;}'
+	// 		document.head.appendChild(mockStylesheet)
+	//
+	// 		const nano = createKeyframesNano({
+	// 			sh: mockStylesheet
+	// 		})
+	//
+	// 		const keyframesMock = jest.spyOn(nano, 'keyframes')
+	//
+	// 		nano.keyframes()
+	//
+	// 		expect(keyframesMock).toHaveBeenCalledTimes(0)
+	// 	})
+	// })
 })
