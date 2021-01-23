@@ -8,15 +8,6 @@ const addOn = function (renderer, config = {}) {
 
 	const prefixedKeyframes = prefixes.map((prefix) => `@${prefix}keyframes`)
 
-	if (renderer.client) {
-		if (!renderer.ksh) {
-			// Craete @keyframe Stylesheet `ksh`.
-			document.head.appendChild(
-				(renderer.ksh = document.createElement('style'))
-			)
-		}
-	}
-
 	renderer.keyframes = function (decls, name) {
 		const frameContent = assembleKeyframe(decls)
 		if (renderer.kcache[frameContent]) {
@@ -32,11 +23,7 @@ const addOn = function (renderer, config = {}) {
 			rawKeyframes += `${prefixed} ${frameName}{${frameContent}}`
 		}
 
-		if (renderer.client) {
-			renderer.ksh.appendChild(document.createTextNode(rawKeyframes))
-		} else {
-			renderer.putRaw(rawKeyframes)
-		}
+		renderer.putRaw(rawKeyframes)
 
 		return frameName
 	}

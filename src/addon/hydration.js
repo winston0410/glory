@@ -38,6 +38,7 @@ const addOn = function (renderer) {
 		const cssRules = sh.cssRules || sh.sheet.cssRules
 		console.log('check cssRules', cssRules)
 		for (const rule of cssRules) {
+			// Check rule by instance instead of property for checking keyframes rule, CSSKeyframesRule
 			if (rule.media) {
 				for (const basicRule of rule.cssRules) {
 					renderer.cache[
