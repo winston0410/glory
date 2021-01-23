@@ -14,15 +14,18 @@ const addOn = function (renderer, config = {}) {
 	}
 
 	renderer.keyframes = function (decls, name) {
-		// console.log('check parameter', decls, name)
+		const frameContent = assembleKeyframe(decls)
+		if (renderer.kcache[frameContent]) {
+			return renderer.kcache[frameContent]
+		}
+
 		const frameName = assembleClassName(renderer, name)
+		renderer.kcache[frameContent] = frameName
 
 		let rawKeyframes = ''
 
-		// console.log('check result', assembleKeyframe(decls))
-
 		for (const prefixed of prefixedKeyframes) {
-			rawKeyframes += `${prefixed} ${frameName}{${assembleKeyframe(decls)}}`
+			rawKeyframes += `${prefixed} ${frameName}{${frameContent}}`
 		}
 
 		if (renderer.client) {
