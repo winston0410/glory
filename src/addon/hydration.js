@@ -36,7 +36,7 @@ const addOn = function (renderer) {
 
 	renderer.hydrate = function (sh) {
 		const cssRules = sh.cssRules || sh.sheet.cssRules
-
+		console.log('check cssRules', cssRules)
 		for (const rule of cssRules) {
 			if (rule.media) {
 				for (const basicRule of rule.cssRules) {

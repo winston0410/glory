@@ -68,6 +68,7 @@ describe('keyframes', function () {
 				expect(nano.ksh.appendChild).toHaveBeenCalledTimes(1)
 			} else {
 				const result = nano.putRaw.mock.calls[0][0]
+				console.log('check result', result)
 				expect(result.includes('to{transform:rotate(360deg);}')).toBe(true)
 				expect(nano.putRaw).toHaveBeenCalledTimes(1)
 			}

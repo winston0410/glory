@@ -23,7 +23,9 @@ function createVirtualNano(config) {
 
 function createKeyframesNano(config) {
 	const nano = create(config)
-	addonKeyframes(nano)
+	addonKeyframes(nano, {
+		prefixes: ['']
+	})
 	addOnHydration(nano)
 	return nano
 }
@@ -184,21 +186,35 @@ describe('hydration', function () {
 	// 	expect(putMock).toHaveBeenCalledTimes(0)
 	// })
 
-	// describe('when using keyframes()', function() {
-	// 	it('should prevent keyframes found in stylesheet from re-rendering', function() {
-	// 		const mockStylesheet = document.createElement('style')
-	// 		mockStylesheet.textContent = '.one{display:block;}'
-	// 		document.head.appendChild(mockStylesheet)
-	//
-	// 		const nano = createKeyframesNano({
-	// 			sh: mockStylesheet
-	// 		})
-	//
-	// 		const keyframesMock = jest.spyOn(nano, 'keyframes')
-	//
-	// 		nano.keyframes()
-	//
-	// 		expect(keyframesMock).toHaveBeenCalledTimes(0)
-	// 	})
-	// })
+	describe('when using keyframes()', function () {
+		it('should prevent keyframes found in stylesheet from re-rendering', function () {
+			const mockStylesheet = document.createElement('style')
+			mockStylesheet.textContent = '@keyframes a{to{transform:rotate(360deg);}}'
+			document.head.appendChild(mockStylesheet)
+
+			// console.log(mockStylesheet.cssRules || mockStylesheet.sheet.cssRules)
+
+			const nano = create({
+				ksh: mockStylesheet
+			})
+
+			addonKeyframes(nano, {
+				prefixes: ['']
+			})
+			addOnHydration(nano)
+
+			const keyframesMock = jest.spyOn(nano, 'keyframes')
+
+			const frameName = nano.keyframes({
+				to: {
+					transform: 'rotate(360deg)'
+				}
+			})
+
+			const nanoForComparison = create()
+
+			expect(frameName).toBe(nanoForComparison.hash())
+			// expect(keyframesMock).toHaveBeenCalledTimes(0)
+		})
+	})
 })
