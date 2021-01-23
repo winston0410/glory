@@ -43,6 +43,8 @@ describe('keyframes', function () {
 				prefixes: ['']
 			})
 
+			const keyframesMock = jest.spyOn(nano, 'keyframes')
+
 			nano.putRaw = jest.fn()
 
 			const name = nano.keyframes({
@@ -57,6 +59,8 @@ describe('keyframes', function () {
 				expect(result.includes('to{transform:rotate(360deg);}')).toBe(true)
 				expect(nano.putRaw).toHaveBeenCalledTimes(1)
 			}
+
+			expect(keyframesMock).toHaveBeenCalledTimes(1)
 		})
 
 		it('puts animation CSS with all prefixes', function () {
@@ -65,6 +69,8 @@ describe('keyframes', function () {
 			addonKeyframes(nano, {
 				prefixes: ['-webkit-', '-moz-', '']
 			})
+
+			const keyframesMock = jest.spyOn(nano, 'keyframes')
 
 			nano.putRaw = jest.fn()
 
@@ -83,6 +89,8 @@ describe('keyframes', function () {
 				expect(result.includes('@-o-keyframes')).toBe(false)
 				expect(result.includes('@keyframes')).toBe(true)
 			}
+
+			expect(keyframesMock).toHaveBeenCalledTimes(1)
 		})
 
 		it('caches previous keyframes() result to prevent unnecessary operations', function () {
@@ -92,6 +100,7 @@ describe('keyframes', function () {
 				prefixes: ['']
 			})
 
+			const keyframesMock = jest.spyOn(nano, 'keyframes')
 			nano.putRaw = jest.fn()
 
 			nano.keyframes({
@@ -109,6 +118,8 @@ describe('keyframes', function () {
 			if (env.isServer) {
 				expect(nano.putRaw).toHaveBeenCalledTimes(1)
 			}
+
+			expect(keyframesMock).toHaveBeenCalledTimes(1)
 		})
 	})
 
