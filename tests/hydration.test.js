@@ -162,6 +162,28 @@ describe('hydration', function () {
 			expect(className).toBe('.a')
 			expect(atomicMock).toHaveBeenCalledTimes(0)
 		})
+
+		it('should not generate wrong className if media queries with same declaration is inserted after generated styling', function () {
+			const mockStylesheet = document.createElement('style')
+			mockStylesheet.textContent =
+				'body{display:block;}.a{display:block;}@media screen{.b{display:block;}}'
+			document.head.appendChild(mockStylesheet)
+
+			const nano = createVirtualNano({
+				sh: mockStylesheet
+			})
+
+			const atomicMock = jest.spyOn(nano, 'atomic')
+
+			addOnHydration(nano)
+
+			const className = nano.virtual({
+				display: 'block'
+			})
+
+			expect(className).toBe('.a')
+			expect(atomicMock).toHaveBeenCalledTimes(0)
+		})
 	})
 
 	// it('should prevent media-queries found in stylesheet from re-rendering', function() {
