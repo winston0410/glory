@@ -12,7 +12,7 @@ import safeIsObj from 'safe-is-obj'
 
 const addOn = function (renderer) {
 	// Setting the cache outside this function may result in more persistant but unexpected behaviors
-	createCache(renderer)
+	createCache(renderer, 'cache')
 
 	const objectToClassNames = (decls, selector = '', atRule = '') => {
 		let classNames = ''

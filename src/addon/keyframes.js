@@ -1,5 +1,5 @@
 'use strict'
-import { assembleClassName } from '../helper'
+import { assembleClassName, createCache } from '../helper'
 
 const buildKeyframe = (list) => {
 	let result = ''
@@ -13,6 +13,8 @@ const buildKeyframe = (list) => {
 }
 
 const addOn = function (renderer, config = {}) {
+	createCache(renderer, 'kcache')
+
 	const { prefixes = ['-webkit-', '-moz-', '-o-', ''] } = config
 
 	const prefixedKeyframes = prefixes.map((prefix) => `@${prefix}keyframes`)

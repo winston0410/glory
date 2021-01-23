@@ -35,9 +35,9 @@ const cssifyObject = (decls, callback) => {
 	return css
 }
 
-const createCache = (renderer) => {
-	if (!renderer.cache) {
-		renderer.cache = {}
+const createCache = (renderer, name) => {
+	if (!renderer[name]) {
+		renderer[name] = {}
 	}
 }
 

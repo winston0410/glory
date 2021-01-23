@@ -31,7 +31,8 @@ const CSSRuleToObj = (rule) => {
 }
 
 const addOn = function (renderer) {
-	createCache(renderer)
+	createCache(renderer, 'cache')
+	createCache(renderer, 'kcache')
 
 	renderer.hydrate = function (sh) {
 		const cssRules = sh.cssRules || sh.sheet.cssRules
