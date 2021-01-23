@@ -43,7 +43,7 @@ import hydration from 'camouflage/hydration'
 import virtual from 'camouflage/virtual'
 
 const camouflage = create({
-	//Config renderer here
+    //Config renderer here
 })
 
 //Use plugin to upgrade the default renderer
@@ -56,16 +56,16 @@ prefixer(camouflage)
 hydration(camouflage)
 
 const style = {
-	color: 'red',
-	paddingTop: '100px',
-	'@media screen': {
-		//supports media queries
-		color: 'red'
-	},
-	':hover': {
-		//supports pesudo-classes and selectors
-		backgroundColor: 'blue'
-	}
+    color: 'red',
+    paddingTop: '100px',
+    '@media screen': {
+        //supports media queries
+        color: 'red'
+    },
+    ':hover': {
+        //supports pesudo-classes and selectors
+        backgroundColor: 'blue'
+    }
 }
 
 const className = camouflage.virtual(style)
@@ -121,7 +121,15 @@ This library is a folk of `nano-css`, with the following difference:
 
 ## Contribution
 
-TODO
+To contribute in this project, you need to do the followings:
+
+- Fork this repo and then clone **your fork** into your computer.
+
+- Contribute in your fork, commit and push to **your fork**.
+
+- Create a pull request in this repo.
+
+After your code had been reviewed, accepted and merged into this repo, you contribution will be shown in this repo.
 
 ## Roadmap
 
