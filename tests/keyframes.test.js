@@ -103,6 +103,37 @@ describe('keyframes', function () {
 				expect(result.includes('@keyframes')).toBe(true)
 			}
 		})
+
+		it('caches previous keyframes() result to prevent unnecessary operations', function () {
+			const nano = create()
+
+			addonKeyframes(nano, {
+				prefixes: ['']
+			})
+
+			nano.putRaw = jest.fn()
+			nano.ksh = {
+				appendChild: jest.fn()
+			}
+
+			nano.keyframes({
+				to: {
+					transform: 'rotate(360deg)'
+				}
+			})
+
+			nano.keyframes({
+				to: {
+					transform: 'rotate(360deg)'
+				}
+			})
+
+			if (env.isClient) {
+				expect(nano.ksh.appendChild).toHaveBeenCalledTimes(1)
+			} else {
+				expect(nano.putRaw).toHaveBeenCalledTimes(1)
+			}
+		})
 	})
 
 	//Test for putting @keyframe with nano.put is removed, as keyframes should be handeld by a separate function
