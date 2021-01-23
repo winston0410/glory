@@ -20,16 +20,6 @@ describe('keyframes', function () {
 		expect(typeof nano.keyframes).toBe('function')
 	})
 
-	it('creates keyframe style sheet on client', function () {
-		const nano = createNano()
-
-		if (env.isClient) {
-			expect(typeof nano.ksh).toBe('object')
-		} else {
-			expect(typeof nano.ksh).toBe('undefined')
-		}
-	})
-
 	describe('keyframes()', function () {
 		it('returns animation name', function () {
 			const nano = createNano()
@@ -54,9 +44,6 @@ describe('keyframes', function () {
 			})
 
 			nano.putRaw = jest.fn()
-			nano.ksh = {
-				appendChild: jest.fn()
-			}
 
 			const name = nano.keyframes({
 				to: {
@@ -64,9 +51,7 @@ describe('keyframes', function () {
 				}
 			})
 
-			if (env.isClient) {
-				expect(nano.ksh.appendChild).toHaveBeenCalledTimes(1)
-			} else {
+			if (env.isServer) {
 				const result = nano.putRaw.mock.calls[0][0]
 				console.log('check result', result)
 				expect(result.includes('to{transform:rotate(360deg);}')).toBe(true)
@@ -82,9 +67,6 @@ describe('keyframes', function () {
 			})
 
 			nano.putRaw = jest.fn()
-			nano.ksh = {
-				appendChild: jest.fn()
-			}
 
 			const name = nano.keyframes({
 				to: {
@@ -92,9 +74,7 @@ describe('keyframes', function () {
 				}
 			})
 
-			if (env.isClient) {
-				expect(nano.ksh.appendChild).toHaveBeenCalledTimes(1)
-			} else {
+			if (env.isServer) {
 				const result = nano.putRaw.mock.calls[0][0]
 				expect(nano.putRaw).toHaveBeenCalledTimes(1)
 				expect(result.includes('to{transform:rotate(360deg);}')).toBe(true)
@@ -113,9 +93,6 @@ describe('keyframes', function () {
 			})
 
 			nano.putRaw = jest.fn()
-			nano.ksh = {
-				appendChild: jest.fn()
-			}
 
 			nano.keyframes({
 				to: {
@@ -129,9 +106,7 @@ describe('keyframes', function () {
 				}
 			})
 
-			if (env.isClient) {
-				expect(nano.ksh.appendChild).toHaveBeenCalledTimes(1)
-			} else {
+			if (env.isServer) {
 				expect(nano.putRaw).toHaveBeenCalledTimes(1)
 			}
 		})
