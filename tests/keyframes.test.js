@@ -39,7 +39,10 @@ describe('keyframes', function () {
 				}
 			})
 
+			const nanoForCoparison = createNano()
+
 			expect(typeof name).toBe('string')
+			expect(name).toBe(nanoForCoparison.hash())
 			expect(name.length > 0).toBe(true)
 		})
 
@@ -64,6 +67,8 @@ describe('keyframes', function () {
 			if (env.isClient) {
 				expect(nano.ksh.appendChild).toHaveBeenCalledTimes(1)
 			} else {
+				const result = nano.putRaw.mock.calls[0][0]
+				expect(result.includes('to{transform:rotate(360deg);}')).toBe(true)
 				expect(nano.putRaw).toHaveBeenCalledTimes(1)
 			}
 		})
@@ -90,7 +95,6 @@ describe('keyframes', function () {
 				expect(nano.ksh.appendChild).toHaveBeenCalledTimes(1)
 			} else {
 				const result = nano.putRaw.mock.calls[0][0]
-
 				expect(nano.putRaw).toHaveBeenCalledTimes(1)
 				expect(result.includes('to{transform:rotate(360deg);}')).toBe(true)
 				expect(result.includes('@-webkit-keyframes')).toBe(true)

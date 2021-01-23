@@ -25,6 +25,7 @@ const addOn = function (renderer, config = {}) {
 	}
 
 	renderer.keyframes = function (decls, name) {
+		console.log('check parameter', decls, name)
 		const frameName = assembleClassName(renderer, name)
 
 		let rawKeyframes = ''
