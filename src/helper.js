@@ -10,6 +10,17 @@ const assembleDecl = (prop, value) => `${hyphenateProperty(prop)}:${value};`
 
 const assembleRule = (name, rule) => `${name}{${rule}}`
 
+const assembleKeyframe = (list) => {
+	let result = ''
+	for (const key in list) {
+		result +=
+			typeof list[key] === 'string'
+				? `${key}:${list[key]};`
+				: `${key}{${assembleKeyframe(list[key])}}`
+	}
+	return result
+}
+
 const isAtRule = (selector) => selector[0] === '@' && selector !== '@font-face'
 
 const cssifyArray = (prop, value) => {
@@ -49,5 +60,6 @@ export {
 	cssifyArray,
 	assembleRule,
 	assembleDecl,
+	assembleKeyframe,
 	createCache
 }

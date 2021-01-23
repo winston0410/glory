@@ -1,16 +1,5 @@
 'use strict'
-import { assembleClassName, createCache } from '../helper'
-
-const buildKeyframe = (list) => {
-	let result = ''
-	for (const key in list) {
-		result +=
-			typeof list[key] === 'string'
-				? `${key}:${list[key]};`
-				: `${key}{${buildKeyframe(list[key])}}`
-	}
-	return result
-}
+import { assembleClassName, assembleKeyframe, createCache } from '../helper'
 
 const addOn = function (renderer, config = {}) {
 	createCache(renderer, 'kcache')
@@ -25,13 +14,15 @@ const addOn = function (renderer, config = {}) {
 	}
 
 	renderer.keyframes = function (decls, name) {
-		console.log('check parameter', decls, name)
+		// console.log('check parameter', decls, name)
 		const frameName = assembleClassName(renderer, name)
 
 		let rawKeyframes = ''
 
+		// console.log('check result', assembleKeyframe(decls))
+
 		for (const prefixed of prefixedKeyframes) {
-			rawKeyframes += `${prefixed} ${frameName}{${buildKeyframe(decls)}}`
+			rawKeyframes += `${prefixed} ${frameName}{${assembleKeyframe(decls)}}`
 		}
 
 		if (renderer.client) {
@@ -45,8 +36,3 @@ const addOn = function (renderer, config = {}) {
 }
 
 export default addOn
-
-// const rawKeyframes = prefixedKeyframes.reduce((acc, keyframe) => {
-// 	const rawKeyframe = `${keyframe} ${frameName}{${buildKeyframe(decls)}}`
-// 	return acc + rawKeyframe
-// }, '')
