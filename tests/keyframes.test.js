@@ -7,21 +7,18 @@ import addonKeyframes from '../src/addon/keyframes'
 
 function createNano(config) {
 	const nano = create(config)
-
 	addonKeyframes(nano)
-
 	return nano
 }
 
-describe('keyframes', function () {
-	it('installs interface', function () {
+describe('installing keyframes()', function () {
+	it('should become the method of the renderer', function () {
 		const nano = createNano()
-
 		expect(typeof nano.keyframes).toBe('function')
 	})
 
-	describe('keyframes()', function () {
-		it('returns animation name', function () {
+	describe('when calling keyframes()', function () {
+		it('should return the name of the keyframe', function () {
 			const nano = createNano()
 			const name = nano.keyframes({
 				to: {
@@ -36,16 +33,14 @@ describe('keyframes', function () {
 			expect(name.length > 0).toBe(true)
 		})
 
-		it('puts animation CSS', function () {
+		it('should insert the keyframe into the stylesheet', function () {
 			const nano = create()
 
 			addonKeyframes(nano, {
 				prefixes: ['']
 			})
 
-			const keyframesMock = jest.spyOn(nano, 'keyframes')
-
-			nano.putRaw = jest.fn()
+			const putRawMock = jest.spyOn(nano, 'putRaw')
 
 			const name = nano.keyframes({
 				to: {
@@ -54,74 +49,80 @@ describe('keyframes', function () {
 			})
 
 			if (env.isServer) {
-				const result = nano.putRaw.mock.calls[0][0]
-				console.log('check result', result)
-				expect(result.includes('to{transform:rotate(360deg);}')).toBe(true)
-				expect(nano.putRaw).toHaveBeenCalledTimes(1)
+				expect(nano.raw.includes('to{transform:rotate(360deg);}')).toBe(true)
 			}
 
-			expect(keyframesMock).toHaveBeenCalledTimes(1)
+			expect(putRawMock).toHaveBeenCalledTimes(1)
 		})
 
-		it('puts animation CSS with all prefixes', function () {
-			const nano = create()
+		describe('when prefixes is not provided', function () {
+			it('should insert the keyframe to stylesheet with all prefixes', function () {
+				const nano = create()
 
-			addonKeyframes(nano, {
-				prefixes: ['-webkit-', '-moz-', '']
-			})
+				addonKeyframes(nano)
 
-			const keyframesMock = jest.spyOn(nano, 'keyframes')
+				const name = nano.keyframes({
+					to: {
+						transform: 'rotate(360deg)'
+					}
+				})
 
-			nano.putRaw = jest.fn()
-
-			const name = nano.keyframes({
-				to: {
-					transform: 'rotate(360deg)'
+				if (env.isServer) {
+					const result = nano.raw
+					expect(result.includes('@-webkit-keyframes')).toBe(true)
+					expect(result.includes('@-moz-keyframes')).toBe(true)
+					expect(result.includes('@-o-keyframes')).toBe(true)
+					expect(result.includes('@keyframes')).toBe(true)
 				}
 			})
-
-			if (env.isServer) {
-				const result = nano.putRaw.mock.calls[0][0]
-				expect(nano.putRaw).toHaveBeenCalledTimes(1)
-				expect(result.includes('to{transform:rotate(360deg);}')).toBe(true)
-				expect(result.includes('@-webkit-keyframes')).toBe(true)
-				expect(result.includes('@-moz-keyframes')).toBe(true)
-				expect(result.includes('@-o-keyframes')).toBe(false)
-				expect(result.includes('@keyframes')).toBe(true)
-			}
-
-			expect(keyframesMock).toHaveBeenCalledTimes(1)
 		})
 
-		it('caches previous keyframes() result to prevent unnecessary operations', function () {
-			const nano = create()
+		describe('when prefixes is provided', function () {
+			it('should insert the keyframe to stylesheet with the provided prefixes', function () {
+				const nano = create()
 
-			addonKeyframes(nano, {
-				prefixes: ['']
-			})
+				addonKeyframes(nano, {
+					prefixes: ['-webkit-', '-moz-', '']
+				})
 
-			const keyframesMock = jest.spyOn(nano, 'keyframes')
-			nano.putRaw = jest.fn()
+				const name = nano.keyframes({
+					to: {
+						transform: 'rotate(360deg)'
+					}
+				})
 
-			nano.keyframes({
-				to: {
-					transform: 'rotate(360deg)'
+				if (env.isServer) {
+					const result = nano.raw
+					expect(result.includes('@-webkit-keyframes')).toBe(true)
+					expect(result.includes('@-moz-keyframes')).toBe(true)
+					expect(result.includes('@-o-keyframes')).toBe(false)
+					expect(result.includes('@keyframes')).toBe(true)
 				}
 			})
+		})
 
-			nano.keyframes({
-				to: {
-					transform: 'rotate(360deg)'
-				}
-			})
+		describe('when keyframes() is called with duplicated declarations', function () {
+			it('should not insert identical keyframe into the stylesheet', function () {
+				const nano = create()
 
-			if (env.isServer) {
+				addonKeyframes(nano)
+
+				const putRawMock = jest.spyOn(nano, 'putRaw')
+
+				nano.keyframes({
+					to: {
+						transform: 'rotate(360deg)'
+					}
+				})
+
+				nano.keyframes({
+					to: {
+						transform: 'rotate(360deg)'
+					}
+				})
+
 				expect(nano.putRaw).toHaveBeenCalledTimes(1)
-			}
-
-			expect(keyframesMock).toHaveBeenCalledTimes(1)
+			})
 		})
 	})
-
-	//Test for putting @keyframe with nano.put is removed, as keyframes should be handeld by a separate function
 })
