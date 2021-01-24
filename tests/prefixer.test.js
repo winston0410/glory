@@ -3,19 +3,10 @@
 
 const env = require('./env')
 import { create } from '../src/index'
-import addonRule from '../src/addon/rule'
 import addonVirtual from '../src/addon/virtual'
 import addonPrefixer from '../src/addon/prefixer'
-import addonNesting from '../src/addon/nesting'
 const { removeLineAndSpace } = require('./helper.js')
 import { prefix } from 'inline-style-prefixer'
-
-function createNano(config) {
-	const nano = create(config)
-	addonRule(nano)
-	addonPrefixer(nano)
-	return nano
-}
 
 function createVirtualNano(config) {
 	const nano = create(config)
@@ -26,50 +17,9 @@ function createVirtualNano(config) {
 
 describe('installing prefixer', function () {
 	it('should installs without crashing', function () {
-		const nano = createNano()
+		const nano = create()
+		addonPrefixer(nano)
 		expect(nano).toBeDefined()
-	})
-
-	describe('using put() and rule() interface', function () {
-		it('handles "user-select" correctly', function () {
-			const nano = createNano()
-
-			nano.putRaw = jest.fn()
-
-			nano.put('.one', {
-				userSelect: 'none'
-			})
-
-			const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
-
-			const userSelectPrefix = [
-				'-ms-user-select',
-				'-moz-user-select',
-				'-webkit-user-select',
-				'user-select'
-			]
-
-			userSelectPrefix.forEach(function (key) {
-				expect(result.includes(key)).toBe(true)
-			})
-		})
-
-		it("doesn't kebab values", function () {
-			const nano = createNano()
-			const decl = {
-				backgroundImage:
-					"url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='36' viewBox='0 0 48 36' fill='rgb(28,28,28)'%3E%3Crect x='16' y='12' width='16' height='2' /%3E%3Crect x='16' y='17' width='16' height='2' /%3E%3Crect x='16' y='22' width='16' height='2' /%3E%3C/svg>\")"
-			}
-
-			nano.putRaw = jest.fn()
-
-			nano.put('.one', decl)
-
-			const result = nano.putRaw.mock.calls[0][0].replace(/ +(?= )/g, '')
-			const expected =
-				".one{background-image:url(\"data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='48' height='36' viewBox='0 0 48 36' fill='rgb(28,28,28)'%3E%3Crect x='16' y='12' width='16' height='2' /%3E%3Crect x='16' y='17' width='16' height='2' /%3E%3Crect x='16' y='22' width='16' height='2' /%3E%3C/svg>\");}"
-			expect(result).toEqual(expected)
-		})
 	})
 
 	describe('using virtual() interface', function () {
