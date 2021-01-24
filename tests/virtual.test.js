@@ -84,7 +84,7 @@ describe('virtual', function () {
 		})
 	})
 
-	describe('when virtual() is called', function () {
+	describe('when virtual() is called with declarations', function () {
 		it('should inject CSS into stylesheet', function () {
 			const nano = createNano({
 				pfx: '_'
@@ -147,81 +147,53 @@ describe('virtual', function () {
 		})
 
 		describe('when virtual() is called with duplicated declarations', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+
+			const putRawMock = jest.spyOn(nano, 'putRaw')
+
+			const className = nano.virtual({
+				color: 'red'
+			})
+
+			const cachedClassName = nano.virtual({
+				color: 'red'
+			})
+
 			it('should not insert those duplicated into the stylesheet', function () {
-				const nano = createNano({
-					pfx: '_'
-				})
-
-				const putRawMock = jest.spyOn(nano, 'putRaw')
-
-				nano.virtual({
-					color: 'red'
-				})
-
-				nano.virtual({
-					color: 'red'
-				})
-
 				expect(putRawMock).toHaveBeenCalledTimes(1)
 			})
 
 			it('should return the className of the existing rule', function () {
-				const nano = createNano({
-					pfx: '_'
-				})
-
-				const className = nano.virtual({
-					color: 'red'
-				})
-
-				const cachedClassName = nano.virtual({
-					color: 'red'
-				})
-
 				expect(className).toBe(cachedClassName)
 			})
 		})
 
 		describe('when virtual() is called with duplicated declarations in media-queries', function () {
+			const nano = createNano({
+				pfx: '_'
+			})
+
+			const putRawMock = jest.spyOn(nano, 'putRaw')
+
+			const className = nano.virtual({
+				'@media screen': {
+					color: 'red'
+				}
+			})
+
+			const cachedClassName = nano.virtual({
+				'@media screen': {
+					color: 'red'
+				}
+			})
+
 			it('should not insert those duplicated into the stylesheet', function () {
-				const nano = createNano({
-					pfx: '_'
-				})
-
-				const putRawMock = jest.spyOn(nano, 'putRaw')
-
-				nano.virtual({
-					'@media screen': {
-						color: 'red'
-					}
-				})
-
-				nano.virtual({
-					'@media screen': {
-						color: 'red'
-					}
-				})
-
 				expect(putRawMock).toHaveBeenCalledTimes(1)
 			})
 
 			it('should return the className of the existing rule', function () {
-				const nano = createNano({
-					pfx: '_'
-				})
-
-				const className = nano.virtual({
-					'@media screen': {
-						color: 'red'
-					}
-				})
-
-				const cachedClassName = nano.virtual({
-					'@media screen': {
-						color: 'red'
-					}
-				})
-
 				expect(className).toBe(cachedClassName)
 			})
 		})
