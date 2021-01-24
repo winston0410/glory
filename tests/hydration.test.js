@@ -217,7 +217,7 @@ describe('hydration', function () {
 			// console.log(mockStylesheet.cssRules || mockStylesheet.sheet.cssRules)
 
 			const nano = create({
-				ksh: mockStylesheet
+				sh: mockStylesheet
 			})
 
 			addonKeyframes(nano, {
