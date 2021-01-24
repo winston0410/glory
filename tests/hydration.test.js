@@ -214,8 +214,6 @@ describe('hydration', function () {
 			mockStylesheet.textContent = '@keyframes a{to{transform:rotate(360deg);}}'
 			document.head.appendChild(mockStylesheet)
 
-			// console.log(mockStylesheet.cssRules || mockStylesheet.sheet.cssRules)
-
 			const nano = create({
 				sh: mockStylesheet
 			})
@@ -225,7 +223,7 @@ describe('hydration', function () {
 			})
 			addOnHydration(nano)
 
-			const keyframesMock = jest.spyOn(nano, 'keyframes')
+			const putRawMock = jest.spyOn(nano, 'putRaw')
 
 			const frameName = nano.keyframes({
 				to: {
@@ -236,7 +234,7 @@ describe('hydration', function () {
 			const nanoForComparison = create()
 
 			expect(frameName).toBe(nanoForComparison.hash())
-			// expect(keyframesMock).toHaveBeenCalledTimes(0)
+			expect(putRawMock).toHaveBeenCalledTimes(0)
 		})
 	})
 })

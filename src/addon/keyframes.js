@@ -13,7 +13,6 @@ const addOn = function (renderer, config = {}) {
 		if (renderer.kcache[frameContent]) {
 			return renderer.kcache[frameContent]
 		}
-
 		const frameName = assembleClassName(renderer, name)
 		renderer.kcache[frameContent] = frameName
 

@@ -3,7 +3,8 @@ import {
 	cssifyObject,
 	assembleClassName,
 	isAtRule,
-	createCache
+	createCache,
+	assembleRule
 } from '../helper.js'
 
 const compare = (original, updated) => {
@@ -38,7 +39,15 @@ const addOn = function (renderer) {
 		const cssRules = sh.cssRules || sh.sheet.cssRules
 		for (const rule of cssRules) {
 			if (rule.constructor.name === 'CSSKeyframesRule') {
-				// renderer.cache[]
+				let content = ''
+				for (const frameRule of rule.cssRules) {
+					content += assembleRule(
+						frameRule.keyText,
+						cssifyObject(CSSRuleToObj(frameRule))
+					)
+				}
+				console.log('hydrate content', content)
+				renderer.kcache[content] = rule.name
 			} else if (rule.constructor.name === 'CSSMediaRule') {
 				for (const basicRule of rule.cssRules) {
 					renderer.cache[
@@ -61,34 +70,3 @@ const addOn = function (renderer) {
 }
 
 export default addOn
-
-// if (renderer.put) {
-// 	const put = renderer.put
-// 	renderer.put = function(selector, decls, atRule) {
-// 		if (selector in hydrated) {
-// 			const { isEql, diff } = compare(hydrated[selector], decls)
-// 			if (!isEql) {
-// 				return put(selector, diff, atRule)
-// 			}
-// 		} else {
-// 			return put(selector, decls, atRule)
-// 		}
-// 	}
-// }
-//
-// if (renderer.rule) {
-// 	const next = renderer.hasher(renderer.hashChars)
-// 	const rule = renderer.rule
-// 	renderer.rule = function(decls) {
-// 		// Refactor with assembleClassName later
-// 		const selector = `.${renderer.pfx}${next()}`
-// 		if (hydrated[selector]) {
-// 			const { isEql, diff } = compare(hydrated[selector], decls)
-// 			if (isEql) {
-// 				return selector
-// 			}
-// 			return rule(diff)
-// 		}
-// 		return rule(decls)
-// 	}
-// }
