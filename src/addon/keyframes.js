@@ -8,12 +8,12 @@ const addOn = function (renderer, config = {}) {
 
 	const prefixedKeyframes = prefixes.map((prefix) => `@${prefix}keyframes`)
 
-	renderer.keyframes = function (decls, name) {
+	renderer.keyframes = function (decls) {
 		const frameContent = assembleKeyframe(decls)
 		if (renderer.kcache[frameContent]) {
 			return renderer.kcache[frameContent]
 		}
-		const frameName = assembleClassName(renderer, name)
+		const frameName = assembleClassName(renderer)
 		renderer.kcache[frameContent] = frameName
 
 		let rawKeyframes = ''
