@@ -98,8 +98,8 @@ describe('keyframes()', function () {
 		const putRawMock = jest.spyOn(nano, 'putRaw')
 		const name = nano.keyframes()
 
-		it('should not return anything', function () {
-			// console.log('check name', name)
+		it('should return an empty string', function () {
+			expect(name).toBe('')
 		})
 
 		it('should not insert anything into the stylesheet', function () {
