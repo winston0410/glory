@@ -3,21 +3,17 @@
 
 const env = require('./env')
 import { create } from '../src/index'
-import addonRule from '../src/addon/rule'
 import addonVirtual from '../src/addon/virtual'
 import addonKeyframes from '../src/addon/keyframes'
 
 function createNano(config) {
 	const nano = create(config)
-
-	addonRule(nano)
 	addonVirtual(nano)
-
 	return nano
 }
 
 describe('virtual', function () {
-	it('installs interface', function () {
+	it('should install without crashing', function () {
 		const nano = createNano()
 
 		expect(typeof nano.atomic).toBe('function')
@@ -79,7 +75,7 @@ describe('virtual', function () {
 			}
 		})
 
-		it('prefixes class names', function () {
+		it('should add prefix to className, when pfx is provided', function () {
 			const nano = createNano({
 				pfx: 'foo-'
 			})
@@ -88,22 +84,25 @@ describe('virtual', function () {
 		})
 	})
 
-	describe('virtual()', function () {
-		it('injects CSS', function () {
+	describe('when virtual() is called', function () {
+		it('should inject CSS into stylesheet', function () {
 			const nano = createNano({
 				pfx: '_'
 			})
+
+			const putRawMock = jest.spyOn(nano, 'putRaw')
+
 			const className = nano.virtual({
 				color: 'red'
 			})
 
-			expect(className).toBe(' _a')
 			if (env.isServer) {
 				expect(nano.raw).toBe('._a{color:red;}')
 			}
+			expect(putRawMock).toHaveBeenCalledTimes(1)
 		})
 
-		it('makes basic declarations atomic', function () {
+		it('should make declarations atomic', function () {
 			const nano = createNano({
 				pfx: '_'
 			})
@@ -122,7 +121,7 @@ describe('virtual', function () {
 			}
 		})
 
-		it('makes basic declarations in media-queries atomic', function () {
+		it('should makes declarations in media-queries atomic', function () {
 			const nano = createNano({
 				pfx: '_'
 			})
@@ -147,43 +146,87 @@ describe('virtual', function () {
 			}
 		})
 
-		it('caches basic declarations', function () {
-			const nano = createNano({
-				pfx: '_'
+		describe('when virtual() is called with duplicated declarations', function () {
+			it('should not insert those duplicated into the stylesheet', function () {
+				const nano = createNano({
+					pfx: '_'
+				})
+
+				const putRawMock = jest.spyOn(nano, 'putRaw')
+
+				nano.virtual({
+					color: 'red'
+				})
+
+				nano.virtual({
+					color: 'red'
+				})
+
+				expect(putRawMock).toHaveBeenCalledTimes(1)
 			})
 
-			const className = nano.virtual({
-				color: 'red'
-			})
+			it('should return the className of the existing rule', function () {
+				const nano = createNano({
+					pfx: '_'
+				})
 
-			const cachedClassName = nano.virtual({
-				color: 'red'
-			})
+				const className = nano.virtual({
+					color: 'red'
+				})
 
-			expect(className).toBe(cachedClassName)
+				const cachedClassName = nano.virtual({
+					color: 'red'
+				})
+
+				expect(className).toBe(cachedClassName)
+			})
 		})
 
-		it('caches at-rules', function () {
-			const nano = createNano({
-				pfx: '_'
+		describe('when virtual() is called with duplicated declarations in media-queries', function () {
+			it('should not insert those duplicated into the stylesheet', function () {
+				const nano = createNano({
+					pfx: '_'
+				})
+
+				const putRawMock = jest.spyOn(nano, 'putRaw')
+
+				nano.virtual({
+					'@media screen': {
+						color: 'red'
+					}
+				})
+
+				nano.virtual({
+					'@media screen': {
+						color: 'red'
+					}
+				})
+
+				expect(putRawMock).toHaveBeenCalledTimes(1)
 			})
 
-			const className = nano.virtual({
-				'@media screen': {
-					color: 'red'
-				}
-			})
+			it('should return the className of the existing rule', function () {
+				const nano = createNano({
+					pfx: '_'
+				})
 
-			const cachedClassName = nano.virtual({
-				'@media screen': {
-					color: 'red'
-				}
-			})
+				const className = nano.virtual({
+					'@media screen': {
+						color: 'red'
+					}
+				})
 
-			expect(className).toBe(cachedClassName)
+				const cachedClassName = nano.virtual({
+					'@media screen': {
+						color: 'red'
+					}
+				})
+
+				expect(className).toBe(cachedClassName)
+			})
 		})
 
-		it('allows nesting', function () {
+		it('should support nesting', function () {
 			const nano = createNano({
 				pfx: '_'
 			})
@@ -197,6 +240,8 @@ describe('virtual', function () {
 			expect(className).toBe(' _a _b')
 
 			if (env.isServer) {
+				const result = nano.raw
+				console.log('get result', result)
 				expect(nano.raw.includes('._a')).toBe(true)
 				expect(nano.raw.includes('._b')).toBe(true)
 				expect(nano.raw.includes(':hover')).toBe(true)
@@ -205,7 +250,7 @@ describe('virtual', function () {
 			}
 		})
 
-		it('handles values in array in a single class', function () {
+		it('should handle values in array in a single className', function () {
 			const nano = createNano({
 				pfx: '_'
 			})

@@ -24,8 +24,8 @@ function createVirtualNano(config) {
 	return nano
 }
 
-describe('prefixer', function () {
-	it('installs without crashing', function () {
+describe('installing prefixer', function () {
+	it('should installs without crashing', function () {
 		const nano = createNano()
 		expect(nano).toBeDefined()
 	})
