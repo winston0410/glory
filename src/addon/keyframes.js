@@ -9,6 +9,7 @@ const addOn = function (renderer, config = {}) {
 	const prefixedKeyframes = prefixes.map((prefix) => `@${prefix}keyframes`)
 
 	renderer.keyframes = function (decls) {
+		if (!decls) return ''
 		const frameContent = assembleKeyframe(decls)
 		if (renderer.kcache[frameContent]) {
 			return renderer.kcache[frameContent]

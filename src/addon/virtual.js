@@ -62,7 +62,10 @@ const addOn = function (renderer) {
 	}
 
 	// Only media queries should be supported in virtual
-	renderer.virtual = (decls) => objectToClassNames(decls)
+	renderer.virtual = (decls) => {
+		if (!decls) return ''
+		return objectToClassNames(decls)
+	}
 
 	renderer.rule = renderer.virtual
 }
