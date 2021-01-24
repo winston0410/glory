@@ -36,10 +36,10 @@ const addOn = function (renderer) {
 
 	renderer.hydrate = function (sh) {
 		const cssRules = sh.cssRules || sh.sheet.cssRules
-		console.log('check cssRules', cssRules)
 		for (const rule of cssRules) {
-			// Check rule by instance instead of property for checking keyframes rule, CSSKeyframesRule
-			if (rule.media) {
+			if (rule.constructor.name === 'CSSKeyframesRule') {
+				// renderer.cache[]
+			} else if (rule.constructor.name === 'CSSMediaRule') {
 				for (const basicRule of rule.cssRules) {
 					renderer.cache[
 						`@media ${rule.media.mediaText}${cssifyObject(
@@ -56,9 +56,6 @@ const addOn = function (renderer) {
 	if (renderer.client) {
 		if (renderer.sh) {
 			renderer.hydrate(renderer.sh)
-		}
-		if (renderer.ksh) {
-			renderer.hydrate(renderer.ksh)
 		}
 	}
 }
