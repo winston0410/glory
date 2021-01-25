@@ -17,78 +17,117 @@ describe('keyframes()', function () {
 		expect(typeof nano.keyframes).toBe('function')
 	})
 
-	describe('when calling keyframes() with declarations', function () {
-		describe('when prefixes is not provided', function () {
+	describe('when calling keyframes() with an argument', function () {
+		describe('when the argument is not an object', function () {
 			const nano = createNano()
 			const putRawMock = jest.spyOn(nano, 'putRaw')
-			const name = nano.keyframes({
-				to: {
-					transform: 'rotate(360deg)'
-				}
+
+			const num = nano.keyframes(1)
+			const str = nano.keyframes('hello-world')
+			const arr = nano.keyframes([])
+
+			it('should return an empty string', function () {
+				expect(num).toBe('')
+				expect(str).toBe('')
+				expect(arr).toBe('')
 			})
 
-			it('should return the name of the keyframe', function () {
-				expect(typeof name).toBe('string')
-				expect(name.length > 0).toBe(true)
+			it('should not inject anything into the stylesheet', function () {
+				expect(putRawMock).toHaveBeenCalledTimes(0)
+			})
+		})
+
+		describe('when the argument is an object', function () {
+			describe('when that object is empty', function () {
+				const nano = createNano()
+				const putRawMock = jest.spyOn(nano, 'putRaw')
+				const obj = nano.keyframes({})
+
+				it('should return an empty string', function () {
+					expect(obj).toBe('')
+				})
+
+				it('should not inject anything into the stylesheet', function () {
+					expect(putRawMock).toHaveBeenCalledTimes(0)
+				})
 			})
 
-			it('should return a name based on the hash function', function () {
-				const nanoForCoparison = createNano()
-				expect(name).toBe(nanoForCoparison.hash())
-			})
-
-			it('should insert the keyframe into the stylesheet', function () {
-				if (env.isServer) {
-					expect(nano.raw.includes('to{transform:rotate(360deg);}')).toBe(true)
-				}
-
-				expect(putRawMock).toHaveBeenCalledTimes(1)
-			})
-
-			it('should insert the keyframe to stylesheet with all prefixes', function () {
-				if (env.isServer) {
-					const result = nano.raw
-					expect(result.includes('@-webkit-keyframes')).toBe(true)
-					expect(result.includes('@-moz-keyframes')).toBe(true)
-					expect(result.includes('@-o-keyframes')).toBe(true)
-					expect(result.includes('@keyframes')).toBe(true)
-				}
-			})
-
-			describe('when keyframes() is called with duplicated declarations', function () {
-				it('should not insert identical keyframe into the stylesheet', function () {
-					nano.keyframes({
+			describe('when that object is not empty', function () {
+				describe('when prefixes is not provided', function () {
+					const nano = createNano()
+					const putRawMock = jest.spyOn(nano, 'putRaw')
+					const name = nano.keyframes({
 						to: {
 							transform: 'rotate(360deg)'
 						}
 					})
 
-					expect(nano.putRaw).toHaveBeenCalledTimes(1)
+					it('should return the name of the keyframe', function () {
+						expect(typeof name).toBe('string')
+						expect(name.length > 0).toBe(true)
+					})
+
+					it('should return a name based on the hash function', function () {
+						const nanoForCoparison = createNano()
+						expect(name).toBe(nanoForCoparison.hash())
+					})
+
+					it('should insert the keyframe into the stylesheet', function () {
+						if (env.isServer) {
+							expect(nano.raw.includes('to{transform:rotate(360deg);}')).toBe(
+								true
+							)
+						}
+
+						expect(putRawMock).toHaveBeenCalledTimes(1)
+					})
+
+					it('should insert the keyframe to stylesheet with all prefixes', function () {
+						if (env.isServer) {
+							const result = nano.raw
+							expect(result.includes('@-webkit-keyframes')).toBe(true)
+							expect(result.includes('@-moz-keyframes')).toBe(true)
+							expect(result.includes('@-o-keyframes')).toBe(true)
+							expect(result.includes('@keyframes')).toBe(true)
+						}
+					})
+
+					describe('when keyframes() is called with duplicated declarations', function () {
+						it('should not insert identical keyframe into the stylesheet', function () {
+							nano.keyframes({
+								to: {
+									transform: 'rotate(360deg)'
+								}
+							})
+
+							expect(nano.putRaw).toHaveBeenCalledTimes(1)
+						})
+					})
 				})
-			})
-		})
 
-		describe('when prefixes is provided', function () {
-			it('should insert the keyframe to stylesheet with the provided prefixes only', function () {
-				const nano = create()
+				describe('when prefixes is provided', function () {
+					it('should insert the keyframe to stylesheet with the provided prefixes only', function () {
+						const nano = create()
 
-				addonKeyframes(nano, {
-					prefixes: ['-webkit-', '-moz-', '']
+						addonKeyframes(nano, {
+							prefixes: ['-webkit-', '-moz-', '']
+						})
+
+						const name = nano.keyframes({
+							to: {
+								transform: 'rotate(360deg)'
+							}
+						})
+
+						if (env.isServer) {
+							const result = nano.raw
+							expect(result.includes('@-webkit-keyframes')).toBe(true)
+							expect(result.includes('@-moz-keyframes')).toBe(true)
+							expect(result.includes('@-o-keyframes')).toBe(false)
+							expect(result.includes('@keyframes')).toBe(true)
+						}
+					})
 				})
-
-				const name = nano.keyframes({
-					to: {
-						transform: 'rotate(360deg)'
-					}
-				})
-
-				if (env.isServer) {
-					const result = nano.raw
-					expect(result.includes('@-webkit-keyframes')).toBe(true)
-					expect(result.includes('@-moz-keyframes')).toBe(true)
-					expect(result.includes('@-o-keyframes')).toBe(false)
-					expect(result.includes('@keyframes')).toBe(true)
-				}
 			})
 		})
 	})
