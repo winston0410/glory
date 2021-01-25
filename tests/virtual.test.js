@@ -20,130 +20,171 @@ describe('virtual', function () {
 		expect(typeof nano.virtual).toBe('function')
 	})
 
-	describe('atomic()', function () {
-		it('injects raw styles', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-
-			const className = nano.atomic('color:red;', '')
-
-			expect(className).toBe('_a')
-
-			if (env.isServer) {
-				expect(nano.raw).toBe('._a{color:red;}')
-			}
-		})
-
-		it('increments ID', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-
-			expect(nano.atomic('color:red;')).toBe('_a')
-			expect(nano.atomic('color:blue;')).toBe('_b')
-			expect(nano.atomic('color:green;')).toBe('_c')
-
-			if (env.isServer) {
-				expect(nano.raw).toBe(
-					'._a{color:red;}._b{color:blue;}._c{color:green;}'
-				)
-			}
-		})
-
-		it('handles at-rules', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-
-			nano.atomic('color:red;', '', '@media screen')
-
-			if (env.isServer) {
-				expect(nano.raw).toBe('@media screen{._a{color:red;}}')
-			}
-		})
-
-		it('handles pesudo-classes', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-
-			expect(nano.atomic('color:red;', ':hover', '@media screen')).toBe('_a')
-
-			if (env.isServer) {
-				expect(nano.raw).toBe('@media screen{._a:hover{color:red;}}')
-			}
-		})
-
-		it('should add prefix to className, when pfx is provided', function () {
-			const nano = createNano({
-				pfx: 'foo-'
-			})
-
-			expect(nano.atomic('color:red;')).toBe('foo-a')
-		})
-	})
-
-	describe('when virtual() is called with declarations', function () {
-		it('should inject CSS into stylesheet', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-
+	describe('when virtual() is called with an argument', function () {
+		describe('when the argument is not an object', function () {
+			const nano = createNano()
 			const putRawMock = jest.spyOn(nano, 'putRaw')
 
-			const className = nano.virtual({
-				color: 'red'
+			const num = nano.virtual(1)
+			const str = nano.virtual('hello-world')
+			const arr = nano.virtual([])
+
+			it('should return an empty string', function () {
+				expect(num).toBe('')
+				expect(str).toBe('')
+				expect(arr).toBe('')
 			})
 
-			if (env.isServer) {
-				expect(nano.raw).toBe('._a{color:red;}')
-			}
-			expect(putRawMock).toHaveBeenCalledTimes(1)
+			it('should not inject anything into the stylesheet', function () {
+				expect(putRawMock).toHaveBeenCalledTimes(0)
+			})
 		})
 
-		it('should make declarations atomic', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-			const className = nano.virtual({
-				color: 'red',
-				background: 'black',
-				textAlign: 'center'
-			})
+		describe('when the argument is an object', function () {
+			describe('when that object is empty', function () {
+				const nano = createNano()
+				const putRawMock = jest.spyOn(nano, 'putRaw')
+				const obj = nano.virtual({})
 
-			expect(className).toBe(' _a _b _c')
+				it('should return an empty string', function () {
+					expect(obj).toBe('')
+				})
 
-			if (env.isServer) {
-				expect(nano.raw.includes('color:red')).toBe(true)
-				expect(nano.raw.includes('background:black')).toBe(true)
-				expect(nano.raw.includes('text-align:center')).toBe(true)
-			}
-		})
-
-		it('should makes declarations in media-queries atomic', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-			const className = nano.virtual({
-				'@media screen': {
-					color: 'red',
-					background: 'black',
-					textAlign: 'center'
-				}
+				it('should not inject anything into the stylesheet', function () {
+					expect(putRawMock).toHaveBeenCalledTimes(0)
+				})
 			})
 
-			expect(className).toBe(' _a _b _c')
+			describe('when that object is not empty', function () {
+				it('should inject CSS into stylesheet', function () {
+					const nano = createNano({
+						pfx: '_'
+					})
 
-			if (env.isServer) {
-				expect(nano.raw).toBe(
-					'@media screen{._a{color:red;}}@media screen{._b{background:black;}}@media screen{._c{text-align:center;}}'
-				)
-				// Should optimize output of virtual() to this without harming performance.
-				// expect(nano.raw).toBe(
-				// 	'@media screen{._a{color:red;}._b{background:black;}._c{text-align:center;}}'
-				// )
-			}
+					const putRawMock = jest.spyOn(nano, 'putRaw')
+
+					const className = nano.virtual({
+						color: 'red'
+					})
+
+					if (env.isServer) {
+						expect(nano.raw).toBe('._a{color:red;}')
+					}
+					expect(putRawMock).toHaveBeenCalledTimes(1)
+				})
+
+				it('should make declarations atomic', function () {
+					const nano = createNano({
+						pfx: '_'
+					})
+					const className = nano.virtual({
+						color: 'red',
+						background: 'black',
+						textAlign: 'center'
+					})
+
+					expect(className).toBe(' _a _b _c')
+
+					if (env.isServer) {
+						expect(nano.raw.includes('color:red')).toBe(true)
+						expect(nano.raw.includes('background:black')).toBe(true)
+						expect(nano.raw.includes('text-align:center')).toBe(true)
+					}
+				})
+
+				it('should makes declarations in media-queries atomic', function () {
+					const nano = createNano({
+						pfx: '_'
+					})
+					const className = nano.virtual({
+						'@media screen': {
+							color: 'red',
+							background: 'black',
+							textAlign: 'center'
+						}
+					})
+
+					expect(className).toBe(' _a _b _c')
+
+					if (env.isServer) {
+						expect(nano.raw).toBe(
+							'@media screen{._a{color:red;}}@media screen{._b{background:black;}}@media screen{._c{text-align:center;}}'
+						)
+						// Should optimize output of virtual() to this without harming performance.
+						// expect(nano.raw).toBe(
+						// 	'@media screen{._a{color:red;}._b{background:black;}._c{text-align:center;}}'
+						// )
+					}
+				})
+
+				describe('when a nesting object is passed in as value of a declaration', function () {
+					const nano = createNano({
+						pfx: '_'
+					})
+					const className = nano.virtual({
+						color: 'red',
+						':hover': {
+							color: 'blue'
+						}
+					})
+					it('should create atomic css', function () {
+						expect(className).toBe(' _a _b')
+					})
+
+					it('should make the prop of that nesting object declaration to be the selector', function () {
+						if (env.isServer) {
+							const result = nano.raw
+							expect(nano.raw.includes('._b:hover{color:blue;}')).toBe(true)
+						}
+					})
+				})
+
+				describe('when an array is passed in as value of a declaration', function () {
+					const nano = createNano({
+						pfx: '_'
+					})
+
+					const atomic = jest.spyOn(nano, 'atomic')
+
+					const className = nano.virtual({
+						display: ['flex', '-webkit-flex']
+					})
+
+					it('should expand value of that array using the same prop', function () {
+						if (env.isServer) {
+							expect(nano.raw.includes('display:flex;')).toBe(true)
+							expect(nano.raw.includes('display:-webkit-flex;')).toBe(true)
+						}
+					})
+
+					it('should handle values of that array in a single rule and className', function () {
+						expect(className).toBe(' _a')
+						expect(atomic).toHaveBeenCalledTimes(1)
+					})
+				})
+
+				it('should handle multiple styles', function () {
+					const nano = createNano()
+
+					nano.atomic = jest.fn()
+
+					const className = nano.virtual({
+						color: 'tomato',
+						border: '1px solid red',
+						margin: '10px auto',
+						padding: '0',
+						':focus': {
+							color: 'blue'
+						},
+						'@media screen': {
+							textAlign: 'right',
+							cursor: 'pointer'
+						}
+					})
+
+					expect(nano.atomic).toHaveBeenCalledTimes(7)
+				})
+			})
 		})
 
 		describe('when virtual() is called with duplicated declarations', function () {
@@ -197,71 +238,19 @@ describe('virtual', function () {
 				expect(className).toBe(cachedClassName)
 			})
 		})
+	})
 
-		it('should support nesting', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-			const className = nano.virtual({
-				color: 'red',
-				':hover': {
-					color: 'blue'
-				}
-			})
+	describe('when virtual() is called without declarations', function () {
+		const nano = createNano()
+		const putRawMock = jest.spyOn(nano, 'putRaw')
+		const name = nano.virtual()
 
-			expect(className).toBe(' _a _b')
-
-			if (env.isServer) {
-				const result = nano.raw
-				console.log('get result', result)
-				expect(nano.raw.includes('._a')).toBe(true)
-				expect(nano.raw.includes('._b')).toBe(true)
-				expect(nano.raw.includes(':hover')).toBe(true)
-				expect(nano.raw.includes('color:red')).toBe(true)
-				expect(nano.raw.includes('color:blue')).toBe(true)
-			}
+		it('should return an empty string', function () {
+			expect(name).toBe('')
 		})
 
-		it('should handle values in array in a single className', function () {
-			const nano = createNano({
-				pfx: '_'
-			})
-
-			const atomic = jest.spyOn(nano, 'atomic')
-
-			const className = nano.virtual({
-				display: ['flex', '-webkit-flex']
-			})
-
-			expect(className).toBe(' _a')
-			expect(atomic).toHaveBeenCalledTimes(1)
-			expect(atomic).toHaveBeenCalledWith('display:flex;display:-webkit-flex;')
-
-			if (env.isServer) {
-				expect(nano.raw).toBe('._a{display:flex;display:-webkit-flex;}')
-			}
-		})
-
-		it('multiple styles', function () {
-			const nano = createNano()
-
-			nano.atomic = jest.fn()
-
-			const className = nano.virtual({
-				color: 'tomato',
-				border: '1px solid red',
-				margin: '10px auto',
-				padding: '0',
-				':focus': {
-					color: 'blue'
-				},
-				'@media screen': {
-					textAlign: 'right',
-					cursor: 'pointer'
-				}
-			})
-
-			expect(nano.atomic).toHaveBeenCalledTimes(7)
+		it('should not insert anything into the stylesheet', function () {
+			expect(nano.putRaw).toHaveBeenCalledTimes(0)
 		})
 	})
 })
