@@ -31,12 +31,13 @@ const CSSRuleToObj = (rule) => {
 	return obj
 }
 
-const addOn = function (renderer) {
+const addOn = function(renderer) {
 	createCache(renderer, 'cache')
 	createCache(renderer, 'kcache')
 
-	renderer.hydrate = function (sh) {
-		const cssRules = sh.cssRules || sh.sheet.cssRules
+	renderer.hydrate = function(sh) {
+		if (!sh.sheet) return
+		const cssRules = sh.sheet.cssRules
 		for (const rule of cssRules) {
 			if (rule.constructor.name === 'CSSKeyframesRule') {
 				let content = ''

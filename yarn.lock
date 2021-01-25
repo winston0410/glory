@@ -2628,10 +2628,10 @@ es6-error@^4.0.1:
   resolved "https://registry.yarnpkg.com/es6-error/-/es6-error-4.1.1.tgz#9e3af407459deed47e9a91f9b885a84eb05c561d"
   integrity sha512-Um/+FxMr9CISWh0bi5Zv0iOD+4cFh5qLeks1qhAopKVAJw3drgKbKySikp7wGhDL0HPeaja0P5ULZrxLkniUVg==
 
-esbuild@^0.8.33:
-  version "0.8.33"
-  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.8.33.tgz#4e24ab4e780b08ff5527171bf5a684594c8b56e9"
-  integrity sha512-2ms/P6Y9zJfopR9dKo2vHzhXKfGSNlquVVoVOF8YnhjuzZVrvManMVBPadBsR/t7jzIkRnwqvxrs7d4f3C3eyg==
+esbuild@^0.8.34:
+  version "0.8.34"
+  resolved "https://registry.yarnpkg.com/esbuild/-/esbuild-0.8.34.tgz#16b4ac58f74c821d2c5a8c2f0585ca96a38ab4e6"
+  integrity sha512-tnr0V1ooakYr1aRLXQLzCn2GVG1kBTW3FWpRyC+NgrR3ntsouVpJOlTOV0BS4YLATx3/c+x3h/uBq9lWJlUAtQ==
 
 escalade@^3.1.1:
   version "3.1.1"
@@ -5793,10 +5793,10 @@ qs@~6.5.2:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
   integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
 
-rambda@^6.5.2:
-  version "6.5.2"
-  resolved "https://registry.yarnpkg.com/rambda/-/rambda-6.5.2.tgz#ceaeb309a2c4aa68ee9dda953d8cba05d29fa53b"
-  integrity sha512-ptA+gifKKQZfMn3vZfX6PCbFWHryFZ0PQzHevXqVWV/lIZJ08sMjNgRf1ip+fhJp9onND+1aUbRZxHmvVhnelQ==
+rambda@^6.5.3:
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/rambda/-/rambda-6.5.3.tgz#c83908b5c28ee39428ba049382ca040cbadf2f38"
+  integrity sha512-2CAMX4isM2QVOybyiKCCXlopEYIwWMc5nx6SD2PTFEgN4DLMJXjrwjlVsNOisMGeL2+akojuZEF7LuSHb2NMsQ==
 
 ramda@^0.27.1:
   version "0.27.1"
@@ -6106,10 +6106,10 @@ rollup-plugin-multi-input@^1.2.0:
     fast-glob "^3.0.0"
     lodash "^4.17.11"
 
-rollup@^2.37.1:
-  version "2.37.1"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.37.1.tgz#aa7aadffd75c80393f9314f9857e851b0ffd34e7"
-  integrity sha512-V3ojEeyGeSdrMSuhP3diBb06P+qV4gKQeanbDv+Qh/BZbhdZ7kHV0xAt8Yjk4GFshq/WjO7R4c7DFM20AwTFVQ==
+rollup@^2.38.0:
+  version "2.38.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.38.0.tgz#57942d5a10826cb12ed1f19c261f774efa502d2d"
+  integrity sha512-ay9zDiNitZK/LNE/EM2+v5CZ7drkB2xyDljvb1fQJCGnq43ZWRkhxN145oV8GmoW1YNi4sA/1Jdkr2LfawJoXw==
   optionalDependencies:
     fsevents "~2.1.2"
 
@@ -7068,6 +7068,11 @@ word-wrap@^1.2.3, word-wrap@~1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
   integrity sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==
+
+workerpool@^6.0.4:
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/workerpool/-/workerpool-6.0.4.tgz#f83ecf101b35c034cb20ed38cedd619dde9d722c"
+  integrity sha512-sAc9w9oAJQ2680gDArGinjw0Ygj2K3KF1ZCRfslBKUCzc9Gycwlj9ZIAbizPRBftcXxhXgoGMVPxJE0VMNnWbw==
 
 wrap-ansi@^5.1.0:
   version "5.1.0"

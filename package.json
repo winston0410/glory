@@ -79,7 +79,8 @@
 		"rollup": "^2.38.0",
 		"rollup-plugin-multi-input": "^1.2.0",
 		"tiny-worker": "^2.3.0",
-		"url-polyfill": "^1.1.12"
+		"url-polyfill": "^1.1.12",
+		"workerpool": "^6.0.4"
 	},
 	"lint-staged": {
 		"**/*.js": [
