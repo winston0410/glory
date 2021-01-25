@@ -36,10 +36,6 @@ const addOn = function(renderer) {
 					classNames += objectToClassNames(value, '', prop)
 					continue
 				}
-
-				if (renderer.selectorToPrefix[prop]) {
-				}
-
 				classNames += objectToClassNames(value, prop)
 			} else {
 				const prefixedRawDecls = renderer.prefixer
@@ -59,7 +55,15 @@ const addOn = function(renderer) {
 	renderer.atomic = function(rawDecl, selector = '', atRule = '') {
 		const className = assembleClassName(renderer)
 
-		const rule = assembleRule(`.${className}${selector}`, rawDecl)
+		let rule = ''
+
+		if (renderer.selectorToPrefix[selector]) {
+			for (const prefixedSelector of renderer.selectorToPrefix[selector]) {
+				rule += assembleRule(`.${className}${prefixedSelector}`, rawDecl)
+			}
+		}
+
+		rule += assembleRule(`.${className}${selector}`, rawDecl)
 
 		renderer.putRaw(atRule ? assembleRule(atRule, rule) : rule)
 

@@ -94,7 +94,6 @@ describe('installing prefixer', function() {
 			})
 
 			if (env.isServer) {
-				// console.log('check result', nano.raw)
 				const result = nano.raw
 				expect(result.includes('::-webkit-input-placeholder')).toBe(true)
 				expect(result.includes('::-moz-placeholder')).toBe(true)
