@@ -5,16 +5,8 @@
 const env = require('./env')
 import { create } from '../src/index'
 import addOnHydration from '../src/addon/hydration'
-import addOnRule from '../src/addon/rule'
 import addonVirtual from '../src/addon/virtual'
 import addonKeyframes from '../src/addon/keyframes'
-
-function createRuleNano(config) {
-	const nano = create(config)
-	addOnRule(nano)
-	addOnHydration(nano)
-	return nano
-}
 
 function createVirtualNano(config) {
 	const nano = create(config)
@@ -39,45 +31,6 @@ describe('hydration', function () {
 	})
 
 	describe('when server-side generated stylesheet is provided', function () {
-		describe('when using it with put() or rule()', function () {
-			it('should prevent basic declaration found in stylesheet from re-rendering', function () {
-				const mockStylesheet = document.createElement('style')
-				mockStylesheet.textContent = '.one{display:block;}'
-				document.head.appendChild(mockStylesheet)
-
-				const nano = createRuleNano({
-					sh: mockStylesheet
-				})
-
-				const putMock = jest.spyOn(nano, 'put')
-
-				nano.put('.one', {
-					display: 'block'
-				})
-
-				expect(putMock).toHaveBeenCalledTimes(0)
-			})
-
-			it('should re-render basic declaration, if props in stylesheet and in Javascript are different', function () {
-				const mockStylesheet = document.createElement('style')
-				mockStylesheet.textContent = '.one{display:block;}'
-				document.head.appendChild(mockStylesheet)
-
-				const nano = createRuleNano({
-					sh: mockStylesheet
-				})
-
-				const putMock = jest.spyOn(nano, 'put')
-
-				nano.put('.one', {
-					display: 'block',
-					color: 'red'
-				})
-
-				expect(putMock).toHaveBeenCalledTimes(1)
-			})
-		})
-
 		describe('when using it with virtual()', function () {
 			it('should prevent rules found in stylesheet from being inserted again.', function () {
 				const mockStylesheet = document.createElement('style')
