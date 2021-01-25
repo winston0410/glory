@@ -15,15 +15,15 @@ function createVirtualNano(config) {
 	return nano
 }
 
-describe('installing prefixer', function () {
-	it('should installs without crashing', function () {
+describe('installing prefixer', function() {
+	it('should installs without crashing', function() {
 		const nano = create()
 		addonPrefixer(nano)
 		expect(nano).toBeDefined()
 	})
 
-	describe('using virtual() interface', function () {
-		it('handles "user-select" correctly', function () {
+	describe('using virtual() interface', function() {
+		it('should prefix user-select correctly', function() {
 			const nano = createVirtualNano()
 
 			nano.putRaw = jest.fn()
@@ -41,12 +41,12 @@ describe('installing prefixer', function () {
 				'user-select'
 			]
 
-			userSelectPrefix.forEach(function (key) {
+			userSelectPrefix.forEach(function(key) {
 				expect(result.includes(key)).toBe(true)
 			})
 		})
 
-		it("doesn't kebab values", function () {
+		it('should not kebab values', function() {
 			const nano = createVirtualNano()
 			const decl = {
 				backgroundImage:
@@ -63,7 +63,7 @@ describe('installing prefixer', function () {
 			expect(result.includes(expected)).toBe(true)
 		})
 
-		it('prefixes transform correctly', function () {
+		it('should prefixe transform correctly', function() {
 			const nano = createVirtualNano()
 			const decl = {
 				transform: 'translateX(2em) rotate(0.5turn)'
@@ -72,8 +72,6 @@ describe('installing prefixer', function () {
 			const mockDecl = {
 				transform: 'translateX(2em)'
 			}
-
-			// console.log('prefixer result', prefix(mockDecl))
 
 			nano.putRaw = jest.fn()
 
@@ -84,80 +82,29 @@ describe('installing prefixer', function () {
 				'{-webkit-transform: translateX(2em);-ms-transform: translateX(2em);transform:translateX(2em);}'
 			expect(result.includes(expected)).toBe(true)
 		})
+
+		it('should prefix ::placeholder', function() {
+			const nano = createVirtualNano()
+
+			nano.virtual({
+				'::placeholder': {
+					fontWeight: 300,
+					userSelect: 'none'
+				}
+			})
+
+			if (env.isServer) {
+				// console.log('check result', nano.raw)
+				const result = nano.raw
+				expect(result.includes('::-webkit-input-placeholder')).toBe(true)
+				expect(result.includes('::-moz-placeholder')).toBe(true)
+				expect(result.includes(':-ms-input-placeholder')).toBe(true)
+				expect(result.includes('::placeholder')).toBe(true)
+			}
+		})
 	})
 
-	describe('using keyframes() interface', function () {
+	describe('using keyframes() interface', function() {
 		//Add test here later
 	})
-	//
-	// it('prefixes "placeholder" correctly', function() {
-	// 	const nano = createNano()
-	// 	nano.putRaw = jest.fn()
-	//
-	// 	nano.put('input::placeholder', {
-	// 		fontWeight: 300,
-	// 		userSelect: 'none'
-	// 	})
-	//
-	// 	const result = nano.putRaw.mock.calls.join(' ').replace(/ +(?= )/g, '')
-	//
-	// 	const prefixList = [
-	// 		'input::-webkit-input-placeholder',
-	// 		'input::-moz-placeholder',
-	// 		'input:-ms-input-placeholder',
-	// 		'input:-moz-placeholder',
-	// 		'::placeholder'
-	// 	]
-	//
-	// 	prefixList.forEach(function(key) {
-	// 		expect(result.includes(key)).toBe(true)
-	// 	})
-	// })
-
-	//
-	// it('prefixes "placeholder" in nested rules correctly', function() {
-	// 	const nano = createNano()
-	// 	addonNesting(nano)
-	// 	nano.putRaw = jest.fn()
-	//
-	// 	nano.put('input[type=email]', {
-	// 		'&::placeholder': {
-	// 			color: '#393939',
-	// 			fontWeight: 300
-	// 		}
-	// 	})
-	//
-	// 	const result = nano.putRaw.mock.calls.join(' ').replace(/ +(?= )/g, '')
-	// 	;[
-	// 		'::-webkit-input-placeholder',
-	// 		'::-moz-placeholder',
-	// 		':-ms-input-placeholder',
-	// 		':-moz-placeholder',
-	// 		'::placeholder'
-	// 	].forEach(function(key) {
-	// 		expect(result.includes(key)).toBe(true)
-	// 	})
-	// })
-	//
-	// it('prefixes "placeholder" in compound rules correctly', function() {
-	// 	const nano = createNano()
-	// 	nano.putRaw = jest.fn()
-	//
-	// 	nano.put(
-	// 		'input[type=email]::placeholder, input[type=password]::placeholder, input[type=text]::placeholder',
-	// 		{
-	// 			color: '#393939',
-	// 			fontWeight: 300
-	// 		}
-	// 	)
-	//
-	// 	const calls = nano.putRaw.mock.calls
-	// 	expect(calls).toHaveLength(15)
-	//
-	// 	const result = nano.putRaw.mock.calls.join(' ').replace(/ +(?= )/g, '')
-	// 	const rawResult =
-	// 		'input[type=email]::-webkit-input-placeholder{color:#393939;font-weight:300;} input[type=email]::-moz-placeholder{color:#393939;font-weight:300;} input[type=email]:-ms-input-placeholder{color:#393939;font-weight:300;} input[type=email]:-moz-placeholder{color:#393939;font-weight:300;} input[type=email]::placeholder{color:#393939;font-weight:300;} input[type=password]::-webkit-input-placeholder{color:#393939;font-weight:300;} input[type=password]::-moz-placeholder{color:#393939;font-weight:300;} input[type=password]:-ms-input-placeholder{color:#393939;font-weight:300;} input[type=password]:-moz-placeholder{color:#393939;font-weight:300;} input[type=password]::placeholder{color:#393939;font-weight:300;} input[type=text]::-webkit-input-placeholder{color:#393939;font-weight:300;} input[type=text]::-moz-placeholder{color:#393939;font-weight:300;} input[type=text]:-ms-input-placeholder{color:#393939;font-weight:300;} input[type=text]:-moz-placeholder{color:#393939;font-weight:300;} input[type=text]::placeholder{color:#393939;font-weight:300;}'
-	//
-	// 	expect(result).toEqual(rawResult)
-	// })
 })

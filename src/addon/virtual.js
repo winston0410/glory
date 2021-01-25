@@ -11,7 +11,7 @@ import {
 } from '../helper'
 import safeIsObj from 'safe-is-obj'
 
-const addOn = function (renderer) {
+const addOn = function(renderer) {
 	// Setting the cache outside this function may result in more persistant but unexpected behaviors
 	createCache(renderer, 'cache')
 
@@ -36,6 +36,10 @@ const addOn = function (renderer) {
 					classNames += objectToClassNames(value, '', prop)
 					continue
 				}
+
+				if (renderer.selectorToPrefix[prop]) {
+				}
+
 				classNames += objectToClassNames(value, prop)
 			} else {
 				const prefixedRawDecls = renderer.prefixer
@@ -52,7 +56,7 @@ const addOn = function (renderer) {
 		return classNames
 	}
 
-	renderer.atomic = function (rawDecl, selector = '', atRule = '') {
+	renderer.atomic = function(rawDecl, selector = '', atRule = '') {
 		const className = assembleClassName(renderer)
 
 		const rule = assembleRule(`.${className}${selector}`, rawDecl)
