@@ -1,5 +1,11 @@
 'use strict'
-import { assembleClassName, assembleKeyframe, createCache } from '../helper'
+import {
+	assembleClassName,
+	assembleKeyframe,
+	createCache,
+	isEmptyObj
+} from '../helper'
+import safeIsObj from 'safe-is-obj'
 
 const addOn = function (renderer, config = {}) {
 	createCache(renderer, 'kcache')
@@ -9,7 +15,8 @@ const addOn = function (renderer, config = {}) {
 	const prefixedKeyframes = prefixes.map((prefix) => `@${prefix}keyframes`)
 
 	renderer.keyframes = function (decls) {
-		if (!decls) return ''
+		if (!decls || !safeIsObj(decls)) return ''
+		if (isEmptyObj(decls)) return ''
 		const frameContent = assembleKeyframe(decls)
 		if (renderer.kcache[frameContent]) {
 			return renderer.kcache[frameContent]

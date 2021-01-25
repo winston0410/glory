@@ -6,7 +6,8 @@ import {
 	isAtRule,
 	cssifyArray,
 	cssifyObject,
-	createCache
+	createCache,
+	isEmptyObj
 } from '../helper'
 import safeIsObj from 'safe-is-obj'
 
@@ -63,7 +64,8 @@ const addOn = function (renderer) {
 
 	// Only media queries should be supported in virtual
 	renderer.virtual = (decls) => {
-		if (!decls) return ''
+		if (!decls || !safeIsObj(decls)) return ''
+		if (isEmptyObj(decls)) return ''
 		return objectToClassNames(decls)
 	}
 
