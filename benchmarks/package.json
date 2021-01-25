@@ -13,7 +13,8 @@
 		"benchmark:prefix:case": "node -r esm addPrefix/prefixer.spec.js",
 		"benchmark:comma": "node handleComma/handleComma.spec.js",
 		"benchmark:cache": "node -r esm cacheStyle/index.spec.js",
-		"benchmark:worker": "node -r esm webWorker/index.spec.js"
+		"benchmark:worker": "node -r esm webWorker/index.spec.js",
+		"benchmark:switch": "node switch-ifelse.spec.js"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",
