@@ -1,10 +1,9 @@
 'use strict'
 import { isBrowser } from 'browser-or-node'
 import joli from '@blackblock/joli-string'
-import greenlet from 'greenlet'
-const isProduction = process.env.NODE_ENV === 'production'
+import { isProduction } from './helper.js'
 
-const create = function (config) {
+const create = function(config) {
 	const renderer = {
 		raw: '',
 		pfx: '',
@@ -31,7 +30,7 @@ const create = function (config) {
 	}
 
 	if (renderer.client) {
-		renderer.putRaw = async function (rawCssRule) {
+		renderer.putRaw = async function(rawCssRule) {
 			if (isProduction) {
 				const sheet = renderer.sh.sheet
 				// await console.log('from microtask')
@@ -53,7 +52,7 @@ const create = function (config) {
 			}
 		}
 	} else {
-		renderer.putRaw = async function (rawCssRule) {
+		renderer.putRaw = async function(rawCssRule) {
 			renderer.raw += rawCssRule
 		}
 	}

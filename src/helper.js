@@ -54,6 +54,8 @@ const createCache = (renderer, name) => {
 
 const isEmptyObj = (obj) => Object.keys(obj).length === 0
 
+const isProduction = process.env.NODE_ENV === 'production'
+
 export {
 	assembleClassName,
 	addPrefix,
@@ -64,5 +66,6 @@ export {
 	assembleDecl,
 	assembleKeyframe,
 	createCache,
-	isEmptyObj
+	isEmptyObj,
+	isProduction
 }
