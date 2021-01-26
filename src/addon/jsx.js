@@ -4,6 +4,7 @@ import safeIsObj from 'safe-is-obj'
 
 const addOn = function(renderer) {
 	renderer.jsx = (Tag, callback, name) => {
+		console.log('check value', Tag, callback)
 		if (!renderer.h) {
 			throw new Error(
 				'You need to set jsx factory function as renderer.h before using renderer.jsx.'
@@ -13,11 +14,6 @@ const addOn = function(renderer) {
 		function Component(props = {}) {
 			if (!Tag) return null
 			if (callback) {
-				console.log('check callback', callback)
-				if (typeof callback !== 'function') {
-					throw new TypeError('callback is not a function')
-				}
-
 				const stylingObject = callback(props)
 
 				if (safeIsObj(stylingObject)) {
