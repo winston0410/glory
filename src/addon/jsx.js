@@ -13,7 +13,11 @@ const addOn = function(renderer) {
 		function Component(props = {}) {
 			if (!Tag) return null
 			if (callback) {
-				console.log('has callback?', callback)
+				console.log('check callback', callback)
+				if (typeof callback !== 'function') {
+					throw new TypeError('callback is not a function')
+				}
+
 				const stylingObject = callback(props)
 
 				if (safeIsObj(stylingObject)) {
