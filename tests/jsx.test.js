@@ -5,8 +5,9 @@ const env = require('./env')
 import { create } from '../src/index'
 import addOnJsx from '../src/addon/jsx'
 import addOnVirtual from '../src/addon/virtual'
-import { createElement } from 'react'
+import React, { createElement } from 'react'
 import safeIsObj from 'safe-is-obj'
+import ReactTestRenderer from 'react-test-renderer'
 
 function createNano(config) {
 	const nano = create(config)
@@ -41,8 +42,8 @@ describe('jsx()', function() {
 
 		describe('when calling jsx()', function() {
 			describe('when TagName is not provided as an argument', function() {
-				const Component = nano.jsx()
 				const putRawMock = jest.spyOn(nano, 'putRaw')
+				const Component = nano.jsx()
 
 				it('should return a function that returns null', function() {
 					//Cannot use typeof here as typeof null = object
@@ -50,13 +51,13 @@ describe('jsx()', function() {
 				})
 
 				it('should not insert anything into the stylesheet', function() {
-					expect(nano.putRaw).toHaveBeenCalledTimes(0)
+					expect(putRawMock).toHaveBeenCalledTimes(0)
 				})
 			})
 
 			describe('when TagName is provided as an argument', function() {
-				const Component = nano.jsx('h1')
-
+				const putRawMock = jest.spyOn(nano, 'putRaw')
+				const Component = nano.jsx('h1', undefined)
 				const returnValue = Component()
 
 				it('should return a function that returns an object for rendering in framework', function() {
@@ -65,21 +66,33 @@ describe('jsx()', function() {
 
 				describe('when styling callback is not provided', function() {
 					it('should not insert anything into the stylesheet', function() {
-						expect(nano.putRaw).toHaveBeenCalledTimes(0)
+						expect(putRawMock).toHaveBeenCalledTimes(0)
 					})
 				})
+			})
 
+			describe('when TagName is provided as an argument', function() {
 				describe('when styling callback is provided', function() {
 					describe('when a function is provided', function() {
 						describe('when the function returns an object', function() {
+							const putRawMock = jest.spyOn(nano, 'putRaw')
+
 							const Component = nano.jsx('h1', (props) => ({
 								color: 'red'
 							}))
-							const returnValue = createElement(Component)
 
-							console.log('check return value', returnValue)
+							const result = ReactTestRenderer.create(
+								<Component>Hello</Component>
+							).toJSON()
 
-							it('should', function() {})
+							it('should add className to the component', function() {
+								expect(result.props.className).toBeDefined()
+								expect(typeof result.props.className).toBe('string')
+							})
+
+							it('should inject styling into stylesheet', function() {
+								expect(putRawMock).toHaveBeenCalledTimes(1)
+							})
 						})
 
 						describe('when the function does not return an object', function() {
@@ -92,7 +105,9 @@ describe('jsx()', function() {
 							const Arr = nano.jsx('h1', () => {
 								return []
 							})
-							it('should', function() {})
+							// it('should not inject styling into stylesheet', function() {
+							// 	expect(putRawMock).toHaveBeenCalledTimes(0)
+							// })
 						})
 					})
 
