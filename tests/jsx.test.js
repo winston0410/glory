@@ -99,6 +99,15 @@ describe('jsx()', function() {
 							it('should inject styling into stylesheet', function() {
 								expect(putRawMock).toHaveBeenCalledTimes(1)
 							})
+
+							describe('when as prop is set', function() {
+								const result = ReactTestRenderer.create(
+									<Component as={'p'}>Hello</Component>
+								).toJSON()
+								it('should change the tag name of the component', function() {
+									expect(result.type).toBe('p')
+								})
+							})
 						})
 
 						describe('when the function does not return an object', function() {
