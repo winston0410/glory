@@ -72,10 +72,13 @@ describe('jsx()', function() {
 				describe('when styling callback is provided', function() {
 					describe('when a function is provided', function() {
 						describe('when the function returns an object', function() {
-							const Component = nano.jsx('h1', () => ({
+							const Component = nano.jsx('h1', (props) => ({
 								color: 'red'
 							}))
-							const returnValue = Component()
+							const returnValue = createElement(Component)
+
+							console.log('check return value', returnValue)
+
 							it('should', function() {})
 						})
 

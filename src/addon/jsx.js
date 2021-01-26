@@ -10,7 +10,7 @@ const addOn = function(renderer) {
 			)
 		}
 
-		function Component(props) {
+		function Component(props = {}) {
 			if (!Tag) return null
 			if (callback) {
 				const stylingObject = callback(props)
@@ -25,7 +25,7 @@ const addOn = function(renderer) {
 
 		if (!isProduction) {
 			if (name) {
-				Component.displayName = `jsx.${name}`
+				Component.displayName = name
 			}
 		}
 
