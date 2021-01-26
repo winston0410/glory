@@ -63,7 +63,7 @@ describe('installing prefixer', function() {
 			expect(result.includes(expected)).toBe(true)
 		})
 
-		it('should prefixe transform correctly', function() {
+		it('should prefix transform correctly', function() {
 			const nano = createVirtualNano()
 			const decl = {
 				transform: 'translateX(2em) rotate(0.5turn)'
