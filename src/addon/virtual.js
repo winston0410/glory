@@ -57,9 +57,11 @@ const addOn = function(renderer) {
 
 		let rule = ''
 
-		if (renderer.selectorToPrefix[selector]) {
-			for (const prefixedSelector of renderer.selectorToPrefix[selector]) {
-				rule += assembleRule(`.${className}${prefixedSelector}`, rawDecl)
+		if (renderer.selectorToPrefix) {
+			if (renderer.selectorToPrefix.hasOwnProperty(selector)) {
+				for (const prefixedSelector of renderer.selectorToPrefix[selector]) {
+					rule += assembleRule(`.${className}${prefixedSelector}`, rawDecl)
+				}
 			}
 		}
 
