@@ -8,6 +8,7 @@ import addOnVirtual from '../src/addon/virtual'
 import React, { createElement } from 'react'
 import safeIsObj from 'safe-is-obj'
 import ReactTestRenderer from 'react-test-renderer'
+import { isValidElementType } from 'react-is'
 
 function createNano(config) {
 	const nano = create(config)
@@ -61,13 +62,9 @@ describe('jsx()', function() {
 				const putRawMock = jest.spyOn(nano, 'putRaw')
 				const Component = nano.jsx('h1')
 
-				//TODO: Fix render result
-
-				// const returnValue = Component()
-				//
-				// it('should return a function that returns an object for rendering in framework', function() {
-				// 	expect(safeIsObj(returnValue)).toBe(true)
-				// })
+				it('should return a framework component', function() {
+					expect(isValidElementType(Component)).toBe(true)
+				})
 
 				describe('when styling callback is not provided', function() {
 					it('should not insert anything into the stylesheet', function() {
@@ -122,7 +119,6 @@ describe('jsx()', function() {
 							})
 						})
 					})
-
 					describe('when value in type other than function is provided', function() {
 						const nano = createNano({
 							h: createElement
