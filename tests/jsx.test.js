@@ -8,6 +8,7 @@ import addOnVirtual from '../src/addon/virtual'
 import React, { createElement } from 'react'
 import safeIsObj from 'safe-is-obj'
 import ReactTestRenderer from 'react-test-renderer'
+import { isValidElementType } from 'react-is'
 
 function createNano(config) {
 	const nano = create(config)
@@ -44,9 +45,10 @@ describe('jsx()', function() {
 				const putRawMock = jest.spyOn(nano, 'putRaw')
 				const Component = nano.jsx()
 
-				it('should return a function that returns null', function() {
-					//Cannot use typeof here as typeof null = object
-					expect(Component()).toBe(null)
+				const returnValue = ReactTestRenderer.create(<Component />).toJSON()
+				it('should return a component that returns null', function() {
+					expect(isValidElementType(Component)).toBe(true)
+					expect(returnValue).toBe(null)
 				})
 
 				it('should not insert anything into the stylesheet', function() {
@@ -61,13 +63,9 @@ describe('jsx()', function() {
 				const putRawMock = jest.spyOn(nano, 'putRaw')
 				const Component = nano.jsx('h1')
 
-				//TODO: Fix render result
-
-				// const returnValue = Component()
-				//
-				// it('should return a function that returns an object for rendering in framework', function() {
-				// 	expect(safeIsObj(returnValue)).toBe(true)
-				// })
+				it('should return a framework component', function() {
+					expect(isValidElementType(Component)).toBe(true)
+				})
 
 				describe('when styling callback is not provided', function() {
 					it('should not insert anything into the stylesheet', function() {
@@ -94,12 +92,21 @@ describe('jsx()', function() {
 							).toJSON()
 
 							it('should add className to the component', function() {
-								expect(result.props.className).toBeDefined()
 								expect(typeof result.props.className).toBe('string')
+								expect(result.props.className.length).toBeGreaterThan(0)
 							})
 
 							it('should inject styling into stylesheet', function() {
 								expect(putRawMock).toHaveBeenCalledTimes(1)
+							})
+
+							describe('when as prop is set', function() {
+								const result = ReactTestRenderer.create(
+									<Component as={'p'}>Hello</Component>
+								).toJSON()
+								it('should change the tag name of the component', function() {
+									expect(result.type).toBe('p')
+								})
 							})
 						})
 
@@ -129,7 +136,7 @@ describe('jsx()', function() {
 						})
 
 						it('should throw error', function() {
-							// expect(() => nano.jsx('h1', 'Hello')).toThrow()
+							// expect(() => nano.jsx('h2', 'Hello')).toThrow()
 							// expect(() => nano.jsx('h1', 123)).toThrow()
 							// expect(() => nano.jsx('h1', [])).toThrow()
 						})
