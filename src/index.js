@@ -23,9 +23,6 @@ const create = function(config) {
 
 		if (!isProduction) {
 			renderer.sh.setAttribute('data-nano-css-dev', '')
-			renderer.shTest = document.createElement('style')
-			renderer.shTest.setAttribute('data-nano-css-dev-tests', '')
-			document.head.appendChild(renderer.shTest)
 		}
 	}
 
@@ -40,14 +37,6 @@ const create = function(config) {
 					console.log(error)
 				}
 			} else {
-				try {
-					renderer.shTest.sheet.insertRule(
-						rawCssRule,
-						renderer.shTest.sheet.cssRules.length
-					)
-				} catch (error) {
-					console.error(error)
-				}
 				renderer.sh.appendChild(document.createTextNode(rawCssRule))
 			}
 		}
