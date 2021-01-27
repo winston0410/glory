@@ -4,6 +4,7 @@
 const env = require('./env')
 import { create } from '../src/index'
 import addonVirtual from '../src/addon/virtual'
+import addonKeyframes from '../src/addon/keyframes'
 import addonPrefixer from '../src/addon/prefixer'
 const { removeLineAndSpace } = require('./helper.js')
 import { prefix } from 'inline-style-prefixer'
@@ -104,6 +105,33 @@ describe('installing prefixer', function() {
 	})
 
 	describe('using keyframes() interface', function() {
-		//Add test here later
+		const nano = create()
+		addonKeyframes(nano)
+		addonPrefixer(nano)
+
+		const mockKeyframe = {
+			'from, 20%, 53%, 80%, to': {
+				transform: 'translate3d(0,0,0)'
+			},
+			'40%, 43%': {
+				transform: 'translate3d(0, -30px, 0)'
+			},
+			'70%': {
+				transform: 'translate3d(0, -15px, 0)'
+			},
+			'90%': {
+				transform: 'translate3d(0, -4px, 0)'
+			}
+		}
+
+		it('should prefix style correctly', function() {
+			const frameName = nano.keyframes(mockKeyframe)
+
+			if (env.isServer) {
+				const result = nano.raw
+				// console.log('check result', result)
+				//Add test here later
+			}
+		})
 	})
 })
