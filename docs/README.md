@@ -59,7 +59,7 @@ export default camouflage
 
 ## Add auto-prefixing support
 
-By default, auto-prefixing is not support by the default bundler for a more modular design. To enable it, upgrade renderer with `prefixer()`
+By default, auto-prefixing is not support by the default bundler for a more modular design. To enable it, upgrade renderer with [`prefixer()`](./prefixer.md)
 
 ```javascript
 //nameItTheWayYouWant.js
@@ -90,7 +90,7 @@ import camouflage from 'nameItTheWayYouWant.js'
 html += `<style>${camouflage.raw}</style>`
 ```
 
-To avoid re-rendering duplicated styling, you will need to use `hydration()` in your renderer instance, and provide the renderer style tag as `renderer.sh`.
+To avoid re-rendering duplicated styling, you will need to use [`hydration()`](./hydration.md) in your renderer instance, and provide the renderer style tag as `renderer.sh`.
 
 ```javascript
 //nameItTheWayYouWant.js

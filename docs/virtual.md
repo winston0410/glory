@@ -1,35 +1,22 @@
-# `virtual` Addon
+# `virtual`
 
-Uses [_Virtual CSS_](https://ryantsao.com/blog/virtual-css-with-styletron) when injecting rules -- splits all CSS rules into atomic single declarations, where each is assigned a class name and reused.
+This add-on insert stylings atomically.
 
-Example:
-
-```javascript
-const classNames1 = nano.rule({
-    color: 'red',
-    border: '1px solid red',
-    textAlign: 'center'
-});
-// _a _b _c
-
-const classNames2 = nano.rule({
-    border: '1px solid red',
-});
-// _b
-
-<div className={classNames1} /> // <div class="_a _b _c" />
-<div className={classNames2} /> // <div class="_b" />
-```
-
-## `.virtual()`
-
-Returns a list of class names given a CSS-like object.
+## Example
 
 ```javascript
 const classNames1 = nano.virtual({
     color: 'red',
     border: '1px solid red',
     textAlign: 'center'
-});
+})
 // _a _b _c
+
+/*The generated styling would be:
+.a{color: red;}
+.b{border: 1px solid red;}
+.c{text-align: center;}
+*/
+
+<div className={classNames1} /> // <div class="_a _b _c" />
 ```

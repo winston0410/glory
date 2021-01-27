@@ -1,37 +1,19 @@
-# `hydrate` Addon
+# `hydrate`
 
-Re-hydrates CSS styles generated on the server.
+This add-on re-hydrates CSS styles generated on the server.
 
-First, install the `hydrate` addon, then add `nano-css` id to your style sheet.
+## Hydration rules
 
-```javascript
-html += `<style id="nano-css">${nano.raw}</style>`;
+In case you are not aware, a **declaration is a pair of property and value** of CSS.
+
+```css
+body {
+    font-size: 100px; /*font-size: 100px is a declaration*/
+}
 ```
 
-And when creating `nano-css` instance provide that style sheet in configuration.
+- when a **declaration** is found in the server-side generated stylesheet, re-generation of that declaration in client-side is prevented.
 
-```javascript
-const isClient = typeof document === 'object';
+_Unlike `nano-css`, this add-on supports hydration of media queries or animation keyframes._
 
-const nano = create({
-    sh: isClient ? document.getElementById('nano-css') : null
-});
-```
-
-That's it! `nano-css` will not inject CSS rules are already present in the style sheet.
-
-You can also manually hydrate any stylesheet or external stylesheet you might have created using [`extract`](./extract.md) addon.
-
-Let's say you have and external style sheet:
-
-```html
-<link rel="stylesheet" type="text/css" href="extracted.css" id="extracted-css">
-```
-
-You can hydrate it like so:
-
-```javascript
-nano.hydrate(document.getElementById('extracted-css'));
-```
-
-_Unlike `nano-css`, it supports hydration of media queries or animation keyframes._
+- when a **declaration** is not found in the server-side generated stylesheet, but found in the Javascript, it will then be generated.

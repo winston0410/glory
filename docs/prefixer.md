@@ -1,11 +1,10 @@
-# `prefixer` Addon
+# `prefixer`
 
-Uses [`inline-style-prefixer`](https://github.com/rofrischmann/inline-style-prefixer) library
-to auto-prefix your styles on the server and browser.
+This add-on uses [`inline-style-prefixer`](https://github.com/rofrischmann/inline-style-prefixer) internally to auto-prefix your styles on the server and browser.
 
 Example:
 
-```js
+```javascript
 nano.put('.foo', {
     flex: 1
 });
@@ -19,10 +18,3 @@ Result:
     flex: 1;
 }
 ```
-
-
-## Installation
-
-Simply install `prefixer` addon.
-
-Read more about the [Addon Installation](./addons.md#addon-installation).
