@@ -31,7 +31,7 @@ const camouflage = create({
 export default camouflage
 ```
 
-You can find parameters for configuring default renderer here.
+You can find parameters for [configuring default renderer here](./config.md).
 
 ## Add styling interface
 
@@ -39,9 +39,9 @@ By default, camouflage doesn't come with a styling interface in order to reduce 
 
 You may use more than one of the following add-ons.
 
-- `rule()`
+- [`virtual()`](./virtual.md)
 
-- `virtual()`
+- [`jsx()`](./jsx.md)
 
 These add-ons are included in the main package, and can be access like the example below.
 
