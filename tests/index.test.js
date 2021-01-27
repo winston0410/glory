@@ -44,12 +44,23 @@ describe('create()', function() {
 	})
 
 	describe('when no <style> node is provided', function() {
-		it('should create a new <style> node', function() {
+		describe('when in client-side', function() {
 			const nano = create()
+			it('should create a new <style> node', function() {
+				if (env.isClient) {
+					expect(nano.sh.constructor.name).toBe('HTMLStyleElement')
+				}
+			})
 
-			if (env.isClient) {
-				expect(nano.sh.constructor.name).toBe('HTMLStyleElement')
-			}
+			describe('when in development', function() {
+				it('should have attribute "data-css-dev"', function() {
+					if (env.isClient) {
+						if (env.isDev) {
+							expect(nano.sh.hasAttribute('data-css-dev')).toBe(true)
+						}
+					}
+				})
+			})
 		})
 	})
 })

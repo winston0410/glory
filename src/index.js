@@ -22,7 +22,7 @@ const create = function(config) {
 		}
 
 		if (!isProduction) {
-			renderer.sh.setAttribute('data-nano-css-dev', '')
+			renderer.sh.setAttribute('data-css-dev', '')
 		}
 	}
 
