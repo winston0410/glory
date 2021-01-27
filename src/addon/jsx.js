@@ -3,7 +3,7 @@ import { isProduction } from '../helper'
 import safeIsObj from 'safe-is-obj'
 
 const addOn = function(renderer) {
-	renderer.jsx = (Tag, callback, name) => {
+	renderer.jsx = (Tag, callback) => {
 		if (!renderer.h) {
 			throw new Error(
 				'You need to set jsx factory function as renderer.h before using renderer.jsx.'
@@ -21,12 +21,6 @@ const addOn = function(renderer) {
 			}
 
 			return renderer.h(props.as || Tag, props)
-		}
-
-		if (!isProduction) {
-			if (name) {
-				Component.displayName = name
-			}
 		}
 
 		return Component
