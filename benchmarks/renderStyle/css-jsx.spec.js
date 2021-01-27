@@ -12,19 +12,29 @@ const suite = new Benchmark.Suite()
 
 const fakeDecl = {
 	color: 'red',
-	display: 'block'
+	display: 'block',
+	'@media (min-width: 1px)': {
+		rule: 'all'
+	},
+	'&:hover': {
+		another: 1,
+		display: 'space'
+	}
 }
 
 suite.add('styled component', function() {
 	const Component = styled.div(fakeDecl)
+	createElement(Component)
 })
 
 suite.add('emotion, styled()', function() {
 	const Component = emotionStyled.div(fakeDecl)
+	createElement(Component)
 })
 
 suite.add('goober', function() {
 	const Component = gooberStyled('div')(() => fakeDecl)
+	createElement(Component)
 })
 
 const camouflage = createCamoflage({
@@ -37,6 +47,7 @@ PrefixerCamouflage(camouflage)
 
 suite.add('camouflage, jsx()', function() {
 	const Component = camouflage.jsx('div', (props) => fakeDecl)
+	createElement(Component)
 })
 
 suite.on('cycle', function(event) {
