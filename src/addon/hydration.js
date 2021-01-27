@@ -7,21 +7,6 @@ import {
 	assembleRule
 } from '../helper.js'
 
-const compare = (original, updated) => {
-	const diff = {}
-
-	for (const key in updated) {
-		if (updated[key] !== original[key]) {
-			diff[key] = updated[key]
-		}
-	}
-
-	return {
-		diff,
-		isEql: Object.keys(diff).length === 0
-	}
-}
-
 const CSSRuleToObj = (rule) => {
 	const obj = {}
 	for (let i = 0; i < rule.style.length; i++) {
