@@ -1,40 +1,23 @@
-# Addons
+# Add-ons
 
-`nano-css` comes only with a single [`put()`](./put.md) addon pre-installed. However, it has
-plenty more to chose from. Below is a list of addons shipped with `nano-css`.
+With bundle size and modularity in mind, `camouflage` does not come with any styling interface in its core. It cannot inject styles, handle prefix and hydration without using add-on.
 
-- [`rule()`](./rule.md) &mdash; injects CSS styles and returns a generated selectorsed
-- [`keyframes()`](./keyframes.md) &mdash; adds `@keyframes` support
-- [`hydrate()`](./hydrate.md) &mdash; adds support for re-hydration on client side
-- [`prefixer`](./prefixer.md) &mdash; auto-prefixes your styles with correct vendor prefixes
-- [`virtual`](./virtual.md) &mdash; virtual CSS renderer, splits css rules in atomic declarations
+## List of add-on
 
-## Addon Installation
+### Styling interface
 
-All addons are in the `nano-css/addon/` folder and are exported
-as an `addon` named export. Addon is simply a function that receives `nano-css` renderer object
-as a single argument.
+- [`keyframes()`](./keyframes.md) -- adds `@keyframes` support
 
-When these docs mention that you need to install an addon, say `xxx`, you simply import it
-from the addon folder and apply to the nano renderer object:
+- [`virtual`](./virtual.md) -- Injects style that split declarations atomically for maximum reusability and performance.
 
-```js
-import {addon as addonXXX} from 'nano-css/addon/xxx';
+- [`jsx()`](./jsx.md) -- Styling interface that mimics `styled-component`.
 
-addonXXX(nano);
+### Prefixer
 
-nano.xxx(/* ... */);
-```
+- [`prefixer`](./prefixer.md) -- Prefix your styling with correct vendor prefixes.
 
-Here we install [`rule()`](./rule.md) and [`keyframes`](./keyframes.md) addons:
+### Hydration
 
-```js
-import {create} from 'nano-css';
-import {addon as addonRule} from 'nano-css/addon/rule';
-import {addon as addonKeyframes} from 'nano-css/addon/keyframes';
+- [`hydrate()`](./hydrate.md) -- Support for re-hydration and prevent duplicate injection of styles in client side.
 
-const nano = create();
-
-addonRule(nano);
-addonKeyframes(nano);
-```
+## How to write an add-on?
