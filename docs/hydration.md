@@ -4,13 +4,13 @@ Re-hydrates CSS styles generated on the server.
 
 First, install the `hydrate` addon, then add `nano-css` id to your style sheet.
 
-```js
+```javascript
 html += `<style id="nano-css">${nano.raw}</style>`;
 ```
 
 And when creating `nano-css` instance provide that style sheet in configuration.
 
-```js
+```javascript
 const isClient = typeof document === 'object';
 
 const nano = create({
@@ -30,14 +30,8 @@ Let's say you have and external style sheet:
 
 You can hydrate it like so:
 
-```js
+```javascript
 nano.hydrate(document.getElementById('extracted-css'));
 ```
 
-*P.S. Currently, does not hydrate media queries or animation keyframes.*
-
-## Installation
-
-Simply install `hydrate` addon.
-
-Read more about the [Addon Installation](./addons.md#addon-installation).
+_Unlike `nano-css`, it supports hydration of media queries or animation keyframes._

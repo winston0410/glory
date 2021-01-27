@@ -24,9 +24,9 @@
 			"require": "./dist/cjs/jsx.js",
 			"default": "./dist/esm/jsx.js"
 		},
-		"./rule": {
-			"require": "./dist/cjs/rule.js",
-			"default": "./dist/esm/rule.js"
+		"./virtual": {
+			"require": "./dist/cjs/virtual.js",
+			"default": "./dist/esm/virtual.js"
 		},
 		"./prefixer": {
 			"require": "./dist/cjs/prefixer.js",
