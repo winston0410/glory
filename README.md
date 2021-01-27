@@ -43,7 +43,7 @@ import hydration from 'camouflage/hydration'
 import virtual from 'camouflage/virtual'
 
 const camouflage = create({
-    //Config renderer here
+	//Config renderer here
 })
 
 //Use plugin to upgrade the default renderer
@@ -56,16 +56,16 @@ prefixer(camouflage)
 hydration(camouflage)
 
 const style = {
-    color: 'red',
-    paddingTop: '100px',
-    '@media screen': {
-        //supports media queries
-        color: 'red'
-    },
-    ':hover': {
-        //supports pesudo-classes and selectors
-        backgroundColor: 'blue'
-    }
+	color: 'red',
+	paddingTop: '100px',
+	'@media screen': {
+		//supports media queries
+		color: 'red'
+	},
+	':hover': {
+		//supports pesudo-classes and selectors
+		backgroundColor: 'blue'
+	}
 }
 
 const className = camouflage.virtual(style)
@@ -82,7 +82,7 @@ This library is made by Hong Kongers.
 
 You can test the benchmark in your computer by cloning this repo and `cd benchmarks`. You can find all benchmarking commands in that `package.json` there.
 
-### Without prefixer
+### Without prefixer, `virtual()`
 
 ```markdownify
 $ node -r esm renderStyle/css.spec.js
@@ -96,7 +96,7 @@ camouflage, virtual() x 1,357,795 ops/sec ±0.63% (94 runs sampled)
 Fastest is camouflage, virtual(),fela("^11.5.2")
 ```
 
-### With prefixer
+### With prefixer, `virtual()`
 
 ```markdownify
 $ node -r esm renderStyle/css-prefixed.spec.js
@@ -109,6 +109,17 @@ styletron("^1.4.6") x 394,933 ops/sec ±1.32% (90 runs sampled)
 camouflage, rule() x 249,918 ops/sec ±4.25% (57 runs sampled)
 camouflage, virtual() x 1,002,094 ops/sec ±5.58% (72 runs sampled)
 Fastest is camouflage, virtual()
+```
+
+### With prefixer, `jsx()`
+
+```markdownify
+$ node -r esm renderStyle/css-jsx.spec.js
+styled component x 42,740 ops/sec ±2.68% (85 runs sampled)
+emotion, styled() x 1,552,696 ops/sec ±4.02% (73 runs sampled)
+goober x 159,692,337 ops/sec ±1.85% (86 runs sampled)
+camouflage, jsx() x 167,172,392 ops/sec ±1.34% (86 runs sampled)
+Fastest is camouflage, jsx()
 ```
 
 ## Difference between `nano-css` and `camouflage`
