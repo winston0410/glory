@@ -4,7 +4,6 @@ import safeIsObj from 'safe-is-obj'
 
 const addOn = function(renderer) {
 	renderer.jsx = (Tag, callback, name) => {
-		console.log('check value', Tag, callback)
 		if (!renderer.h) {
 			throw new Error(
 				'You need to set jsx factory function as renderer.h before using renderer.jsx.'

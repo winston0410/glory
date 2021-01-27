@@ -11,6 +11,6 @@ module.exports = async () => {
 		setupFiles: ['./tests/setup.js'],
 		moduleFileExtensions: ['js', 'jsx', 'json'],
 		collectCoverage: true,
-		coverageReporters: ['lcov']
+		coverageReporters: ['json', 'lcov', 'text']
 	}
 }
