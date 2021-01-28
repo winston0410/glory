@@ -7,10 +7,10 @@ module.exports = async () => {
 			'^.+\\.[t|j]sx?$': 'babel-jest'
 		},
 		// testEnvironment: 'jest-environment-node',
-		testRegex: '.*/tests/.*\\.(test|spec)\\.(jsx?)$',
+		testRegex: '.*/tests/.*\\.(test|spec)\\.([t|j]sx?)$',
 		setupFiles: ['./tests/setup.js'],
 		// setupFilesAfterEnv: ['./tests/setup.js'],
-		moduleFileExtensions: ['js', 'jsx', 'json'],
+		moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json'],
 		collectCoverage: true,
 		coverageReporters: ['json', 'lcov', 'text']
 	}

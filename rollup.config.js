@@ -2,6 +2,7 @@ import multiInput from 'rollup-plugin-multi-input'
 import typescript from 'rollup-plugin-typescript2'
 const { nodeResolve } = require('@rollup/plugin-node-resolve')
 const commonjs = require('@rollup/plugin-commonjs')
+const path = require('path')
 
 export default [
 	{
@@ -22,21 +23,14 @@ export default [
 		],
 		plugins: [
 			multiInput({
-				// relative: 'src/addon/',
 				transformOutputPath: (output, input) => {
-					console.log('check output, input', output, input)
-					if (output.match(/addon/)) {
-						return output.replace(/\/addon/, '')
+					const pathObj = path.parse(output)
+
+					if (pathObj.dir === 'src') {
+						pathObj.dir = ''
+						return path.format(pathObj)
 					}
-					if (output === 'src/index.ts') {
-						return 'index.js'
-					}
-					if (output === 'src/helper.ts') {
-						return 'helper.js'
-					}
-					if (output === 'src/type.ts') {
-						return ''
-					}
+
 					return output
 				}
 			}),
