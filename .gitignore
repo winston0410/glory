@@ -77,6 +77,8 @@ output
 
 # Dist
 dist/**/*.js
+dist/**/*.ts
+dist/**/*.d.ts
 
 # Ignore bundled output from Purescript
 src/*/_*.js
