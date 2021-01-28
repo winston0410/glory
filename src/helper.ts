@@ -11,7 +11,7 @@ const assembleDecl = (prop: string, value: string): string =>
 
 const assembleRule = (name: string, rule: string) => `${name}{${rule}}`
 
-const assembleKeyframe = (list: Object): string => {
+const assembleKeyframe = (list: object): string => {
 	let result = ''
 	for (const key in list) {
 		result +=
@@ -33,7 +33,7 @@ const cssifyArray = (prop: string, value: string[]): string => {
 	return concatedDecl
 }
 
-const cssifyObject = (decls: Object, callback: Function) => {
+const cssifyObject = (decls: object, callback?: Function) => {
 	let css = ''
 	for (const prop in decls) {
 		const value = decls[prop]
@@ -54,7 +54,7 @@ const createCache = (renderer: Renderer, name: string) => {
 	}
 }
 
-const isEmptyObj = (obj: Object) => Object.keys(obj).length === 0
+const isEmptyObj = (obj: object) => Object.keys(obj).length === 0
 
 const isProduction = process.env.NODE_ENV === 'production'
 

@@ -22,9 +22,12 @@ export default [
 		],
 		plugins: [
 			multiInput({
-				relative: 'src/addon/',
+				// relative: 'src/addon/',
 				transformOutputPath: (output, input) => {
-					console.log('check input and output', output, input)
+					console.log('check output, input', output, input)
+					if (output.match(/addon/)) {
+						return output.replace(/\/addon/, '')
+					}
 					if (output === 'src/index.ts') {
 						return 'index.js'
 					}

@@ -6,8 +6,9 @@ import {
 	createCache,
 	assembleRule
 } from '../helper.js'
+import { Renderer } from '../type'
 
-const CSSRuleToObj = (rule) => {
+const CSSStyleRuleToObj = (rule: CSSStyleRule): Object => {
 	const obj = {}
 	for (let i = 0; i < rule.style.length; i++) {
 		const prop = rule.style[i]
@@ -16,7 +17,7 @@ const CSSRuleToObj = (rule) => {
 	return obj
 }
 
-const addOn = function(renderer) {
+const addOn = function(renderer: Renderer): void {
 	createCache(renderer, 'cache')
 	createCache(renderer, 'kcache')
 
@@ -29,7 +30,7 @@ const addOn = function(renderer) {
 				for (const frameRule of rule.cssRules) {
 					content += assembleRule(
 						frameRule.keyText,
-						cssifyObject(CSSRuleToObj(frameRule))
+						cssifyObject(CSSStyleRuleToObj(frameRule))
 					)
 				}
 				console.log('hydrate content', content)
@@ -38,12 +39,13 @@ const addOn = function(renderer) {
 				for (const basicRule of rule.cssRules) {
 					renderer.cache[
 						`@media ${rule.media.mediaText}${cssifyObject(
-							CSSRuleToObj(basicRule)
+							CSSStyleRuleToObj(basicRule)
 						)}`
 					] = basicRule.selectorText
 				}
 			} else {
-				renderer.cache[cssifyObject(CSSRuleToObj(rule))] = rule.selectorText
+				renderer.cache[cssifyObject(CSSStyleRuleToObj(rule))] =
+					rule.selectorText
 			}
 		}
 	}
