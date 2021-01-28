@@ -1,12 +1,12 @@
 'use strict'
 import styled from 'styled-components'
-import { create as createCamoflage } from '../../src/index'
-import PrefixerCamouflage from '../../src/addon/prefixer'
-import VirtualCamouflage from '../../src/addon/virtual'
-import JSXCamouflage from '../../src/addon/jsx'
+import PrefixerCamouflage from '../../src/addon/prefixer.ts'
+import VirtualCamouflage from '../../src/addon/virtual.ts'
+import JSXCamouflage from '../../src/addon/jsx.ts'
 import React, { createElement } from 'react'
 import emotionStyled from '@emotion/styled'
 import { styled as gooberStyled } from 'goober'
+import { create } from '../../src/index.ts'
 const { Benchmark } = require('benchmark')
 const suite = new Benchmark.Suite()
 
@@ -37,7 +37,7 @@ suite.add('goober', function() {
 	createElement(Component)
 })
 
-const camouflage = createCamoflage({
+const camouflage = create({
 	h: createElement
 })
 
