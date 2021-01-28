@@ -43,7 +43,7 @@ import hydration from 'camouflage/hydration'
 import virtual from 'camouflage/virtual'
 
 const camouflage = create({
-    //Config renderer here
+	//Config renderer here
 })
 
 //Use plugin to upgrade the default renderer
@@ -56,16 +56,16 @@ prefixer(camouflage)
 hydration(camouflage)
 
 const style = {
-    color: 'red',
-    paddingTop: '100px',
-    '@media screen': {
-        //supports media queries
-        color: 'red'
-    },
-    ':hover': {
-        //supports pesudo-classes and selectors
-        backgroundColor: 'blue'
-    }
+	color: 'red',
+	paddingTop: '100px',
+	'@media screen': {
+		//supports media queries
+		color: 'red'
+	},
+	':hover': {
+		//supports pesudo-classes and selectors
+		backgroundColor: 'blue'
+	}
 }
 
 const className = camouflage.virtual(style)
@@ -125,11 +125,15 @@ Fastest is camouflage, jsx()
 
 ## Difference between `nano-css` and `camouflage`
 
-This library is a folk of `nano-css`, with the following difference:
+This library is a fork of `nano-css`, with the following difference:
 
 - `renderer.put()` is no longer the default.
 
-- Handle array values without needing `array` add-on.
+- `rendere.pfx` is default to `''`.
+
+- `hydration()` add-on can handle hydration for basic rules, at-rules and keyframes.
+
+- Handle values in array without needing `array` add-on.
 
 ## Contribution
 
