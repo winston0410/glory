@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"license": "MIT",
+	"type": "module",
 	"private": true,
 	"scripts": {
 		"benchmark:keyframe": "node -r esm buildKeyframe/keyframes.spec.js",
@@ -10,7 +11,7 @@
 		"benchmark:css": "node -r esm renderStyle/css.spec.js",
 		"benchmark:css:prefixed": "node -r esm renderStyle/css-prefixed.spec.js",
 		"benchmark:css:keyframes": "node -r esm css renderStyle/keyframes.spec.js",
-		"benchmark:css:jsx": "ts-node -r esm renderStyle/css-jsx.spec.js",
+		"benchmark:css:jsx": "node -r esm renderStyle/css-jsx.spec.js",
 		"benchmark:prefix:case": "node -r esm addPrefix/prefixer.spec.js",
 		"benchmark:comma": "node -r esm handleComma/handleComma.spec.js",
 		"benchmark:cache": "node -r esm cacheStyle/index.spec.js",
