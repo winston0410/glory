@@ -1,0 +1,13 @@
+import { prefix as addPrefix } from 'inline-style-prefixer';
+import { Renderer } from './type';
+declare const assembleClassName: (renderer: Renderer, name?: string) => any;
+declare const assembleDecl: (prop: string, value: string) => string;
+declare const assembleRule: (name: string, rule: string) => string;
+declare const assembleKeyframe: (list: Object) => string;
+declare const isAtRule: (selector: string) => boolean;
+declare const cssifyArray: (prop: string, value: string[]) => string;
+declare const cssifyObject: (decls: Object, callback: Function) => string;
+declare const createCache: (renderer: Renderer, name: string) => void;
+declare const isEmptyObj: (obj: Object) => boolean;
+declare const isProduction: boolean;
+export { assembleClassName, addPrefix, isAtRule, cssifyObject, cssifyArray, assembleRule, assembleDecl, assembleKeyframe, createCache, isEmptyObj, isProduction };
