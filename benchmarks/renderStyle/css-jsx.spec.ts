@@ -1,14 +1,15 @@
 'use strict'
 import styled from 'styled-components'
-import PrefixerCamouflage from '../../src/addon/prefixer.ts'
-import VirtualCamouflage from '../../src/addon/virtual.ts'
-import JSXCamouflage from '../../src/addon/jsx.ts'
+import PrefixerCamouflage from '../../src/addon/prefixer'
+import VirtualCamouflage from '../../src/addon/virtual'
+import JSXCamouflage from '../../src/addon/jsx'
 import React, { createElement } from 'react'
 import emotionStyled from '@emotion/styled'
 import { styled as gooberStyled } from 'goober'
-import { create } from '../../src/index.ts'
+import { create } from '../../src/index'
 const { Benchmark } = require('benchmark')
 const suite = new Benchmark.Suite()
+import { Renderer } from '../../src/type'
 
 const fakeDecl = {
 	color: 'red',
