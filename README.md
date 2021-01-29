@@ -20,6 +20,8 @@ Don't you believe me? Check out the [benchmark](https://github.com/winston0410/c
 
 - :ambulance: Provide optional **prefixer** plugin.
 
+- :construction_worker: Provide optional **Web Worker** plugin support.
+
 - :nail_care: Support **nesting**, **keyframes** and **media-queries**.
 
 - :construction: **Isomorphic**. Support SSR/SSG server side render **style rehydration**. Unnecessary re-render is avoided.
