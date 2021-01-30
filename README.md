@@ -45,7 +45,7 @@ import hydration from 'camouflage/hydration'
 import virtual from 'camouflage/virtual'
 
 const camouflage = create({
-    //Config renderer here
+	//Config renderer here
 })
 
 //Use plugin to upgrade the default renderer
@@ -58,16 +58,16 @@ prefixer(camouflage)
 hydration(camouflage)
 
 const style = {
-    color: 'red',
-    paddingTop: '100px',
-    '@media screen': {
-        //supports media queries
-        color: 'red'
-    },
-    ':hover': {
-        //supports pesudo-classes and selectors
-        backgroundColor: 'blue'
-    }
+	color: 'red',
+	paddingTop: '100px',
+	'@media screen': {
+		//supports media queries
+		color: 'red'
+	},
+	':hover': {
+		//supports pesudo-classes and selectors
+		backgroundColor: 'blue'
+	}
 }
 
 const className = camouflage.virtual(style)
