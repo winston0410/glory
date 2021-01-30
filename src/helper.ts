@@ -1,17 +1,17 @@
 import { prefix as addPrefix } from 'inline-style-prefixer'
 import { camelCaseProperty, hyphenateProperty } from 'css-in-js-utils'
 import safeIsObj from 'safe-is-obj'
-import { Renderer } from './type'
+import { Renderer, Prop, Value, CSSString, Declaration, Selector } from './type'
 
 const assembleClassName = (renderer: Renderer, name = '') =>
   renderer.pfx + (name || renderer.hash())
 
-const assembleDecl = (prop: string, value: string): string =>
+const assembleDecl = (prop: Prop, value: Value): string =>
   `${hyphenateProperty(prop)}:${value};`
 
-const assembleRule = (name: string, rule: string) => `${name}{${rule}}`
+const assembleRule = (name: Selector, rule: string) => `${name}{${rule}}`
 
-const assembleKeyframe = (decls: object): string => {
+const assembleKeyframe = (decls: Declaration): string => {
   let result = ''
   for (const prop in decls) {
     result +=
@@ -22,10 +22,10 @@ const assembleKeyframe = (decls: object): string => {
   return result
 }
 
-const isAtRule = (selector: string) =>
+const isAtRule = (selector: Selector): boolean =>
   selector[0] === '@' && selector !== '@font-face'
 
-const cssifyArray = (prop: string, value: string[]): string => {
+const cssifyArray = (prop: Prop, value: Value[]): CSSString => {
   let concatedDecl = ''
   for (const currentValue of value) {
     concatedDecl += assembleDecl(prop, currentValue)
@@ -33,7 +33,7 @@ const cssifyArray = (prop: string, value: string[]): string => {
   return concatedDecl
 }
 
-const cssifyObject = (decls: object, callback?: Function) => {
+const cssifyObject = (decls: Declaration, callback?: Function): CSSString => {
   let css = ''
   for (const prop in decls) {
     const value = decls[prop]
@@ -48,13 +48,13 @@ const cssifyObject = (decls: object, callback?: Function) => {
   return css
 }
 
-const createCache = (renderer: Renderer, name: string) => {
+const createCache = (renderer: Renderer, name: string): void => {
   if (!renderer[name]) {
     renderer[name] = {}
   }
 }
 
-const isEmptyObj = (obj: object) => Object.keys(obj).length === 0
+const isEmptyObj = (obj: object): boolean => Object.keys(obj).length === 0
 
 const isProduction = process.env.NODE_ENV === 'production'
 
