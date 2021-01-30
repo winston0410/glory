@@ -1,8 +1,12 @@
 {
 	"compilerOptions": {
-		"target": "es2017",
+		"target": "es2020",
 		"moduleResolution": "node",
 		"declaration": true
 	},
-	"include": ["src/**/*"]
+	"include": ["src/**/*"],
+	"strictNullChecks": true,
+	"noImplicitThis": true,
+	"strictBindCallApply": true,
+	"noImplicitAny": true
 }
