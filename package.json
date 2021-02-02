@@ -20,6 +20,10 @@
 			"require": "./dist/cjs/index.js",
 			"default": "./dist/esm/index.js"
 		},
+		"./helper": {
+			"require": "./dist/cjs/helper.js",
+			"default": "./dist/esm/helper.js"
+		},
 		"./jsx": {
 			"require": "./dist/cjs/addon/jsx.js",
 			"default": "./dist/esm/addon/jsx.js"
