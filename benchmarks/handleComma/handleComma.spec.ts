@@ -12,7 +12,7 @@ suite.add('Map join', function () {
 })
 
 suite.add('Replace regex', function () {
-	require('./replaceRegex')(...fakeData)
+	require('./regexReplace')(...fakeData)
 })
 
 suite.on('cycle', function (event) {

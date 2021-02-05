@@ -1,4 +1,4 @@
-const handleComma = (parentSelector, childSelectors) => {
+const handleCommaByMapJoin = (parentSelector: string, childSelectors: string): string => {
 	if (!childSelectors.includes(',')) {
 		return childSelectors
 	}
@@ -10,4 +10,4 @@ const handleComma = (parentSelector, childSelectors) => {
 		.join(',')
 }
 
-module.exports = handleComma
+module.exports = handleCommaByMapJoin
