@@ -2,7 +2,7 @@
 const { Benchmark } = require('benchmark')
 const suite = new Benchmark.Suite()
 
-const input = 'hello'
+const input:string = 'hello'
 
 suite.add('switch', function() {
 	switch (input) {

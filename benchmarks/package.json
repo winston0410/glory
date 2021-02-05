@@ -15,7 +15,7 @@
 		"benchmark:comma": "ts-node -r esm handleComma/handleComma.spec.ts",
 		"benchmark:cache": "ts-node -r esm cacheStyle/index.spec.ts",
 		"benchmark:worker": "node -r esm webWorker/index.spec.js",
-		"benchmark:switch": "node -r esm switch-ifelse.spec.js"
+		"benchmark:switch": "ts-node -r esm switch-ifelse.spec.ts"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.12.10",
