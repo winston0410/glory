@@ -12,8 +12,8 @@
 		"benchmark:css:keyframes": "node -r esm css renderStyle/keyframes.spec.js",
 		"benchmark:css:jsx": "ts-node -r esm renderStyle/css-jsx.spec.ts",
 		"benchmark:prefix:case": "node -r esm addPrefix/prefixer.spec.js",
-		"benchmark:comma": "node -r esm handleComma/handleComma.spec.js",
-		"benchmark:cache": "node -r esm cacheStyle/index.spec.js",
+		"benchmark:comma": "ts-node -r esm handleComma/handleComma.spec.ts",
+		"benchmark:cache": "ts-node -r esm cacheStyle/index.spec.ts",
 		"benchmark:worker": "node -r esm webWorker/index.spec.js",
 		"benchmark:switch": "node -r esm switch-ifelse.spec.js"
 	},
