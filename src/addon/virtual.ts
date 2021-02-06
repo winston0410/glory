@@ -10,7 +10,7 @@ import {
 	isEmptyObj
 } from '../helper'
 import safeIsObj from 'safe-is-obj'
-import { Renderer } from '../type'
+import { Renderer, ClassName } from '../type'
 
 const addOn = function(renderer: Renderer): void {
 	// Setting the cache outside this function may result in more persistant but unexpected behaviors
@@ -20,7 +20,7 @@ const addOn = function(renderer: Renderer): void {
 		decls: object,
 		selector = '',
 		atRule = ''
-	): string => {
+	): ClassName => {
 		let classNames = ''
 		for (const prop in decls) {
 			const value = decls[prop]
@@ -61,7 +61,7 @@ const addOn = function(renderer: Renderer): void {
 		rawDecl: string,
 		selector = '',
 		atRule = ''
-	): string {
+	): ClassName {
 		const className = assembleClassName(renderer)
 
 		let rule = ''
@@ -82,7 +82,7 @@ const addOn = function(renderer: Renderer): void {
 	}
 
 	// Only media queries should be supported in virtual
-	renderer.virtual = (decls: object): string => {
+	renderer.virtual = (decls: object): ClassName => {
 		if (!decls || !safeIsObj(decls)) return ''
 		if (isEmptyObj(decls)) return ''
 		return objectToClassNames(decls)

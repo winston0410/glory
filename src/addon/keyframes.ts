@@ -6,7 +6,7 @@ import {
   isEmptyObj
 } from '../helper'
 import safeIsObj from 'safe-is-obj'
-import { Renderer } from '../type'
+import { Renderer, ClassName } from '../type'
 
 const defaultConfig = {
   prefixes: ['-webkit-', '-moz-', '-o-', '']
@@ -19,7 +19,7 @@ const addOn = function(renderer: Renderer, config = defaultConfig): void {
 
   const prefixedKeyframes = prefixes.map((prefix) => `@${prefix}keyframes`)
 
-  renderer.keyframes = function(decls: object): string {
+  renderer.keyframes = function(decls: object): ClassName {
     if (!decls || !safeIsObj(decls)) return ''
     if (isEmptyObj(decls)) return ''
     const frameContent = assembleKeyframe(decls)

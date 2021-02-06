@@ -1,9 +1,9 @@
 import { prefix as addPrefix } from 'inline-style-prefixer'
 import { camelCaseProperty, hyphenateProperty } from 'css-in-js-utils'
 import safeIsObj from 'safe-is-obj'
-import { Renderer, Prop, Value, CSSString, Declaration, Selector } from './type'
+import { Renderer, Prop, Value, CSSString, Declaration, Selector, ClassName } from './type'
 
-const assembleClassName = (renderer: Renderer, name = '') =>
+const assembleClassName = (renderer: Renderer, name = ''): ClassName =>
   renderer.pfx + (name || renderer.hash())
 
 const assembleDecl = (prop: Prop, value: Value): string =>
