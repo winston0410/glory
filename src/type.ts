@@ -15,8 +15,10 @@ type Prop = string
 
 type Value = string
 
+type ClassName = string
+
 type CSSString = string
 
 type Declaration = object
 
-export { Renderer, Prop, Value, CSSString, Declaration, Selector }
+export { Renderer, Prop, Value, CSSString, Declaration, Selector, ClassName }
