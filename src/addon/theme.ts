@@ -8,13 +8,20 @@ const addOn = function(renderer: Renderer): void {
   let currentTheme = {}
 
   type GetThemeCallback = (x: object) => ClassName
-  renderer.getTheme = (callback: GetThemeCallback): string => {
+  renderer.getTheme = (callback: GetThemeCallback): ClassName => {
     return callback(currentTheme)
   }
 
   type selectThemeCallback = (x: object) => object
   renderer.selectTheme = (callback: selectThemeCallback): void => {
     currentTheme = callback(store)
+  }
+
+  renderer.setTheme = (name: string, theme: object): void => {
+    store[name] = {
+      ...store[name],
+      ...theme
+    }
   }
 }
 
