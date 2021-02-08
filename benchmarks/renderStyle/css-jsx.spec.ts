@@ -7,7 +7,7 @@ import React, { createElement } from 'react'
 import emotionStyled from '@emotion/styled'
 import { styled as gooberStyled } from 'goober'
 import { create } from '../../src/index'
-const { Benchmark } = require('benchmark')
+import { Benchmark } from 'benchmark'
 const suite = new Benchmark.Suite()
 import { Renderer } from '../../src/type'
 
