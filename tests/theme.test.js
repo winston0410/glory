@@ -41,7 +41,7 @@ describe('theme()', function() {
 
 	describe('selectTheme()', function() {
 		describe('when called with an existing theme name', function() {
-			it('should select the current theme from store', function() {
+			it('should return the copy of the theme from store as current theme', function() {
 				const nano = createNano()
 
 				const darkTheme = {
@@ -60,12 +60,14 @@ describe('theme()', function() {
 
 				nano.getTheme((theme) => {
 					expect(theme).toStrictEqual(darkTheme)
+					expect(theme).not.toBe(darkTheme)
 				})
 
 				nano.selectTheme('light')
 
 				nano.getTheme((theme) => {
 					expect(theme).toStrictEqual(lightTheme)
+					expect(theme).not.toBe(lightTheme)
 				})
 			})
 		})
