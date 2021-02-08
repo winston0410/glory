@@ -1,4 +1,4 @@
-# `hydrate`
+# `hydrate()`
 
 This add-on re-hydrates CSS styles generated on the server.
 

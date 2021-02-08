@@ -1,4 +1,4 @@
-# `virtual`
+# `virtual()`
 
 This add-on insert stylings atomically.
 
