@@ -1,6 +1,5 @@
 'use strict'
 
-// import { addPrefix } from '../helper'
 import { Renderer, ClassName } from '../type'
 
 const addOn = function(renderer: Renderer): void {
@@ -12,9 +11,8 @@ const addOn = function(renderer: Renderer): void {
     return callback(currentTheme)
   }
 
-  type selectThemeCallback = (x: object) => object
-  renderer.selectTheme = (callback: selectThemeCallback): void => {
-    currentTheme = callback(store)
+  renderer.selectTheme = (themeName: string): void => {
+    currentTheme = store[themeName]
   }
 
   renderer.setTheme = (name: string, theme: object): void => {
