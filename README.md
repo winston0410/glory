@@ -22,6 +22,8 @@ Don't you believe me? Check out the [benchmark](https://github.com/winston0410/c
 
 - :construction_worker: Provide optional **Web Worker** plugin support(experimental).
 
+- :art: Provide optional **theming** plugin.
+
 - :nail_care: Support **nesting**, **keyframes** and **media-queries**.
 
 - :construction: **Isomorphic**. Support SSR/SSG server side render **style rehydration**. Unnecessary re-render is avoided.
