@@ -5,7 +5,13 @@ This add-on insert stylings atomically.
 ## Example
 
 ```javascript
-const classNames1 = nano.virtual({
+import { create } from 'glory'
+import virtualAddon from 'glory/virtual'
+
+const glory = create()
+virtualAddon(glory)
+
+const classNames1 = glory.virtual({
     color: 'red',
     border: '1px solid red',
     textAlign: 'center'
