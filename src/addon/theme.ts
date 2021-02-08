@@ -12,7 +12,9 @@ const addOn = function(renderer: Renderer): void {
   }
 
   renderer.selectTheme = (themeName: string): void => {
-    currentTheme = store[themeName]
+    currentTheme = {
+      ...store[themeName]
+    }
   }
 
   renderer.setTheme = (name: string, theme: object): void => {
