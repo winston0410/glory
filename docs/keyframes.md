@@ -7,7 +7,7 @@ This addon allows one to define CSS `@keyframes` in any CSS-like object.
 It also exposes a `keyframes()` function, which generates a unique animation name automatically.
 
 ```javascript
-const animation = nano.keyframes({
+const animation = glory.keyframes({
 	'0%': {
 		transform: 'rotate(0deg)'
 	},

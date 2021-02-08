@@ -5,13 +5,13 @@ An add-on that allows you to style like `styled-component` but with **atomic CSS
 ## Example
 
 ```javascript
-import { create } from 'camouflage'
-import setUpJsx from 'camouflage/addon/jsx'
+import { create } from 'glory'
+import setUpJsx from 'glory/jsx'
 
-const camouflage = create()
-setUpJsx(camouflage)
+const glory = create()
+setUpJsx(glory)
 
-const Button = camouflage.jsx('button', (props) => ({
+const Button = glory.jsx('button', (props) => ({
     backgroundColor: (props.disabled) ? 'grey' : 'blue',
   fontSize: '40px'
 }))

@@ -1,22 +1,22 @@
 # Add-ons
 
-With bundle size and modularity in mind, `camouflage` does not come with any styling interface in its core. It cannot inject styles, handle prefix and hydration without using add-on.
+With bundle size and modularity in mind, `glory` does not come with any styling interface in its core. It cannot inject styles, handle prefix and hydration without using add-on.
 
 ## Install an add-on
 
 You can access all the default add-on like the following example:
 
 ```javascript
-import setUpVirtual from 'camouflage/virtual'
-import { create } from 'camouflage'
+import setUpVirtual from 'glory/virtual'
+import { create } from 'glory'
 
-const camouflage = create()
-setUpVirtual(camouflage)
+const glory = create()
+setUpVirtual(glory)
 
 //...some more add-ons
 
 //Start using your style renderer
-camouflage.virtual({
+glory.virtual({
 	color: 'red'
 })
 ```

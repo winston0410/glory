@@ -1,19 +1,19 @@
 # Quick start
 
-This is quick start guide will help you set up Camouflage in your project correctly.
+This is quick start guide will help you set up glory in your project correctly.
 
 You can find detail documentation for each add-on in this directory.
 
 ## Installation
 
-First of all, install Camouflage with your package manager
+First of all, install glory with your package manager
 
 ```shell
-yarn add camouflage
+yarn add glory
 ```
 
 ```shell
-npm install camouflage
+npm install glory
 ```
 
 ## Customize renderer
@@ -22,20 +22,20 @@ Then you will need to customize the renderer. Create a new file for customizatio
 
 ```javascript
 //nameItTheWayYouWant.js
-import { create } from 'camouflage'
+import { create } from 'glory'
 
-const camouflage = create({
+const glory = create({
 	// pass parameter here to config the default renderer
 })
 
-export default camouflage
+export default glory
 ```
 
 You can find parameters for [configuring default renderer here](./config.md).
 
 ## Add styling interface
 
-By default, camouflage doesn't come with a styling interface in order to reduce bundle size. You will need to upgrade it with the following add-ons.
+By default, glory doesn't come with a styling interface in order to reduce bundle size. You will need to upgrade it with the following add-ons.
 
 You may use more than one of the following add-ons.
 
@@ -47,14 +47,14 @@ These add-ons are included in the main package, and can be access like the examp
 
 ```javascript
 //nameItTheWayYouWant.js
-import { create } from 'camouflage'
-import virtual from 'camouflage/addon/virtual'
+import { create } from 'glory'
+import virtual from 'glory/virtual'
 
-const camouflage = create({})
+const glory = create({})
 
-virtual(camouflage)
+virtual(glory)
 
-export default camouflage
+export default glory
 ```
 
 ## Add auto-prefixing support
@@ -63,51 +63,51 @@ By default, auto-prefixing is not support by the default bundler for a more modu
 
 ```javascript
 //nameItTheWayYouWant.js
-import { create } from 'camouflage'
-import virtual from 'camouflage/addon/virtual'
-import prefixer from 'camouflage/addon/prefixer'
+import { create } from 'glory'
+import virtual from 'glory/virtual'
+import prefixer from 'glory/prefixer'
 
-const camouflage = create({})
+const glory = create({})
 
-virtual(camouflage)
-prefixer(camouflage)
+virtual(glory)
+prefixer(glory)
 
-export default camouflage
+export default glory
 ```
 
 ## Add server-side rendering support
 
-It is common to do SSR or SSG nowadays for improving website rendering performance. Camouflage supports that and would prevent rendering duplicated stylings.
+It is common to do SSR or SSG nowadays for improving website rendering performance. glory supports that and would prevent rendering duplicated stylings.
 
 To get the rendered styling in server side, access `renderer.raw`.
 
 ```javascript
 //Import an initialized instance
-import camouflage from 'nameItTheWayYouWant.js'
+import glory from 'nameItTheWayYouWant.js'
 
 //render your app to string
 //append the style whereever you want.
-html += `<style>${camouflage.raw}</style>`
+html += `<style>${glory.raw}</style>`
 ```
 
 To avoid re-rendering duplicated styling, you will need to use [`hydration()`](./hydration.md) in your renderer instance, and provide the renderer style tag as `renderer.sh`.
 
 ```javascript
 //nameItTheWayYouWant.js
-import { create } from 'camouflage'
+import { create } from 'glory'
 //...
-import hydration from 'camouflage/addon/hydration'
+import hydration from 'glory/hydration'
 
-const camouflage = create({})
+const glory = create({})
 //...
-hydration(camouflage)
+hydration(glory)
 ```
 
 ```javascript
-const nano = create({
+const glory = create({
 	sh:
-		typeof document === 'object' ? document.getElementById('camouflage') : null
+		typeof document === 'object' ? document.getElementById('glory') : null
 })
 
-html += `<style id="camouflage">${nano.raw}</style>`
+html += `<style id="glory">${glory.raw}</style>`
 ```
