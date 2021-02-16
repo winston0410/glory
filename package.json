@@ -1,5 +1,5 @@
 {
-	"name": "camouflage",
+	"name": "glory",
 	"version": "0.1.0",
 	"author": "Hugo Sum",
 	"license": "MIT",
@@ -9,6 +9,7 @@
 	],
 	"scripts": {
 		"build": "npx rollup -c",
+		"dev": "npx rollup -c -w",
 		"test": "npx jest",
 		"test:coverage": "npx jest --coverage",
 		"test:watch": "npx jest --watch",
