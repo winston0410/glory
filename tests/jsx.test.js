@@ -56,7 +56,7 @@ describe('jsx()', function() {
 				})
 			})
 
-			describe('when TagName is provided as an argument', function() {
+			describe('when string is provided as TagName', function() {
 				const nano = createNano({
 					h: createElement
 				})
@@ -74,7 +74,7 @@ describe('jsx()', function() {
 				})
 			})
 
-			describe('when TagName is provided as an argument', function() {
+			describe('when string is provided as TagName', function() {
 				describe('when styling callback is provided', function() {
 					describe('when a function is provided', function() {
 						describe('when the function returns an object', function() {
@@ -139,6 +139,40 @@ describe('jsx()', function() {
 							// expect(() => nano.jsx('h2', 'Hello')).toThrow()
 							// expect(() => nano.jsx('h1', 123)).toThrow()
 							// expect(() => nano.jsx('h1', [])).toThrow()
+						})
+					})
+				})
+			})
+
+			describe('when a component is provided as Tagname', function (){
+				describe('when a function is provided as styling callback', function (){
+					describe('when styling callback returns an object', function (){
+
+						const glory = createNano({
+							h: createElement
+						})
+						const putRawMock = jest.spyOn(glory, 'putRaw')
+
+						const WithFont = glory.jsx('p', () => ({
+							fontSize: '32px'
+						}))
+
+						const WithColor = glory.jsx(WithFont, () => ({
+							color: 'red'
+						}))
+
+						it('should create a component that inherits styling from the previous component', function (){
+							const result = ReactTestRenderer.create(
+								<WithColor>Hello</WithColor>
+							).toJSON()
+
+							console.log('check result', result)
+
+							expect(result.type).toBe('p')
+							expect(result.props).toEqual({
+								className: ' a b'
+							})
+							expect(result.children).toEqual(['Hello'])
 						})
 					})
 				})
