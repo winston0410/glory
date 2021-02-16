@@ -8,16 +8,15 @@ const createComponent = (
 	renderer: Renderer
 ) =>
 	function Component(props) {
-		if (!Tag) return null
-		if (callback) {
-			const stylingObject = callback(props)
+		if (!Tag ) return null
 
-			if (safeIsObj(stylingObject)) {
-				props.className = renderer.virtual(stylingObject)
-			}
-		}
+		const modifiedProps = (callback) ?
+		({
+			...props,
+			className: renderer.virtual(callback(props))
+		}) : props
 
-		return renderer.h(props.as || Tag, props)
+		return renderer.h(props.as || Tag, modifiedProps)
 	}
 
 const addOn = function(renderer: Renderer): void {
