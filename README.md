@@ -32,9 +32,11 @@ Don't you believe me? Check out the [benchmark](https://github.com/winston0410/c
 
 A 0.1.0 will be released soon.
 
-## Sponsor
+## Sponsors
 
 Support this package by becoming our sponsor.
+
+[![Tecky Academy Logo](./sponsors/tecky.png)](https://tecky.io/en/)
 
 ## Getting started
 
