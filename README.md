@@ -80,6 +80,10 @@ const className = camouflage.virtual(style)
 //Insert .a{color:red;}.b{padding-top:100px;}@media screen{.c{color:red;}}.d:hover{background-color:blue;} as styling
 ```
 
+## Example
+
+An example page built with React and Glory is [available here](https://github.com/winston0410/glory-mono/tree/master/packages/examples/typescript-react).
+
 ## Made in Hong Kong
 
 This library is made by Hong Kongers.
