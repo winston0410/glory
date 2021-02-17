@@ -43,23 +43,23 @@ Support this package by becoming our sponsor.
 See our [quick start guide](https://github.com/winston0410/camouflage/blob/master/docs/README.md) for more details.
 
 ```javascript
-import { create as createCamoflage } from 'camouflage'
-import prefixer from 'camouflage/prefixer'
-import hydration from 'camouflage/hydration'
-import virtual from 'camouflage/virtual'
+import { create as createCamoflage } from 'glory'
+import prefixer from 'glory/prefixer'
+import hydration from 'glory/hydration'
+import virtual from 'glory/virtual'
 
-const camouflage = create({
+const glory = create({
 	//Config renderer here
 })
 
 //Use plugin to upgrade the default renderer
 
 //Select your preferred styling interface
-virtual(camouflage)
+virtual(glory)
 //Add support for auto-prefixing if needed
-prefixer(camouflage)
+prefixer(glory)
 //Add style hydration supports, if you will render styling beforehand in server
-hydration(camouflage)
+hydration(glory)
 
 const style = {
 	color: 'red',
@@ -74,7 +74,7 @@ const style = {
 	}
 }
 
-const className = camouflage.virtual(style)
+const className = glory.virtual(style)
 //return 'a b c d' as class name for maximum performance
 
 //Insert .a{color:red;}.b{padding-top:100px;}@media screen{.c{color:red;}}.d:hover{background-color:blue;} as styling
@@ -82,7 +82,13 @@ const className = camouflage.virtual(style)
 
 ## Example
 
-An example page built with React and Glory is [available here](https://github.com/winston0410/glory-mono/tree/master/packages/examples/typescript-react).
+### Live demo
+
+### Source code
+
+- [Typescript, React and Glory](https://github.com/winston0410/glory-mono/tree/master/packages/examples/typescript-react)
+
+- [Svelte and Glory](https://github.com/winston0410/glory-mono/tree/master/packages/examples/svelte)
 
 ## Made in Hong Kong
 
@@ -101,9 +107,9 @@ nano-css("^5.3.1"), virtual() x 395,781 ops/sec ±0.38% (92 runs sampled)
 emotion("^11.1.3") x 381,874 ops/sec ±0.32% (98 runs sampled)
 styletron("^1.4.6") x 816,730 ops/sec ±0.31% (97 runs sampled)
 fela("^11.5.2") x 1,352,522 ops/sec ±1.11% (93 runs sampled)
-camouflage, rule() x 324,168 ops/sec ±49.39% (56 runs sampled)
-camouflage, virtual() x 1,357,795 ops/sec ±0.63% (94 runs sampled)
-Fastest is camouflage, virtual(),fela("^11.5.2")
+glory, rule() x 324,168 ops/sec ±49.39% (56 runs sampled)
+glory, virtual() x 1,357,795 ops/sec ±0.63% (94 runs sampled)
+Fastest is glory, virtual(),fela("^11.5.2")
 ```
 
 ### With prefixer, `virtual()`
@@ -116,9 +122,9 @@ emotion("^11.1.3") x 252,219 ops/sec ±1.64% (90 runs sampled)
 goober("^2.0.21") x 98,742 ops/sec ±2.60% (57 runs sampled)
 fela("^11.5.2") x 437,485 ops/sec ±3.97% (82 runs sampled)
 styletron("^1.4.6") x 394,933 ops/sec ±1.32% (90 runs sampled)
-camouflage, rule() x 249,918 ops/sec ±4.25% (57 runs sampled)
-camouflage, virtual() x 1,002,094 ops/sec ±5.58% (72 runs sampled)
-Fastest is camouflage, virtual()
+glory, rule() x 249,918 ops/sec ±4.25% (57 runs sampled)
+glory, virtual() x 1,002,094 ops/sec ±5.58% (72 runs sampled)
+Fastest is glory, virtual()
 ```
 
 ### With prefixer, `jsx()`
@@ -128,12 +134,12 @@ $ node -r esm renderStyle/css-jsx.spec.js
 styled component x 39,671 ops/sec ±1.29% (90 runs sampled)
 emotion, styled() x 645,268 ops/sec ±1.29% (90 runs sampled)
 goober x 1,085,717 ops/sec ±0.43% (95 runs sampled)
-camouflage, jsx() x 1,107,726 ops/sec ±0.58% (96 runs sample
+glory, jsx() x 1,107,726 ops/sec ±0.58% (96 runs sample
 d)
-Fastest is camouflage, jsx()
+Fastest is glory, jsx()
 ```
 
-## Difference between `nano-css` and `camouflage`
+## Difference between `nano-css` and `glory`
 
 This library is a fork of `nano-css`, with the following difference:
 
