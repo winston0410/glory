@@ -161,19 +161,71 @@ describe('jsx()', function() {
 							color: 'red'
 						}))
 
+						const WithBg = glory.jsx(WithColor, () => ({
+							backgroundColor: 'blue'
+						}))
+
 						it('should create a component that inherits styling from the previous component', function (){
+
 							const result = ReactTestRenderer.create(
-								<WithColor>Hello</WithColor>
+								<WithBg>Hello</WithBg>
 							).toJSON()
 
-							console.log('check result', result)
-
 							expect(result.type).toBe('p')
+
 							expect(result.props).toEqual({
-								className: ' a b'
+								className: ' a b c'
 							})
+
 							expect(result.children).toEqual(['Hello'])
 						})
+
+						it('should inject styling in all those component', function (){
+							expect(putRawMock).toHaveBeenCalledTimes(3)
+							if(env.isServer){
+								const result = glory.raw
+								console.log(result)
+								// expect(result).toBe('.a{background-color:blue;}.b{color:red;}.d{font-size:32px;}')
+							}
+						})
+					})
+				})
+
+				describe('when "as" is passed as prop', function (){
+					const glory = createNano({
+						h: createElement
+					})
+					const putRawMock = jest.spyOn(glory, 'putRaw')
+
+					const WithDisplay = glory.jsx('p', () => ({
+						display: 'block'
+					}))
+
+					it('should generate the component in the TagName passed in "as"', function (){
+						const result = ReactTestRenderer.create(
+							<WithDisplay as={'b'}>Hello</WithDisplay>
+						).toJSON()
+
+						expect(result.type).toBe('b')
+					})
+				})
+
+				describe('when "css" is passed as prop', function (){
+					const glory = createNano({
+						h: createElement
+					})
+					const putRawMock = jest.spyOn(glory, 'putRaw')
+
+					const WithDisplay = glory.jsx('p', () => ({
+						display: 'block'
+					}))
+
+					it('should extend the original className', function (){
+						const result = ReactTestRenderer.create(
+							<WithDisplay css={'manual-class'}>Hello</WithDisplay>
+						).toJSON()
+						// console.log('className override', result)
+						// expect(result.props.className).toBe(' a manual-class')
 					})
 				})
 			})
