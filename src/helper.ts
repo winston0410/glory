@@ -58,6 +58,8 @@ const isEmptyObj = (obj: object): boolean => Object.keys(obj).length === 0
 
 const isProduction = process.env.NODE_ENV === 'production'
 
+const isFunction = (v) => typeof v === 'function'
+
 export {
   assembleClassName,
   addPrefix,
@@ -69,5 +71,6 @@ export {
   assembleKeyframe,
   createCache,
   isEmptyObj,
-  isProduction
+  isProduction,
+  isFunction
 }

@@ -21,9 +21,6 @@ describe('hydration', function() {
 		const nano = createNano()
 		addOnHydration(nano)
 		const hydrateMock = jest.spyOn(nano, 'hydrate')
-		it('should not throw', function() {
-			expect(() => addOnHydration(nano)).not.toThrow()
-		})
 
 		it('should not run hydrate()', function() {
 			expect(hydrateMock).toHaveBeenCalledTimes(0)
@@ -40,8 +37,6 @@ describe('hydration', function() {
 			it('should run hydrate()', function() {
 				// expect(hydrateMock).toHaveBeenCalledTimes(1)
 			})
-
-			it('should not throw', function() {})
 		})
 
 		describe('when server-side generated styling is provided', function() {

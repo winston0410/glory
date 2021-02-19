@@ -134,12 +134,24 @@ describe('jsx()', function() {
 									expect(result2.props.className).toBe(' b')
 								})
 
-								it('should emit styles', function (){
-									if(env.isServer){
-										const result = nano.raw
-										expect(result).toBe('.a{color:red;}.b{color:green;}')
-									}
-									expect(putRawMock).toHaveBeenCalledTimes(2)
+								describe('when the component is called the first time', function (){
+									it('should emit styles', function (){
+										if(env.isServer){
+											const result = nano.raw
+											expect(result).toBe('.a{color:red;}.b{color:green;}')
+										}
+										expect(putRawMock).toHaveBeenCalledTimes(2)
+									})
+								})
+
+								describe('when component is called again with identical props', function (){
+									// const duplicatedResult = ReactTestRenderer.create(
+									// 	<Component danger={true}>Hello</Component>
+									// ).toJSON()
+
+									it('should return className early from the cache of the component', function (){
+										// expect(duplicatedResult).toBe('y')
+									})
 								})
 							})
 						})
@@ -173,6 +185,45 @@ describe('jsx()', function() {
 							// expect(() => nano.jsx('h2', 'Hello')).toThrow()
 							// expect(() => nano.jsx('h1', 123)).toThrow()
 							// expect(() => nano.jsx('h1', [])).toThrow()
+						})
+					})
+				})
+
+				describe('when "as" is passed as prop', function (){
+					const glory = createNano({
+						h: createElement
+					})
+					const putRawMock = jest.spyOn(glory, 'putRaw')
+
+					const WithDisplay = glory.jsx('p', () => ({
+						display: 'block'
+					}))
+
+					it('should generate the component in the TagName passed in "as"', function (){
+						const result = ReactTestRenderer.create(
+							<WithDisplay as={'b'}>Hello</WithDisplay>
+						).toJSON()
+
+						expect(result.type).toBe('b')
+					})
+				})
+
+				describe('when "css" is passed as prop', function (){
+					const glory = createNano({
+						h: createElement
+					})
+					const putRawMock = jest.spyOn(glory, 'putRaw')
+
+					const WithDisplay = glory.jsx('p', () => ({
+						display: 'block'
+					}))
+
+					describe('when "css" is a string', function (){
+						it('should extend the original className', function (){
+							const result = ReactTestRenderer.create(
+								<WithDisplay css={'manual-class'}>Hello</WithDisplay>
+							).toJSON()
+							expect(result.props.className).toBe(' a manual-class')
 						})
 					})
 				})
@@ -262,44 +313,6 @@ describe('jsx()', function() {
 								expect(putRawMock).toHaveBeenCalledTimes(5)
 							})
 						})
-					})
-				})
-
-				describe('when "as" is passed as prop', function (){
-					const glory = createNano({
-						h: createElement
-					})
-					const putRawMock = jest.spyOn(glory, 'putRaw')
-
-					const WithDisplay = glory.jsx('p', () => ({
-						display: 'block'
-					}))
-
-					it('should generate the component in the TagName passed in "as"', function (){
-						const result = ReactTestRenderer.create(
-							<WithDisplay as={'b'}>Hello</WithDisplay>
-						).toJSON()
-
-						expect(result.type).toBe('b')
-					})
-				})
-
-				describe('when "css" is passed as prop', function (){
-					const glory = createNano({
-						h: createElement
-					})
-					const putRawMock = jest.spyOn(glory, 'putRaw')
-
-					const WithDisplay = glory.jsx('p', () => ({
-						display: 'block'
-					}))
-
-					it('should extend the original className', function (){
-						const result = ReactTestRenderer.create(
-							<WithDisplay css={'manual-class'}>Hello</WithDisplay>
-						).toJSON()
-						// console.log('className override', result)
-						// expect(result.props.className).toBe(' a manual-class')
 					})
 				})
 			})

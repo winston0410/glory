@@ -28,7 +28,7 @@ const addOn = function(renderer: Renderer): void {
 
 			if (renderer.cache[id]) {
 				classNames += renderer.cache[id]
-				renderer.hash() // Run this to make className consistant
+				renderer.hash() // Run this to make className consistant for SSR hydration
 				continue
 			}
 
