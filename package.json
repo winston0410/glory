@@ -40,16 +40,17 @@
 		"./hydration": {
 			"require": "./dist/cjs/addon/hydration.js",
 			"default": "./dist/esm/addon/hydration.js"
+		},
+		"./keyframes": {
+			"require": "./dist/cjs/addon/keyframes.js",
+			"default": "./dist/esm/addon/keyframes.js"
 		}
 	},
 	"dependencies": {
 		"@blackblock/joli-string": "^1.1.0",
 		"browser-or-node": "^1.3.0",
-		"comlink": "^4.3.0",
 		"css-in-js-utils": "^3.1.0",
-		"greenlet": "^1.1.0",
 		"inline-style-prefixer": "^6.0.0",
-		"rambda": "^6.5.3",
 		"safe-is-obj": "^1.0.1"
 	},
 	"devDependencies": {
