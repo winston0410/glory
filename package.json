@@ -55,10 +55,10 @@
 		"safe-is-obj": "1.0.1"
 	},
 	"devDependencies": {
-		"@babel/core": "7.12.10",
-		"@babel/preset-env": "7.12.11",
-		"@babel/preset-react": "7.12.10",
-		"@babel/preset-typescript": "7.12.7",
+		"@babel/core": "7.12.17",
+		"@babel/preset-env": "7.12.17",
+		"@babel/preset-react": "7.12.13",
+		"@babel/preset-typescript": "7.12.17",
 		"@jest-runner/electron": "3.0.0",
 		"@rollup/plugin-commonjs": "17.0.0",
 		"@rollup/plugin-node-resolve": "11.1.0",
