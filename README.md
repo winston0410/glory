@@ -4,13 +4,15 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/37576126acb783f17c77/test_coverage)](https://codeclimate.com/github/winston0410/camouflage/test_coverage) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/30027259349b45ef8cdc73711f17859c)](https://www.codacy.com/gh/winston0410/camouflage/dashboard?utm_source=github.com&utm_medium=referral&utm_content=winston0410/camouflage&utm_campaign=Badge_Grade) [![Known Vulnerabilities](https://snyk.io/test/github/winston0410/camouflage/badge.svg?targetFile=package.json)](https://snyk.io/test/github/winston0410/camouflage?targetFile=package.json) [![Build Status](https://travis-ci.com/winston0410/glory.svg?branch=master)](https://travis-ci.com/winston0410/glory)
 
-Out run big-name popular CSS-in-JS libraries like [Emotion](https://github.com/emotion-js/emotion), [Styletron](https://github.com/styletron/styletron) and [Fela](https://github.com/robinweser/fela) but with identical or even better supports.
+Out run big-name popular CSS-in-JS libraries like [Styled-component](https://github.com/styled-components/styled-components), [Emotion](https://github.com/emotion-js/emotion), [Styletron](https://github.com/styletron/styletron) and [Fela](https://github.com/robinweser/fela) but with identical or even better supports.
 
 Don't you believe me? Check out the [benchmark](https://github.com/winston0410/camouflage/#benchmarks) here.
 
+You can also try the [sandboxes](https://github.com/winston0410/camouflage/#example) to try using Glory with different frameworks
+
 ## Features
 
-- :zap: **Lightweight** and **modular**. Install only what you need.
+- :zap: **Lightweight** and **modular**. Only weights **1.3kb** (minified and gzipped) for the minimum viable setup.
 
 - :fire: Blazing **fast**.
 
@@ -82,7 +84,11 @@ const className = glory.virtual(style)
 
 ## Example
 
-### Live demo
+### Live demo (Code Sandbox)
+
+- [React and Glory](https://codesandbox.io/s/angry-morning-bsjhz?file=/src/App.js)
+
+- [Svelte and Glory](https://codesandbox.io/s/svelte-glory-demo-8j4ux)
 
 ### Source code
 
