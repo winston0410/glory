@@ -1,5 +1,6 @@
 'use strict'
-import { isBrowser } from 'browser-or-node'
+
+import { isBrowser } from "is-in-browser";
 import joli from '@blackblock/joli-string'
 import { isProduction } from './helper'
 import { Renderer } from './type'
