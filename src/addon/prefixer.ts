@@ -1,6 +1,4 @@
-'use strict'
-
-import { addPrefix } from '../helper'
+import { prefix as addPrefix } from 'inline-style-prefixer'
 import { Renderer } from '../type'
 
 const defaultConfig = {

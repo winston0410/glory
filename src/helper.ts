@@ -1,4 +1,3 @@
-import { prefix as addPrefix } from 'inline-style-prefixer'
 import { camelCaseProperty, hyphenateProperty } from 'css-in-js-utils'
 import safeIsObj from 'safe-is-obj'
 import { Renderer, Prop, Value, CSSString, Declaration, Selector, ClassName } from './type'
@@ -62,7 +61,6 @@ const isFunction = (v) => typeof v === 'function'
 
 export {
   assembleClassName,
-  addPrefix,
   isAtRule,
   cssifyObject,
   cssifyArray,
