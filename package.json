@@ -100,7 +100,7 @@
 		"tslib": "2.1.0",
 		"typescript": "4.1.5",
 		"url-polyfill": "1.1.12",
-		"workerpool": "6.0.4"
+		"workerpool": "6.1.0"
 	},
 	"lint-staged": {
 		"**/*.js": [
