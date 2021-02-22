@@ -36,7 +36,7 @@
 		"nano-css": "5.3.1",
 		"styled-components": "5.2.1",
 		"styled-jsx": "3.4.4",
-		"styletron-engine-atomic": "1.4.6",
+		"styletron-engine-atomic": "1.4.7",
 		"ts-node": "9.1.1"
 	}
 }
