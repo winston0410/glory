@@ -94,7 +94,7 @@
 		"react-test-renderer": "17.0.1",
 		"rollup": "2.39.0",
 		"rollup-plugin-multi-input": "1.2.0",
-		"rollup-plugin-typescript2": "0.29.0",
+		"rollup-plugin-typescript2": "0.30.0",
 		"size-limit": "4.9.2",
 		"tiny-worker": "2.3.0",
 		"tslib": "2.1.0",
