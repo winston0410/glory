@@ -111,3 +111,10 @@ const glory = create({
 
 html += `<style id="glory">${glory.raw}</style>`
 ```
+
+## Optimizing production build
+
+By default some error message is provided to guide your development. To remove those error message and trim your production build, use a define plugin to set `process.env.NODE_ENV` to `production` to enable dead code elimination.
+
+### Define plugins:
+[@rollup/plugin-replace](https://www.npmjs.com/package/@rollup/plugin-replace)

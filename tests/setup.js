@@ -1,5 +1,5 @@
 'use strict'
-process.env.NODE_ENV = 'production'
+process.env.NODE_ENV = 'development'
 
 if (typeof window === 'object') {
 	global.requestAnimationFrame = window.requestAnimationFrame = function(

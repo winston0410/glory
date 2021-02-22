@@ -15,7 +15,8 @@
 		"test:watch": "npx jest --watch",
 		"prepublish": "yarn build",
 		"analyze": "npx deoptigate -r esm src/preset.js",
-		"size": "npx size-limit"
+		"size": "npx size-limit",
+		"size:analyze": "npx size-limit --why"
 	},
 	"exports": {
 		".": {

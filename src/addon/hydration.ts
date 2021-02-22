@@ -4,7 +4,8 @@ import {
   assembleClassName,
   isAtRule,
   createCache,
-  assembleRule
+  assembleRule,
+  isProduction
 } from '../helper'
 import { Renderer } from '../type'
 
@@ -51,9 +52,11 @@ const addOn = function(renderer: Renderer): void {
   }
 
   if (renderer.client) {
-    if (renderer.sh) {
-      renderer.hydrate(renderer.sh)
+    if (!isProduction && !renderer.sh) {
+      throw new Error('renderer.hydration depends on renderer.sh but it is now undefined. It seems like that you have forgotten to set a stylesheet node')
     }
+
+    renderer.hydrate(renderer.sh)
   }
 }
 

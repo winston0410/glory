@@ -1,7 +1,7 @@
 'use strict'
 import safeIsObj from 'safe-is-obj'
 import { Renderer } from '../type'
-import { createCache, isFunction } from '../helper'
+import { createCache, isFunction, isProduction} from '../helper'
 
 type Tag = string | Function
 
@@ -34,10 +34,15 @@ const createComponent = (
 
 const addOn = function(renderer: Renderer): void {
 	renderer.jsx = (Tag: Tag, callback: (props: object) => object) => {
-		if (!renderer.h)
+		if (!isProduction && !renderer.h) {
 			throw new Error(
 				'You need to set jsx factory function as renderer.h before using renderer.jsx.'
 			)
+		}
+
+		if(!isProduction && !renderer.virtual){
+			throw new Error('renderer.jsx depends on renderer.virtual but it is now undefined. It seems like that you have forgotten to use virtual() addon')
+		}
 
 		return createComponent(Tag, callback, renderer)
 	}
