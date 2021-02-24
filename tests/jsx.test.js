@@ -78,7 +78,7 @@ describe('jsx()', function() {
 				describe('when styling callback is provided', function() {
 					describe('when a function is provided', function() {
 						describe('when the function returns an object', function() {
-							describe('when the function does not take any argument', function (){
+							describe('when the function does not take any argument', function() {
 								const nano = createNano({
 									h: createElement
 								})
@@ -111,14 +111,14 @@ describe('jsx()', function() {
 								})
 							})
 
-							describe('when the function take props as its argument', function (){
+							describe('when the function take props as its argument', function() {
 								const nano = createNano({
 									h: createElement
 								})
 								const putRawMock = jest.spyOn(nano, 'putRaw')
 
 								const Component = nano.jsx('h1', (props) => ({
-									color: (props.danger) ? 'red' : 'green'
+									color: props.danger ? 'red' : 'green'
 								}))
 
 								const result = ReactTestRenderer.create(
@@ -129,14 +129,14 @@ describe('jsx()', function() {
 									<Component danger={false}>Hello</Component>
 								).toJSON()
 
-								it('should emit different className based on its receiving props', function (){
+								it('should emit different className based on its receiving props', function() {
 									expect(result.props.className).toBe(' a')
 									expect(result2.props.className).toBe(' b')
 								})
 
-								describe('when the component is called the first time', function (){
-									it('should emit styles', function (){
-										if(env.isServer){
+								describe('when the component is called the first time', function() {
+									it('should emit styles', function() {
+										if (env.isServer) {
 											const result = nano.raw
 											expect(result).toBe('.a{color:red;}.b{color:green;}')
 										}
@@ -144,12 +144,12 @@ describe('jsx()', function() {
 									})
 								})
 
-								describe('when component is called again with identical props', function (){
+								describe('when component is called again with identical props', function() {
 									// const duplicatedResult = ReactTestRenderer.create(
 									// 	<Component danger={true}>Hello</Component>
 									// ).toJSON()
 
-									it('should return className early from the cache of the component', function (){
+									it('should return className early from the cache of the component', function() {
 										// expect(duplicatedResult).toBe('y')
 									})
 								})
@@ -189,7 +189,7 @@ describe('jsx()', function() {
 					})
 				})
 
-				describe('when "as" is passed as prop', function (){
+				describe('when "as" is passed as prop', function() {
 					const glory = createNano({
 						h: createElement
 					})
@@ -199,7 +199,7 @@ describe('jsx()', function() {
 						display: 'block'
 					}))
 
-					it('should generate the component in the TagName passed in "as"', function (){
+					it('should generate the component in the TagName passed in "as"', function() {
 						const result = ReactTestRenderer.create(
 							<WithDisplay as={'b'}>Hello</WithDisplay>
 						).toJSON()
@@ -208,7 +208,7 @@ describe('jsx()', function() {
 					})
 				})
 
-				describe('when "css" is passed as prop', function (){
+				describe('when "css" is passed as prop', function() {
 					const glory = createNano({
 						h: createElement
 					})
@@ -218,8 +218,8 @@ describe('jsx()', function() {
 						display: 'block'
 					}))
 
-					describe('when "css" is a string', function (){
-						it('should extend the original className', function (){
+					describe('when "css" is a string', function() {
+						it('should extend the original className', function() {
 							const result = ReactTestRenderer.create(
 								<WithDisplay css={'manual-class'}>Hello</WithDisplay>
 							).toJSON()
@@ -229,10 +229,48 @@ describe('jsx()', function() {
 				})
 			})
 
-			describe('when a component is provided as Tagname', function (){
-				describe('when a function is provided as styling callback', function (){
-					describe('when styling callback returns an object', function (){
-						describe('when the callback takes no argument', function (){
+			describe('when string is provided as TagName', function() {
+				describe('when styling callback is provided', function() {
+					describe('when a function is provided', function() {
+						describe('when a custom Component name is not set', function() {
+							const glory = createNano({
+								h: createElement
+							})
+
+							const WithDisplay = glory.jsx('p', () => ({
+								display: 'block'
+							}))
+
+							it('should dynamically generate a Component name based on its TagName', function() {
+								expect(WithDisplay.name).toBe('glory.p')
+							})
+						})
+
+						describe('when a custom Component name is set', function() {
+							const glory = createNano({
+								h: createElement
+							})
+
+							const WithDisplay = glory.jsx(
+								'p',
+								() => ({
+									display: 'block'
+								}),
+								'DisplayBlock'
+							)
+
+							it('should change the name of the Component', function() {
+								expect(WithDisplay.name).toBe('DisplayBlock')
+							})
+						})
+					})
+				})
+			})
+
+			describe('when a component is provided as Tagname', function() {
+				describe('when a function is provided as styling callback', function() {
+					describe('when styling callback returns an object', function() {
+						describe('when the callback takes no argument', function() {
 							const glory = createNano({
 								h: createElement
 							})
@@ -250,8 +288,7 @@ describe('jsx()', function() {
 								backgroundColor: 'blue'
 							}))
 
-							it('should create a component that inherits styling from the previous component', function (){
-
+							it('should create a component that inherits styling from the previous component', function() {
 								const result = ReactTestRenderer.create(
 									<WithBg>Hello</WithBg>
 								).toJSON()
@@ -265,27 +302,29 @@ describe('jsx()', function() {
 								expect(result.children).toEqual(['Hello'])
 							})
 
-							it('should inject styling used in all those components', function (){
+							it('should inject styling used in all those components', function() {
 								expect(putRawMock).toHaveBeenCalledTimes(3)
-								if(env.isServer){
+								if (env.isServer) {
 									const result = glory.raw
-									expect(result).toBe('.a{background-color:blue;}.b{color:red;}.c{font-size:32px;}')
+									expect(result).toBe(
+										'.a{background-color:blue;}.b{color:red;}.c{font-size:32px;}'
+									)
 								}
 							})
 						})
 
-						describe('when the callback takes props as its argument', function (){
+						describe('when the callback takes props as its argument', function() {
 							const glory = createNano({
 								h: createElement
 							})
 							const putRawMock = jest.spyOn(glory, 'putRaw')
 
 							const WithFont = glory.jsx('p', (props) => ({
-								fontSize: (props.big) ? '32px' : '24px'
+								fontSize: props.big ? '32px' : '24px'
 							}))
 
 							const WithColor = glory.jsx(WithFont, (props) => ({
-								color: (props.danger) ? 'red' : 'green'
+								color: props.danger ? 'red' : 'green'
 							}))
 
 							const WithBg = glory.jsx(WithColor, () => ({
@@ -293,22 +332,28 @@ describe('jsx()', function() {
 							}))
 
 							const result = ReactTestRenderer.create(
-								<WithBg big={true} danger={false}>Hello</WithBg>
+								<WithBg big={true} danger={false}>
+									Hello
+								</WithBg>
 							).toJSON()
 
 							const result2 = ReactTestRenderer.create(
-								<WithBg big={false} danger={true}>Hello</WithBg>
+								<WithBg big={false} danger={true}>
+									Hello
+								</WithBg>
 							).toJSON()
 
-							it('should emit different className based on its receiving props', function (){
+							it('should emit different className based on its receiving props', function() {
 								expect(result.props.className).toBe(' a b c')
 								expect(result2.props.className).toBe(' a e f')
 							})
 
-							it('should emit styles', function (){
-								if(env.isServer){
+							it('should emit styles', function() {
+								if (env.isServer) {
 									const result = glory.raw
-									expect(result).toBe('.a{background-color:blue;}.b{color:green;}.c{font-size:32px;}.e{color:red;}.f{font-size:24px;}')
+									expect(result).toBe(
+										'.a{background-color:blue;}.b{color:green;}.c{font-size:32px;}.e{color:red;}.f{font-size:24px;}'
+									)
 								}
 								expect(putRawMock).toHaveBeenCalledTimes(5)
 							})
