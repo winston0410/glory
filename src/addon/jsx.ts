@@ -8,6 +8,7 @@ type Tag = string | Function
 const createComponent = (
 	Tag: Tag,
 	callback: (props: object) => object,
+	name,
 	renderer: Renderer
 ) => {
 	function Component(props) {
@@ -29,11 +30,19 @@ const createComponent = (
 		})
 	}
 
+	// Will be tree-shaken when in production build
+	if(!isProduction){
+		const defaultName = (typeof Tag === 'function') ? Tag.name : `glory.${Tag}`
+		Reflect.defineProperty(Component, 'name', {
+			value: name || defaultName
+		})
+	}
+
 	return Component
 }
 
 const addOn = function(renderer: Renderer): void {
-	renderer.jsx = (Tag: Tag, callback: (props: object) => object) => {
+	renderer.jsx = (Tag: Tag, callback: (props: object) => object, name) => {
 		if (!isProduction && !renderer.h) {
 			throw new Error(
 				'You need to set jsx factory function as renderer.h before using renderer.jsx.'
@@ -44,7 +53,7 @@ const addOn = function(renderer: Renderer): void {
 			throw new Error('renderer.jsx depends on renderer.virtual but it is now undefined. It seems like that you have forgotten to use virtual() addon')
 		}
 
-		return createComponent(Tag, callback, renderer)
+		return createComponent(Tag, callback, name, renderer)
 	}
 }
 
