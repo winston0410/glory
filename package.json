@@ -72,7 +72,7 @@
 		"chai": "4.3.0",
 		"cross-blob": "2.0.0",
 		"deoptigate": "0.5.0",
-		"esbuild": "0.8.51",
+		"esbuild": "0.8.52",
 		"eslint": "7.20.0",
 		"eslint-config-prettier": "7.2.0",
 		"eslint-config-standard": "16.0.2",
