@@ -46,6 +46,10 @@
 		"./keyframes": {
 			"require": "./dist/cjs/addon/keyframes.js",
 			"default": "./dist/esm/addon/keyframes.js"
+		},
+		"./global": {
+			"require": "./dist/cjs/addon/global.js",
+			"default": "./dist/esm/addon/global.js"
 		}
 	},
 	"dependencies": {
