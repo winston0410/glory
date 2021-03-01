@@ -23,6 +23,11 @@ const addOn = function(renderer: Renderer, config = defaultConfig): void {
   if (renderer.virtual) {
     renderer.prefixer = addPrefix
   }
+
+  if(renderer.global){
+    const globalFn = renderer.global
+    renderer.global = (decls, selectors) => globalFn(addPrefix(decls), selectors)
+  }
 }
 
 export default addOn
