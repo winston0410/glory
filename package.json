@@ -61,7 +61,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "7.13.8",
-		"@babel/preset-env": "7.13.8",
+		"@babel/preset-env": "7.13.9",
 		"@babel/preset-react": "7.12.13",
 		"@babel/preset-typescript": "7.13.0",
 		"@jest-runner/electron": "3.0.0",
@@ -76,7 +76,7 @@
 		"chai": "4.3.0",
 		"cross-blob": "2.0.0",
 		"deoptigate": "0.5.0",
-		"esbuild": "0.8.53",
+		"esbuild": "0.8.54",
 		"eslint": "7.21.0",
 		"eslint-config-prettier": "7.2.0",
 		"eslint-config-standard": "16.0.2",
