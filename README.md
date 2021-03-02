@@ -33,7 +33,17 @@ You can also try the [sandboxes](https://github.com/winston0410/camouflage/#exam
 
 ## Installation
 
-A 0.1.0 will be released soon.
+Npm:
+
+```shell
+npm install glory
+```
+
+Yarn:
+
+```shell
+yarn add glory
+```
 
 ## Sponsors
 
