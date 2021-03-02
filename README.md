@@ -1,4 +1,4 @@
-# Camouflage
+# Glory
 
 :rocket::rocket::rocket: The world **fastest** **framework agonistic** CSS-in-JS library.
 
@@ -46,7 +46,7 @@ Support this package by becoming our sponsor.
 See our [quick start guide](https://github.com/winston0410/camouflage/blob/master/docs/README.md) for more details.
 
 ```javascript
-import { create as createCamoflage } from 'glory'
+import { create } from 'glory'
 import prefixer from 'glory/prefixer'
 import hydration from 'glory/hydration'
 import virtual from 'glory/virtual'
