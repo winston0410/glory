@@ -103,7 +103,7 @@
 		"size-limit": "4.10.0",
 		"tiny-worker": "2.3.0",
 		"tslib": "2.1.0",
-		"typescript": "4.2.2",
+		"typescript": "4.2.3",
 		"url-polyfill": "1.1.12",
 		"workerpool": "6.1.0"
 	},
