@@ -60,8 +60,8 @@
 		"safe-is-obj": "^1.0.1"
 	},
 	"devDependencies": {
-		"@babel/core": "7.13.8",
-		"@babel/preset-env": "7.13.9",
+		"@babel/core": "7.13.10",
+		"@babel/preset-env": "7.13.10",
 		"@babel/preset-react": "7.12.13",
 		"@babel/preset-typescript": "7.13.0",
 		"@jest-runner/electron": "3.0.0",
