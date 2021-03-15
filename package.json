@@ -9,6 +9,7 @@
 	],
 	"main": "./dist/cjs/index.js",
 	"module": "./dist/esm/index.js",
+	"typings": "type.d.ts",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/winston0410/glory.git"
@@ -34,28 +35,28 @@
 			"default": "./dist/esm/helper.js"
 		},
 		"./jsx": {
-			"require": "./dist/cjs/addon/jsx.js",
-			"default": "./dist/esm/addon/jsx.js"
+			"require": "./dist/cjs/jsx.js",
+			"default": "./dist/esm/jsx.js"
 		},
 		"./virtual": {
-			"require": "./dist/cjs/addon/virtual.js",
-			"default": "./dist/esm/addon/virtual.js"
+			"require": "./dist/cjs/virtual.js",
+			"default": "./dist/esm/virtual.js"
 		},
 		"./prefixer": {
-			"require": "./dist/cjs/addon/prefixer.js",
-			"default": "./dist/esm/addon/prefixer.js"
+			"require": "./dist/cjs/prefixer.js",
+			"default": "./dist/esm/prefixer.js"
 		},
 		"./hydration": {
-			"require": "./dist/cjs/addon/hydration.js",
-			"default": "./dist/esm/addon/hydration.js"
+			"require": "./dist/cjs/hydration.js",
+			"default": "./dist/esm/hydration.js"
 		},
 		"./keyframes": {
-			"require": "./dist/cjs/addon/keyframes.js",
-			"default": "./dist/esm/addon/keyframes.js"
+			"require": "./dist/cjs/keyframes.js",
+			"default": "./dist/esm/keyframes.js"
 		},
 		"./global": {
-			"require": "./dist/cjs/addon/global.js",
-			"default": "./dist/esm/addon/global.js"
+			"require": "./dist/cjs/global.js",
+			"default": "./dist/esm/global.js"
 		}
 	},
 	"dependencies": {

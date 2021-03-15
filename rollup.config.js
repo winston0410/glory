@@ -31,6 +31,11 @@ export default [
 						return path.format(pathObj)
 					}
 
+					if (pathObj.dir === 'addon') {
+						pathObj.dir = ''
+						return path.format(pathObj)
+					}
+
 					return output
 				}
 			}),
