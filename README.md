@@ -168,6 +168,32 @@ This library is a fork of `nano-css`, with the following difference:
 
 - Handle values in array without needing `array` add-on.
 
+## Known issues
+
+### Module not found
+
+- If you are using `Glory` with bundler that doesn't respect `export` field in `package.json`, for example `webpack 4.xx.x`(`create-react-app 4.xx.x` internally uses `webpack 4.xx.x`), you have to change your import as following:
+
+```javascript
+// Assuming you are in esm environment, if your bundler doesn't respect `export` field in `package.json`
+
+//Instead of importing like this:
+import { create } from 'glory'
+import virtualAddon from 'glory/virtual'
+//You should import it like this:
+import { create } from 'glory'
+import virtualAddon from 'glory/esm/virtual'
+
+//Assuming you are in cjs environment
+
+//Instead of importing like this:
+const { create } = require('glory')
+const virtualAddon = require('glory/virtual')
+//You should import it like this:
+const { create } = require('glory')
+const virtualAddon = require('glory/cjs/virtual')
+```
+
 ## Contribution
 
 To contribute in this project, you need to do the followings:
