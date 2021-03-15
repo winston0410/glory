@@ -7,6 +7,12 @@
 	"files": [
 		"dist/"
 	],
+	"main": "./dist/cjs/index.js",
+	"module": "./dist/esm/index.js",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/winston0410/glory.git"
+	},
 	"scripts": {
 		"build": "npx rollup -c",
 		"dev": "npx rollup -c -w",
