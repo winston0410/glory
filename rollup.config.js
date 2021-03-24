@@ -14,12 +14,12 @@ export default [
 				plugins: [],
 				exports: 'named'
 			},
-			{
-				dir: 'dist/cjs',
-				format: 'cjs',
-				plugins: [],
-				exports: 'named'
-			}
+			// {
+			// 	dir: 'dist/cjs',
+			// 	format: 'cjs',
+			// 	plugins: [],
+			// 	exports: 'named'
+			// }
 		],
 		plugins: [
 			multiInput({

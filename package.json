@@ -1,15 +1,14 @@
 {
 	"name": "glory",
-	"version": "1.0.3",
+	"version": "2.0.0",
 	"author": "Hugo Sum",
 	"license": "MIT",
-	"type": "commonjs",
+	"type": "module",
 	"files": [
 		"dist/"
 	],
-	"main": "./dist/cjs/index.js",
-	"module": "./dist/esm/index.js",
-	"typings": "type.d.ts",
+	"module": "dist/esm/index.js",
+	"typings": "dist/esm/type.d.ts",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/winston0410/glory.git"
@@ -24,40 +23,6 @@
 		"analyze": "npx deoptigate -r esm src/preset.js",
 		"size": "npx size-limit",
 		"size:analyze": "npx size-limit --why"
-	},
-	"exports": {
-		".": {
-			"require": "./dist/cjs/index.js",
-			"default": "./dist/esm/index.js"
-		},
-		"./helper": {
-			"require": "./dist/cjs/helper.js",
-			"default": "./dist/esm/helper.js"
-		},
-		"./jsx": {
-			"require": "./dist/cjs/jsx.js",
-			"default": "./dist/esm/jsx.js"
-		},
-		"./virtual": {
-			"require": "./dist/cjs/virtual.js",
-			"default": "./dist/esm/virtual.js"
-		},
-		"./prefixer": {
-			"require": "./dist/cjs/prefixer.js",
-			"default": "./dist/esm/prefixer.js"
-		},
-		"./hydration": {
-			"require": "./dist/cjs/hydration.js",
-			"default": "./dist/esm/hydration.js"
-		},
-		"./keyframes": {
-			"require": "./dist/cjs/keyframes.js",
-			"default": "./dist/esm/keyframes.js"
-		},
-		"./global": {
-			"require": "./dist/cjs/global.js",
-			"default": "./dist/esm/global.js"
-		}
 	},
 	"dependencies": {
 		"@blackblock/joli-string": "^1.1.0",
