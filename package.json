@@ -25,11 +25,11 @@
 		"size:analyze": "npx size-limit --why"
 	},
 	"dependencies": {
-		"@blackblock/joli-string": "^1.1.0",
-		"css-in-js-utils": "^3.1.0",
-		"inline-style-prefixer": "^6.0.0",
-		"is-in-browser": "^2.0.0",
-		"safe-is-obj": "^1.0.1"
+		"@blackblock/joli-string": "1.1.0",
+		"css-in-js-utils": "3.1.0",
+		"inline-style-prefixer": "6.0.0",
+		"is-in-browser": "2.0.0",
+		"safe-is-obj": "1.0.1"
 	},
 	"devDependencies": {
 		"@babel/core": "7.13.10",
