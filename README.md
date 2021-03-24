@@ -170,29 +170,15 @@ This library is a fork of `nano-css`, with the following difference:
 
 ## Known issues
 
-### Module not found
+### Module not found due to Typescript absolute import
 
-- If you are using `Glory` with bundler that doesn't respect `export` field in `package.json`, for example `webpack 4.xx.x`(`create-react-app 4.xx.x` internally uses `webpack 4.xx.x`), you have to change your import as following:
+`create-react-app` uses Typescript and absolute import is enabled by default.
 
-```javascript
-// Assuming you are in esm environment, if your bundler doesn't respect `export` field in `package.json`
+If you are using Typescript, which may support absolute import based on compiler setting. If you have enabled absolute import, importing module like `glory/virtual` will make Typescript think that it is importing a file from `<baseUrl>/glory/virtual`, instead of searching `node_modules` for you.
 
-//Instead of importing like this:
-import { create } from 'glory'
-import virtualAddon from 'glory/virtual'
-//You should import it like this:
-import { create } from 'glory'
-import virtualAddon from 'glory/esm/virtual'
+To solve this, you have to update `tsconfig.json` to give the correct path to Typescript.
 
-//Assuming you are in cjs environment
-
-//Instead of importing like this:
-const { create } = require('glory')
-const virtualAddon = require('glory/virtual')
-//You should import it like this:
-const { create } = require('glory')
-const virtualAddon = require('glory/cjs/virtual')
-```
+https://www.typescriptlang.org/docs/handbook/module-resolution.html#path-mapping
 
 ## Contribution
 
