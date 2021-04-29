@@ -18,8 +18,8 @@
 		"benchmark:switch": "node -r esm switch-ifelse.spec.js"
 	},
 	"devDependencies": {
-		"@babel/core": "7.13.16",
-		"@babel/plugin-transform-modules-commonjs": "7.13.8",
+		"@babel/core": "7.14.0",
+		"@babel/plugin-transform-modules-commonjs": "7.14.0",
 		"@emotion/css": "11.1.3",
 		"@emotion/react": "11.1.5",
 		"@emotion/styled": "11.3.0",
