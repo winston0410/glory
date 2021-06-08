@@ -4547,10 +4547,10 @@ delayed-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/delayed-stream/-/delayed-stream-1.0.0.tgz#df3ae199acadfb7d440aaae0b29e2272b24ec619"
   integrity sha1-3zrhmayt+31ECqrgsp4icrJOxhk=
 
-deoptigate@0.5.0:
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/deoptigate/-/deoptigate-0.5.0.tgz#cfefce0fcac285ae5b160cf3db801d2b59eca91d"
-  integrity sha512-jx4NUCaGvPPkbLPRSGb4vJ8CjiHmYiVWGmwDhraK7FzjKGiU512Ivl2GTpDWlMAiBAunBSjUNfo9ZqvY+jfipQ==
+deoptigate@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/deoptigate/-/deoptigate-0.6.0.tgz#9e91a1e96fcda3700d26ed7211f3e6bf1eddd7d5"
+  integrity sha512-lOf3x61b7i9/TqZ4NDUnpMMS2ecJWj+QgJNTOUojWUC1AvL6IM5Myp2YEgSFjB79tc8osm6CEKKU7kvh5bntcg==
   dependencies:
     ansicolors "~0.3.2"
     files-provider "~0.2.0"
