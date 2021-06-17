@@ -78,7 +78,7 @@
 		"tslib": "2.3.0",
 		"typescript": "4.3.4",
 		"url-polyfill": "1.1.12",
-		"workerpool": "6.1.4"
+		"workerpool": "6.1.5"
 	},
 	"lint-staged": {
 		"**/*.js": [
