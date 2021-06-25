@@ -4050,13 +4050,13 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-cross-blob@2.0.1:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/cross-blob/-/cross-blob-2.0.1.tgz#7c187282e0855353705ed9ac5af2ee7f27c910c6"
-  integrity sha512-ARuKPPo3I6DSqizal4UCyMCiGPQdMpMJS3Owx6Lleuh26vSt2UnfWRwbMLCYqbJUrcol+KzGVSLR91ezSHP80A==
+cross-blob@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/cross-blob/-/cross-blob-3.0.0.tgz#18d9c9b0845fa3ae51e26c94cae52238b99bfac7"
+  integrity sha512-XvuxrJZp2eZ82bJ421qPS1qLF8tbuwnH0GyCmzXJZ0twGojZJ+TPTgUG6j9lYte0HuJcljuj6Lrb3uESC2a0DQ==
   dependencies:
     blob-polyfill "^5.0.20210201"
-    fetch-blob "^2.1.2"
+    fetch-blob "^3.0.1"
 
 cross-spawn@^6.0.0:
   version "6.0.5"
@@ -5162,10 +5162,10 @@ fb-watchman@^2.0.0:
   dependencies:
     bser "2.1.1"
 
-fetch-blob@^2.1.2:
-  version "2.1.2"
-  resolved "https://registry.yarnpkg.com/fetch-blob/-/fetch-blob-2.1.2.tgz#a7805db1361bd44c1ef62bb57fb5fe8ea173ef3c"
-  integrity sha512-YKqtUDwqLyfyMnmbw8XD6Q8j9i/HggKtPEI+pZ1+8bvheBu78biSmNaXWusx1TauGqtUUGx/cBb1mKdq2rLYow==
+fetch-blob@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/fetch-blob/-/fetch-blob-3.0.1.tgz#c67d9b2d9e6d7202209b234ba14e13de451c5db9"
+  integrity sha512-uq8YWG2SVATaJtkP6YukvWHw++EpNsoT8vuBxFk57vcUXVQaS9jkdH6RKWVrbgO0YUNy3dPrXO+7HnSgTcJipg==
 
 figgy-pudding@^3.5.1:
   version "3.5.2"
