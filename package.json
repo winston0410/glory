@@ -49,7 +49,7 @@
 		"chai": "4.3.4",
 		"cross-blob": "2.0.1",
 		"deoptigate": "0.6.0",
-		"esbuild": "0.12.12",
+		"esbuild": "0.12.13",
 		"eslint": "7.29.0",
 		"eslint-config-prettier": "7.2.0",
 		"eslint-config-standard": "16.0.3",
