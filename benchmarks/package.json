@@ -24,7 +24,7 @@
 		"@emotion/react": "11.4.0",
 		"@emotion/styled": "11.3.0",
 		"@tsconfig/node14": "1.0.1",
-		"@types/node": "14.17.4",
+		"@types/node": "14.17.5",
 		"aphrodite": "2.4.0",
 		"esm": "3.2.25",
 		"fast-stringify": "2.0.0",
