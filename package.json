@@ -15,15 +15,15 @@
 		"url": "https://github.com/winston0410/glory.git"
 	},
 	"scripts": {
-		"build": "npx rollup -c",
-		"dev": "npx rollup -c -w",
-		"test": "npx jest",
-		"test:coverage": "npx jest --coverage",
-		"test:watch": "npx jest --watch",
-		"prepublish": "yarn build",
-		"analyze": "npx deoptigate -r esm src/preset.js",
-		"size": "npx size-limit",
-		"size:analyze": "npx size-limit --why"
+		"build": "$(npm bin)/rollup -c",
+		"dev": "$(npm bin)/rollup -c -w",
+		"test": "$(npm bin)/jest",
+		"test:coverage": "$(npm bin)/jest --coverage",
+		"test:watch": "$(npm bin)/jest --watch",
+		"prepublish": "npm run build",
+		"analyze": "$(npm bin)/deoptigate -r esm src/preset.js",
+		"size": "$(npm bin)/size-limit",
+		"size:analyze": "$(npm bin)/size-limit --why"
 	},
 	"dependencies": {
 		"@blackblock/joli-string": "^1.1.0",
@@ -82,12 +82,12 @@
 	},
 	"lint-staged": {
 		"**/*.js": [
-			"npx prettier --write"
+			"$(npm bin)/prettier --write"
 		]
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "npx lint-staged",
+			"pre-commit": "$(npm bin)/lint-staged",
 			"pre-push": "yarn test"
 		}
 	},
