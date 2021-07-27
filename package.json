@@ -88,7 +88,7 @@
 	"husky": {
 		"hooks": {
 			"pre-commit": "$(npm bin)/lint-staged",
-			"pre-push": "yarn test"
+			"pre-push": "npm run test"
 		}
 	},
 	"keywords": [
