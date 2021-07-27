@@ -1,8 +1,6 @@
 'use strict'
 import {
   cssifyObject,
-  assembleClassName,
-  isAtRule,
   createCache,
   assembleRule,
   isProduction
@@ -34,7 +32,7 @@ const addOn = function(renderer: Renderer): void {
             cssifyObject(CSSStyleRuleToObj(frameRule))
           )
         }
-        console.log('hydrate content', content)
+        //  console.log('hydrate content', content)
         renderer.kcache[content] = rule.name
       } else if (rule.constructor.name === 'CSSMediaRule') {
         for (const basicRule of rule.cssRules) {

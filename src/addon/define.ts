@@ -13,8 +13,6 @@ function define(renderer: Renderer): void {
       object = Object.assign(object, styleObject);
     }
 
-    console.log(renderer.cache)
-
     return object
   }
 }
