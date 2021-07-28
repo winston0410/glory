@@ -8,18 +8,18 @@ export default [
 	{
 		input: ['src/**/*.ts'],
 		output: [
+			//  {
+			//  dir: 'dist/esm',
+			//  format: 'esm',
+			//  plugins: [],
+			//  exports: 'named'
+			//  },
 			{
-				dir: 'dist/esm',
-				format: 'esm',
+				dir: 'dist',
+				format: 'cjs',
 				plugins: [],
 				exports: 'named'
-			},
-			// {
-			// 	dir: 'dist/cjs',
-			// 	format: 'cjs',
-			// 	plugins: [],
-			// 	exports: 'named'
-			// }
+			}
 		],
 		plugins: [
 			multiInput({
