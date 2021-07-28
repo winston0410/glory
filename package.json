@@ -7,9 +7,8 @@
 	"files": [
 		"dist/"
 	],
-	"main": "dist/cjs/index.js",
-	"module": "dist/esm/index.js",
-	"typings": "dist/esm/type.d.ts",
+	"main": "dist/index.js",
+	"typings": "dist/type.d.ts",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/winston0410/glory.git"
