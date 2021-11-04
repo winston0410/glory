@@ -57,9 +57,9 @@ See our [quick start guide](https://github.com/winston0410/camouflage/blob/maste
 
 ```javascript
 import { create } from 'glory'
-import prefixer from 'glory/prefixer'
-import hydration from 'glory/hydration'
-import virtual from 'glory/virtual'
+import prefixer from 'glory/dist/prefixer'
+import hydration from 'glory/dist/hydration'
+import virtual from 'glory/dist/virtual'
 
 const glory = create({
 	//Config renderer here
